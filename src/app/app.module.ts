@@ -25,7 +25,9 @@ import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
+import { HeaderControlComponent } from './header-control';
 import { AboutComponent } from './about';
+import { DashboardComponent } from './dashboard';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
 
@@ -53,6 +55,8 @@ type StoreType = {
     AppComponent,
     AboutComponent,
     HomeComponent,
+    DashboardComponent,
+    HeaderControlComponent,
     NoContentComponent,
     XLargeDirective
   ],
