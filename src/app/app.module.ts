@@ -28,6 +28,8 @@ import { HomeComponent } from './home';
 import { HeaderControlComponent } from './header-control';
 import { AboutComponent } from './about';
 import { DashboardComponent } from './dashboard';
+import { InfoTableComponent } from './info-table';
+import { RunningLineComponent } from './running-line';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
 
@@ -57,6 +59,8 @@ type StoreType = {
     HomeComponent,
     DashboardComponent,
     HeaderControlComponent,
+    InfoTableComponent,
+    RunningLineComponent,
     NoContentComponent,
     XLargeDirective
   ],
