@@ -1,6 +1,5 @@
 import {EventEmitter, Injectable} from '@angular/core';
 
-
 @Injectable()
 export class AppSettingsService {
   navchange: EventEmitter<number> = new EventEmitter();
