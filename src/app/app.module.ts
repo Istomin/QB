@@ -14,7 +14,7 @@ import {
   RouterModule,
   PreloadAllModules
 } from '@angular/router';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule, TabsModule  } from 'ngx-bootstrap';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -32,6 +32,7 @@ import { InfoTableComponent } from './info-table';
 import { RunningLineComponent } from './running-line';
 import { NoContentComponent } from './no-content';
 import { SettingsModalComponent } from './settings-modal';
+import {SettingsTabsComponent} from './settings-modal/settings-tabs'
 import { XLargeDirective } from './home/x-large';
 
 import '../styles/styles.scss';
@@ -64,6 +65,7 @@ type StoreType = {
     RunningLineComponent,
     NoContentComponent,
     SettingsModalComponent,
+    SettingsTabsComponent,
     XLargeDirective
   ],
   /**
@@ -74,6 +76,7 @@ type StoreType = {
     FormsModule,
     HttpModule,
     ModalModule.forRoot(),
+    TabsModule.forRoot(),
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
   /**

@@ -10,6 +10,6 @@ export class HeaderControlComponent implements OnInit {
   @ViewChild('lgModal') lgModal :SettingsModalComponent;
   constructor() {}
   public ngOnInit() {
-    this.lgModal.show();
+
   }
 }

@@ -14,7 +14,4 @@ export class SettingsModalComponent implements OnInit {
   public ngOnInit() {
 
   }
-  show() {
-    alert(2)
-  }
 }
