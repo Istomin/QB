@@ -15,6 +15,9 @@ import {
   PreloadAllModules
 } from '@angular/router';
 import { ModalModule, TabsModule  } from 'ngx-bootstrap';
+import {ColorPickerModule} from 'angular2-color-picker';
+
+
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -32,6 +35,7 @@ import { InfoTableComponent } from './info-table';
 import { RunningLineComponent } from './running-line';
 import { NoContentComponent } from './no-content';
 import { SettingsModalComponent } from './settings-modal';
+import { ColorPickerComponent } from './settings-modal/color-picker';
 import {SettingsTabsComponent} from './settings-modal/settings-tabs'
 import { XLargeDirective } from './home/x-large';
 
@@ -71,6 +75,7 @@ type StoreType = {
     NoContentComponent,
     SettingsModalComponent,
     SettingsTabsComponent,
+    ColorPickerComponent,
     XLargeDirective
   ],
   /**
@@ -82,6 +87,7 @@ type StoreType = {
     HttpModule,
     ModalModule.forRoot(),
     TabsModule.forRoot(),
+    ColorPickerModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
   /**

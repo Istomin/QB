@@ -1,6 +1,9 @@
 <div>
   <tabset>
-    <tab heading="System">System</tab>
+    <tab heading="System">
+      {{settings.graphics.mainColors.titleBackground}}
+      <color-picker (changed)="onColorChanged($event)" [param]="'titleBackground'" [color]="settings.graphics.mainColors.titleBackground"></color-picker>
+    </tab>
     <tab heading="Alerts1">Alerts</tab>
     <tab heading="Graphics">Graphics</tab>
   </tabset>
