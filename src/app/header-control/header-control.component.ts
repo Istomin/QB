@@ -8,6 +8,10 @@ import {Subscription} from 'rxjs/Subscription';
   templateUrl: 'header-control.component.html'
 })
 export class HeaderControlComponent implements OnInit {
+
+  private titleBackground: string;
+  private titleTextColor: string;
+
   @ViewChild('lgModal') lgModal :SettingsModalComponent;
   subscription: Subscription;
   constructor(private settingsService: AppSettingsService) {
@@ -25,6 +29,6 @@ export class HeaderControlComponent implements OnInit {
   }
 
   onAppSettingsChanged(response:any) {
-    console.log(response, 'responseresponse')
+    this[response.param] = response.color;
   }
 }

@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { ColorPickerComponent } from '../color-picker'
 import { Settings } from '../../models/settings.model';
+import { AppSettingsService } from '../../core/app-settings.service';
 
 @Component({
   selector: 'settings-tabs',
@@ -11,14 +12,15 @@ export class SettingsTabsComponent {
   private settings: Settings;
   @ViewChild(ColorPickerComponent) colorPickerComponent: ColorPickerComponent;
 
-  constructor() {
+  constructor(private settingsService: AppSettingsService) {
   }
 
   ngOnInit() {
     this.settings = {
       graphics: {
         mainColors: {
-          titleBackground: '#f00'
+          titleBackground: '#ee0',
+          titleTextColor: '#fff'
         }
       }
     };
@@ -26,5 +28,6 @@ export class SettingsTabsComponent {
 
   onColorChanged(colorObj) {
     this.settings.graphics.mainColors[colorObj.param] = colorObj.color;
+    this.settingsService.emitNavChangeEvent(colorObj);
   }
 }

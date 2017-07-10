@@ -1,7 +1,8 @@
 export class Settings {
   graphics: {
     mainColors: {
-      titleBackground: string
+      titleBackground: string,
+      titleTextColor: string
     }
   }
 }
