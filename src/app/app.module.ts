@@ -25,7 +25,7 @@ import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
-import { HeaderControlComponent } from './header-control';
+import { HeaderControlComponent } from './header-controll';
 import { AboutComponent } from './about';
 import { DashboardComponent } from './dashboard';
 import { InfoTableComponent } from './info-table';
@@ -34,6 +34,11 @@ import { NoContentComponent } from './no-content';
 import { SettingsModalComponent } from './settings-modal';
 import {SettingsTabsComponent} from './settings-modal/settings-tabs'
 import { XLargeDirective } from './home/x-large';
+
+
+
+import {AppSettingsService} from './core/app-settings.service'
+
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
@@ -83,6 +88,7 @@ type StoreType = {
    * Expose our Services and Providers into Angular's dependency injection.
    */
   providers: [
+    AppSettingsService,
     ENV_PROVIDERS,
     APP_PROVIDERS
   ]
