@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {SettingsModalComponent} from '.././settings-modal';
 
 @Component({
   selector: 'header-control',
@@ -6,8 +7,9 @@ import {Component, OnInit} from '@angular/core';
   templateUrl: 'header-control.component.html'
 })
 export class HeaderControlComponent implements OnInit {
+  @ViewChild('lgModal') lgModal :SettingsModalComponent;
   constructor() {}
   public ngOnInit() {
-
+    this.lgModal.show();
   }
 }

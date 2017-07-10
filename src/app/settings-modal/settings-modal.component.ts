@@ -1,14 +1,20 @@
-import {Component, OnInit, ViewContainerRef } from '@angular/core';
-
+import {Component, OnInit, ViewContainerRef, ViewChild } from '@angular/core';
+import { ModalDirective } from 'ngx-bootstrap';
 @Component({
   selector: 'settings-modal',
   styleUrls: [ 'settings-modal.component.scss' ],
   templateUrl: 'settings-modal.component.html'
 })
 export class SettingsModalComponent implements OnInit {
-  constructor(viewContainerRef: ViewContainerRef) {}
+  @ViewChild('lgModal') public lgModal:ModalDirective;
+  constructor(viewContainerRef: ViewContainerRef) {
+
+  }
   private viewContainerRef: ViewContainerRef;
   public ngOnInit() {
 
+  }
+  show() {
+    alert(2)
   }
 }
