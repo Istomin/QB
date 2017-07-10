@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {SettingsModalComponent} from '.././settings-modal';
+import {AppSettingsService} from './core/app-settings.service'
 
 @Component({
   selector: 'header-control',

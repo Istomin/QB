@@ -25,7 +25,7 @@ import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
-import { HeaderControlComponent } from './header-controll';
+import { HeaderControlComponent } from './header-control';
 import { AboutComponent } from './about';
 import { DashboardComponent } from './dashboard';
 import { InfoTableComponent } from './info-table';
