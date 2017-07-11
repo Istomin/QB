@@ -38,7 +38,7 @@ import { SettingsModalComponent } from './settings-modal';
 import { ColorPickerComponent } from './settings-modal/color-picker';
 import {SettingsTabsComponent} from './settings-modal/settings-tabs'
 import { XLargeDirective } from './home/x-large';
-
+import { LineDirective } from './running-line/line';
 
 
 import {AppSettingsService} from './core/app-settings.service'
@@ -76,6 +76,7 @@ type StoreType = {
     SettingsModalComponent,
     SettingsTabsComponent,
     ColorPickerComponent,
+    LineDirective,
     XLargeDirective
   ],
   /**
