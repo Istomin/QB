@@ -1,23 +1,29 @@
-import { Directive, Renderer2, ElementRef, OnInit } from '@angular/core';
+import { Directive, Renderer2, ElementRef } from '@angular/core';
 var jQuery = require("jquery");
 
 @Directive({
   selector: 'line'
 })
 export class LineDirective {
+  private animSpeed: number = 15000;
   constructor(
     private renderer: Renderer2,
     private element: ElementRef
   ){
 
   }
-
-
-
   ngOnInit() {
-
-    jQuery(this.element.nativeElement).find('.slider').show();
+    this.startAnimation();
   }
 
+  startAnimation() {
+    jQuery(this.element.nativeElement).find('.slider').css({
+      left: jQuery(this.element.nativeElement).width()
+    }).stop().animate({
+      left: - jQuery(this.element.nativeElement).find('.slider').width()
+    }, {easing: 'linear', duration: this.animSpeed, complete: () => {
+        this.startAnimation();
+    }});
+  }
 
 }
