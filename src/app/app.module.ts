@@ -36,13 +36,11 @@ import { RunningLineComponent } from './running-line';
 import { NoContentComponent } from './no-content';
 import { SettingsModalComponent } from './settings-modal';
 import { ColorPickerComponent } from './settings-modal/color-picker';
-import {SettingsTabsComponent} from './settings-modal/settings-tabs'
+import {SettingsTabsComponent} from './settings-modal/settings-tabs';
 import { XLargeDirective } from './home/x-large';
 import { LineDirective } from './running-line/line';
-
-
-import {AppSettingsService} from './core/app-settings.service'
-
+import { FullScreenComponent } from './header-control/full-screen';
+import {AppSettingsService} from './core/app-settings.service';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
@@ -76,6 +74,7 @@ type StoreType = {
     SettingsModalComponent,
     SettingsTabsComponent,
     ColorPickerComponent,
+    FullScreenComponent,
     LineDirective,
     XLargeDirective
   ],
