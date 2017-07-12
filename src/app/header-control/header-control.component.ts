@@ -1,19 +1,17 @@
-import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
-import {SettingsModalComponent} from '.././settings-modal';
-import {AppSettingsService} from '.././core/app-settings.service';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { SettingsModalComponent } from '.././settings-modal';
+import { AppSettingsService } from '.././core/app-settings.service';
+import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'header-control',
   styleUrls: [ 'header-control.component.scss' ],
   templateUrl: 'header-control.component.html'
 })
-export class HeaderControlComponent implements OnInit {
-
+export class HeaderControlComponent implements OnInit, OnDestroy {
+  @ViewChild('lgModal') public  lgModal: SettingsModalComponent;
+  public subscription: Subscription;
   private titleBackground: string;
   private titleTextColor: string;
-
-  @ViewChild('lgModal') lgModal :SettingsModalComponent;
-  subscription: Subscription;
   constructor(private settingsService: AppSettingsService) {
 
   }
@@ -21,14 +19,14 @@ export class HeaderControlComponent implements OnInit {
   public ngOnInit() {
     this.subscription = this.settingsService.getNavChangeEmitter().subscribe((response) => {
       this.onAppSettingsChanged(response);
-    })
+    });
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  onAppSettingsChanged(response:any) {
+  private onAppSettingsChanged(response: any) {
     this[response.param] = response.color;
   }
 }
