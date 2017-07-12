@@ -8,14 +8,12 @@ import { AppSettingsService } from '../../core/app-settings.service';
   styleUrls: [ 'settings-tabs.component.scss'],
   templateUrl: './settings-tabs.component.html'
 })
-export class SettingsTabsComponent {
+export class SettingsTabsComponent implements OnInit {
+  @ViewChild(ColorPickerComponent) public colorPickerComponent: ColorPickerComponent;
   private pageSettings: Settings;
-  @ViewChild(ColorPickerComponent) colorPickerComponent: ColorPickerComponent;
+  constructor(private settingsService: AppSettingsService) { }
 
-  constructor(private settingsService: AppSettingsService) {
-  }
-
-  ngOnInit() {
+  public ngOnInit() {
     this.pageSettings = {
       settings: {
         system: {
@@ -46,17 +44,22 @@ export class SettingsTabsComponent {
           titleBackground: '#f00',
           titleTextColor: '#f00',
           tableHeaderColor: '#f00',
-          tableTextColor: '#f00',
+          tableTextColor: '#fff',
           tableRowColor1: '#f00',
           tableRowColor2: '#f00',
           businessName: 'Your Business Name Here'
         }
       }
-    }
+    };
   }
 
-  onColorChanged(colorObj) {
+  private onColorChanged(colorObj) {
     this.pageSettings.settings.graphics[colorObj.param] = colorObj.color;
-    this.settingsService.emitNavChangeEvent(colorObj);
+    if (colorObj.param === 'tableRowColor1' || colorObj.param === 'tableRowColor2' ||
+      colorObj.param === 'tableTextColor') {
+      this.settingsService.emitTableChangeEvent(colorObj);
+    } else {
+      this.settingsService.emitNavChangeEvent(colorObj);
+    }
   }
 }

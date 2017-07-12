@@ -13,7 +13,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   constructor(private settingsService: AppSettingsService) {}
 
   public ngOnInit() {
-    this.subscription = this.settingsService.getNavChangeEmitter().subscribe((response) => {
+    this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {
       this.onAppSettingsChanged(response);
     });
   }
@@ -23,6 +23,6 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   }
 
   private onAppSettingsChanged(response: any) {
-    console.log(1222, response, 777);
+    this[response.param] = response.color;
   }
 }

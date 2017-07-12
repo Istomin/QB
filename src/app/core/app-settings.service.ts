@@ -1,13 +1,19 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable()
 export class AppSettingsService {
-  navchange: EventEmitter<number> = new EventEmitter();
-  constructor() {}
-  emitNavChangeEvent(number) {
-    this.navchange.emit(number);
+  public navchange: EventEmitter<number> = new EventEmitter();
+  public tablechange: EventEmitter<number> = new EventEmitter();
+  public emitNavChangeEvent(numb: any) {
+    this.navchange.emit(numb);
   }
-  getNavChangeEmitter() {
+  public getNavChangeEmitter() {
     return this.navchange;
+  }
+  public emitTableChangeEvent(numb: any) {
+    this.tablechange.emit(numb);
+  }
+  public getTableChangeEmitter() {
+    return this.tablechange;
   }
 }
