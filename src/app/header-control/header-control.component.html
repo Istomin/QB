@@ -1,7 +1,9 @@
 <div id="header" [style.background]="titleBackground">
   <!-- add logo img -->
   <h1 [style.color]="titleTextColor">My title</h1>
-  <span [style.color]="titleTextColor" class="clock">Current Time: 7/7/2 17:14</span>
+  <div [style.color]="titleTextColor" class="clock-holder">
+    <clock></clock>
+  </div>
   <ul class="controls">
     <li><full-screen></full-screen></li>
     <li><settings-modal #lgModal></settings-modal></li>

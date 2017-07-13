@@ -15,9 +15,7 @@ import {
   PreloadAllModules
 } from '@angular/router';
 import { ModalModule, TabsModule  } from 'ngx-bootstrap';
-import {ColorPickerModule} from 'angular2-color-picker';
-
-
+import { ColorPickerModule } from 'angular2-color-picker';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -36,11 +34,12 @@ import { RunningLineComponent } from './running-line';
 import { NoContentComponent } from './no-content';
 import { SettingsModalComponent } from './settings-modal';
 import { ColorPickerComponent } from './settings-modal/color-picker';
-import {SettingsTabsComponent} from './settings-modal/settings-tabs';
+import { SettingsTabsComponent } from './settings-modal/settings-tabs';
 import { XLargeDirective } from './home/x-large';
 import { LineDirective } from './running-line/line';
 import { FullScreenComponent } from './header-control/full-screen';
-import {AppSettingsService} from './core/app-settings.service';
+import { AppSettingsService } from './core/app-settings.service';
+import { ClockComponent } from './header-control/clock';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
@@ -76,6 +75,7 @@ type StoreType = {
     ColorPickerComponent,
     FullScreenComponent,
     LineDirective,
+    ClockComponent,
     XLargeDirective
   ],
   /**
