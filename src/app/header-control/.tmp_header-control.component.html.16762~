@@ -1,10 +1,20 @@
 <div id="header" [style.background]="titleBackground">
   <!-- add logo img -->
+<<<<<<< HEAD
+  <h1 [style.color]="titleTextColor">My title</h1>
+  <div [style.color]="titleTextColor" class="clock-holder">
+    <clock></clock>
+  </div>
+  <ul class="controls">
+    <li><full-screen></full-screen></li>
+    <li><settings-modal #lgModal></settings-modal></li>
+=======
   <h1 class="logo" [style.color]="titleTextColor">Your Business Name Here</h1>
   <span class="clock" [style.color]="titleTextColor">Current Time: 17.07 17:14</span>
   <div class="app-logo"></div>
   <ul class="controls">
     <li><a href="#" class="ico-full-screen">Full Screen</a></li>
     <li class="settings-modal"><settings-modal #lgModal></settings-modal></li>
+>>>>>>> Markup
   </ul>
 </div>
