@@ -16,6 +16,8 @@ import {
 } from '@angular/router';
 import { ModalModule, TabsModule  } from 'ngx-bootstrap';
 import { ColorPickerModule } from 'angular2-color-picker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -40,6 +42,10 @@ import { LineDirective } from './running-line/line';
 import { FullScreenComponent } from './header-control/full-screen';
 import { AppSettingsService } from './core/app-settings.service';
 import { ClockComponent } from './header-control/clock';
+
+
+import { MdSliderModule } from '@angular/material';
+import 'hammerjs';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
@@ -88,6 +94,8 @@ type StoreType = {
     ModalModule.forRoot(),
     TabsModule.forRoot(),
     ColorPickerModule,
+    MdSliderModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
   /**

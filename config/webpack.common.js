@@ -178,6 +178,12 @@ module.exports = function (options) {
           exclude: [helpers.root('src', 'styles')]
         },
 
+        {
+          test: /\.scss$/,
+          exclude: /node_modules/,
+          loaders: ['raw-loader', 'sass-loader']
+        },
+
         /**
          * Raw loader support for *.html
          * Returns file content as string

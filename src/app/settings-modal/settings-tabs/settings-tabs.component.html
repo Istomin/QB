@@ -1,7 +1,12 @@
 <div>
   <tabset>
     <tab heading="System">
-
+      <md-slider  [(value)]="val"
+                  [max]="max"
+                  (input)="onSliderChanged($event)"
+                  [min]="min"
+                  [step]="step">
+      </md-slider>
     </tab>
     <tab heading="Alerts1">Alerts</tab>
     <tab heading="Graphics">

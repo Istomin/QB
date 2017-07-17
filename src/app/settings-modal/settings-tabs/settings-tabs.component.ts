@@ -11,6 +11,10 @@ import { AppSettingsService } from '../../core/app-settings.service';
 export class SettingsTabsComponent implements OnInit {
   @ViewChild(ColorPickerComponent) public colorPickerComponent: ColorPickerComponent;
   private pageSettings: Settings;
+  private min: number = 1;
+  private max: number = 20;
+  private step: number = 1;
+  private val: number = 5;
   constructor(private settingsService: AppSettingsService) { }
 
   public ngOnInit() {
@@ -61,5 +65,9 @@ export class SettingsTabsComponent implements OnInit {
     } else {
       this.settingsService.emitNavChangeEvent(colorObj);
     }
+  }
+
+  onSliderChanged($event) {
+    this.val = $event.value;
   }
 }
