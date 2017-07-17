@@ -1,37 +1,86 @@
 <div>
-  <tabset>
-    <tab heading="System">
-      <md-slider  [(value)]="val"
-                  [max]="max"
-                  (input)="onSliderChanged($event)"
-                  [min]="min"
-                  [step]="step">
-      </md-slider>
-    </tab>
-    <tab heading="Alerts1">Alerts</tab>
-    <tab heading="Graphics">
-      <h2>Main Colors</h2>
-      <div class="color-picker-holder">
-        <color-picker (changed)="onColorChanged($event)" [param]="'titleBackground'" [color]="pageSettings.settings.graphics.titleBackground"></color-picker>
-        <span>Title Bgnd Color</span>
-      </div>
+	<tabset>
+		<tab heading="System">
+			<div class="tab-col">
+				<div class="form-group">
+					<label>User ID</label>
+					<input type="text" class="form-control" placeholder="QB_4453JHSF"/>
+				</div>
+				<div class="form-group">
+					<label>Password</label>
+					<input type="password" class="form-control" placeholder="QB_4453JHSF"/>
+				</div>
+				<strong class="group-title">Refresh Interval</strong>
+				<md-slider	[(value)]="val"
+										[max]="max"
+										(input)="onSliderChanged($event)"
+										[min]="min"
+										[step]="step">
+				</md-slider>
+				<strong class="group-title">Scroll Interval</strong>
+			</div>
+			<div class="tab-col">
+				<div class="form-group">
+					<strong class="group-title">Display Mode</strong>
+					<ul class="radio-list">
+						<li>
+							<input type="radio" name="list-1" id="shipped" checked="checked"/>
+							<label for="shipped">Shipped</label>
+						</li>
+						<li>
+							<input type="radio" name="list-1" id="shipped" />
+							<label for="shipped">Consignee</label>
+						</li>
+					</ul>
+					<strong class="group-title">Flight Display</strong>
+					<ul class="radio-list">
+						<li>
+							<input type="checkbox" id="transit" checked="checked"/>
+							<label for="transit">Show Transit</label>
+						</li>
+					</ul>
+					<select class="form-control">
+						<option>From Collection</option>
+						<option>From Pack Out</option>
+						<option>From Alternate</option>
+					</select>
+					<ul class="radio-list">
+						<li>
+							<input type="checkbox" id="expected-delivery"/>
+							<label for="expected-delivery">Show Expected Delivery</label>
+						</li>
+						<li>
+							<input type="checkbox" id="drop-delivery"/>
+							<label for="drop-delivery">Drop Delivered</label>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</tab>
+		<tab heading="Alerts1">Alerts</tab>
+		<tab heading="Graphics">
+			<h2>Main Colors</h2>
+			<div class="color-picker-holder">
+				<color-picker (changed)="onColorChanged($event)" [param]="'titleBackground'" [color]="pageSettings.settings.graphics.titleBackground"></color-picker>
+				<span>Title Bgnd Color</span>
+			</div>
 
-      <div class="color-picker-holder">
-        <color-picker (changed)="onColorChanged($event)" [param]="'tableRowColor1'" [color]="pageSettings.settings.graphics.tableRowColor1"></color-picker>
-        <span>Table row color 1</span>
-      </div>
+			<div class="color-picker-holder">
+				<color-picker (changed)="onColorChanged($event)" [param]="'tableRowColor1'" [color]="pageSettings.settings.graphics.tableRowColor1"></color-picker>
+				<span>Table row color 1</span>
+			</div>
 
-      <div class="color-picker-holder">
-        <color-picker (changed)="onColorChanged($event)" [param]="'tableRowColor2'" [color]="pageSettings.settings.graphics.tableRowColor2"></color-picker>
-        <span>Table row color 2</span>
-      </div>
+			<div class="color-picker-holder">
+				<color-picker (changed)="onColorChanged($event)" [param]="'tableRowColor2'" [color]="pageSettings.settings.graphics.tableRowColor2"></color-picker>
+				<span>Table row color 2</span>
+			</div>
 
-      <div class="color-picker-holder">
-        <color-picker (changed)="onColorChanged($event)" [param]="'tableTextColor'" [color]="pageSettings.settings.graphics.tableTextColor"></color-picker>
-        <span>Table text color</span>
-      </div>
+			<div class="color-picker-holder">
+				<color-picker (changed)="onColorChanged($event)" [param]="'tableTextColor'" [color]="pageSettings.settings.graphics.tableTextColor"></color-picker>
+				<span>Table text color</span>
+			</div>
 
 
-    </tab>
-  </tabset>
+		</tab>
+	</tabset>
 </div>
