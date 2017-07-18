@@ -4,35 +4,42 @@
 	color: #fff;
 	padding: 0 10px;
 	line-height: 70px;
-	background: #555555 !important;
-	background: -moz-linear-gradient(top, #555555 0%, #262626 100%) !important;
-	background: -webkit-linear-gradient(top, #555555 0%,#262626 100%) !important;
-	background: linear-gradient(to bottom, #555555 0%,#262626 100%) !important;
+	//background: #555555 !important;
+	//background: -moz-linear-gradient(top, #555555 0%, #262626 100%) !important;
+	//background: -webkit-linear-gradient(top, #555555 0%,#262626 100%) !important;
+	//background: linear-gradient(to bottom, #555555 0%,#262626 100%) !important;
 	.logo {
 		font-size: 22px;
 		line-height: 70px;
 		margin: 0;
 		font-weight: bold;
 		float: left;
-		color: #fff;	}
+		color: #fff;
+	}
 	.clock {
 		font-size: 22px;
 		line-height: 70px;
-		font-weight: bold;		
-		position: absolute;		top: 0;		left: 50%;
+		font-weight: bold;
+
+		position: absolute;
+		top: 0;
+		left: 50%;
 		-webkit-transform: translateX(-50%);
 		-ms-transform: translateX(-50%);
 		transform: translateX(-50%);
 	}
 	.app-logo {
-		float: right;		background: url(logo-quick-board.png);
+		float: right;
+		background: url(logo-quick-board.png);
 		width: 256px;
 		height: 56px;
 		margin: 5px 3px 0 15px
 	}
 	.controls {
-		margin: 0;		padding: 0;
-		float: right;		list-style: none;
+		margin: 0;
+		padding: 0;
+		float: right;
+		list-style: none;
 		* {
 			float: left;
 		}
@@ -43,5 +50,8 @@
 			background: url(ico-full-screen.png);
 			width: 42px;
 			height: 41px;
-			text-indent: -9999px;			overflow: hidden;		}
-	}}
+			text-indent: -9999px;
+			overflow: hidden;
+		}
+	}
+}

@@ -45,7 +45,7 @@ export class SettingsTabsComponent implements OnInit {
           etaNoteBackgroundColor: '#f00',
         },
         graphics: {
-          titleBackground: '#f00',
+          titleBackground: '#555',
           titleTextColor: '#fff',
           tableHeaderColor: '#fff',
           tableTextColor: '#fff',
