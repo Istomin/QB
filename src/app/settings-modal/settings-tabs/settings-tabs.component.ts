@@ -46,8 +46,8 @@ export class SettingsTabsComponent implements OnInit {
         },
         graphics: {
           titleBackground: '#f00',
-          titleTextColor: '#f00',
-          tableHeaderColor: '#f00',
+          titleTextColor: '#fff',
+          tableHeaderColor: '#fff',
           tableTextColor: '#fff',
           tableRowColor1: '#f00',
           tableRowColor2: '#f00',

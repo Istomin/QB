@@ -23,6 +23,8 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   }
 
   private onAppSettingsChanged(response: any) {
+console.log(response);
     this[response.param] = response.color;
+    console.log(this);
   }
 }

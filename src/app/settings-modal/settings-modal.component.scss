@@ -5,7 +5,8 @@
 	text-indent: -9999px;
 	overflow: hidden;
 	border: none;
-	vertical-align: top;}
+	vertical-align: top;
+}
 .modal-dialog {
 	width: 685px !important;
 	position: fixed;
@@ -18,19 +19,36 @@
 	transform: translate(-50%, -50%);
 }
 .modal-content {
-	border: none;	border-radius: 0;
+	border: none;
+	border-radius: 0;
 	padding: 20px;
 }
 .modal-header {
-	padding: 0;	border: none;	margin-bottom: 20px;
-}.modal-title {
+	padding: 0;
+	border: none;
+	margin-bottom: 20px;
+}
+.modal-title {
 	padding: 5px 10px;
-	background: #bbb;	color: #fff;
-	font-weight: bold;	font-size: 18px;
+	background: #bbb;
+	color: #fff;
+	font-weight: bold;
+	font-size: 18px;
 	line-height: 22px;
-	text-transform: uppercase;	text-align: center;
+	text-transform: uppercase;
+	text-align: center;
 	margin: 0;
-	letter-spacing: 0.5px;}
+	letter-spacing: 0.5px;
+}
 .modal-body {
-	padding: 0;}
+	padding: 0;
+}
+
+
+.settings-modal {
+  position: absolute !important;
+  .modal-dialog {
+    position: absolute !important;
+  }
+}
 

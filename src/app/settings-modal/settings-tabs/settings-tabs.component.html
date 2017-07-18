@@ -65,20 +65,18 @@
 				<span>Title Bgnd Color</span>
 			</div>
 
-			<div class="color-picker-holder">
-				<color-picker (changed)="onColorChanged($event)" [param]="'tableRowColor1'" [color]="pageSettings.settings.graphics.tableRowColor1"></color-picker>
-				<span>Table row color 1</span>
-			</div>
+      <div class="color-picker-holder">
+        <color-picker (changed)="onColorChanged($event)" [param]="'titleTextColor'" [color]="pageSettings.settings.graphics.titleTextColor"></color-picker>
+        <span>Title Text Color</span>
+      </div>
 
-			<div class="color-picker-holder">
-				<color-picker (changed)="onColorChanged($event)" [param]="'tableRowColor2'" [color]="pageSettings.settings.graphics.tableRowColor2"></color-picker>
-				<span>Table row color 2</span>
-			</div>
+      <div class="color-picker-holder">
+        <color-picker (changed)="onColorChanged($event)" [param]="'tableTextColor'" [color]="pageSettings.settings.graphics.tableTextColor"></color-picker>
+        <span>Table text color</span>
+      </div>
 
-			<div class="color-picker-holder">
-				<color-picker (changed)="onColorChanged($event)" [param]="'tableTextColor'" [color]="pageSettings.settings.graphics.tableTextColor"></color-picker>
-				<span>Table text color</span>
-			</div>
+
+
 
 
 		</tab>
