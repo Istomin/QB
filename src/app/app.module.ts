@@ -44,8 +44,6 @@ import { AppSettingsService } from './core/app-settings.service';
 import { ClockComponent } from './header-control/clock';
 
 
-import { MdSliderModule } from '@angular/material';
-import 'hammerjs';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
@@ -94,7 +92,6 @@ type StoreType = {
     ModalModule.forRoot(),
     TabsModule.forRoot(),
     ColorPickerModule,
-    MdSliderModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
