@@ -71,8 +71,13 @@
       </div>
 
       <div class="color-picker-holder">
+        <color-picker (changed)="onColorChanged($event)" [param]="'tableHeaderColor'" [color]="pageSettings.settings.graphics.tableHeaderColor"></color-picker>
+        <span>Table Header Color</span>
+      </div>
+
+      <div class="color-picker-holder">
         <color-picker (changed)="onColorChanged($event)" [param]="'tableTextColor'" [color]="pageSettings.settings.graphics.tableTextColor"></color-picker>
-        <span>Table text color</span>
+        <span>Table text Color</span>
       </div>
 
 

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { SettingsModalComponent } from '.././settings-modal';
 import { AppSettingsService } from '.././core/app-settings.service';
 import { Subscription } from 'rxjs/Subscription';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'info-table',
   styleUrls: [ 'info-table.component.scss' ],
@@ -10,7 +11,9 @@ import { Subscription } from 'rxjs/Subscription';
 export class InfoTableComponent implements OnInit, OnDestroy {
   @ViewChild('lgModal') public  lgModal: SettingsModalComponent;
   public subscription: Subscription;
-  constructor(private settingsService: AppSettingsService) {}
+  private defaultBottomColor: string = '#001a22';
+  private tableHeaderColor: string;
+  constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer) {}
 
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {
@@ -23,8 +26,17 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   }
 
   private onAppSettingsChanged(response: any) {
-console.log(response);
     this[response.param] = response.color;
     console.log(this);
+  }
+
+  get stylish() {
+    let basicStyle = `linear-gradient(0deg, ${this.defaultBottomColor}, ${this.tableHeaderColor})`;
+    return this.sanitizer.bypassSecurityTrustStyle(`
+      background: -o-${basicStyle};
+      background: -moz-${basicStyle};
+      background: -webkit-${basicStyle};
+      background: ${basicStyle};
+    `);
   }
 }

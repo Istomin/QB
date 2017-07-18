@@ -47,7 +47,7 @@ export class SettingsTabsComponent implements OnInit {
         graphics: {
           titleBackground: '#555',
           titleTextColor: '#fff',
-          tableHeaderColor: '#fff',
+          tableHeaderColor: '#016c8f',
           tableTextColor: '#fff',
           tableRowColor1: '#f00',
           tableRowColor2: '#f00',
@@ -60,7 +60,7 @@ export class SettingsTabsComponent implements OnInit {
   private onColorChanged(colorObj) {
     this.pageSettings.settings.graphics[colorObj.param] = colorObj.color;
     if (colorObj.param === 'tableRowColor1' || colorObj.param === 'tableRowColor2' ||
-      colorObj.param === 'tableTextColor') {
+      colorObj.param === 'tableTextColor' || colorObj.param === 'tableHeaderColor') {
       this.settingsService.emitTableChangeEvent(colorObj);
     } else {
       this.settingsService.emitNavChangeEvent(colorObj);
