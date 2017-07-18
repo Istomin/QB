@@ -44,7 +44,6 @@ export class InfoTableComponent implements OnInit, OnDestroy {
           this.shipments = vehicles;
         },
         (error) =>  {
-          alert(3)
           this.errorMessage = <any>error;
         }
       );
