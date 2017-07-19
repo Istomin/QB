@@ -59,6 +59,28 @@ export class SettingsTabsComponent implements OnInit {
     };
 
     this.clonedSettings = this.deepCopy(this.pageSettings);
+    this.onTextLogoChanged(this.pageSettings.settings.graphics.businessName);
+  }
+
+  public resetToPreviousSettings() {
+    let array = [];
+    this.pageSettings = this.clonedSettings;
+    for (let key in this.pageSettings.settings.graphics) {
+      if (key === 'businessName') {
+        array.push({
+          param: key,
+          value: this.pageSettings.settings.graphics[key]
+        });
+      } else {
+        array.push({
+          param: key,
+          color: this.pageSettings.settings.graphics[key]
+        });
+      }
+    }
+    array.forEach((obj) => {
+      this.applySettings(obj);
+    });
   }
 
   private onColorChanged(colorObj) {
@@ -66,7 +88,7 @@ export class SettingsTabsComponent implements OnInit {
     this.applySettings(colorObj);
   }
 
-  applySettings(obj: any) {
+  private applySettings(obj: any) {
     if (obj.param === 'tableRowColor1' || obj.param === 'tableRowColor2' ||
       obj.param === 'tableTextColor' || obj.param === 'tableHeaderColor') {
       this.settingsService.emitTableChangeEvent(obj);
@@ -75,29 +97,22 @@ export class SettingsTabsComponent implements OnInit {
     }
   }
 
-  onSliderChanged($event) {
+  private onSliderChanged($event) {
     this.val = $event.value;
   }
 
-  resetToPreviousSettings() {
-    let array = [];
-    this.pageSettings = this.clonedSettings;
-    for(let key in this.pageSettings.settings.graphics) {
-      array.push({
-        param: key,
-        color: this.pageSettings.settings.graphics[key]
-      });
-    }
-    array.forEach((obj) => {
-      this.applySettings(obj);
+  private onTextLogoChanged($event) {
+    this.settingsService.emitNavChangeEvent({
+      param: 'businessName',
+      value: $event
     });
   }
 
-  public deepCopy(oldObj: any) {
-    var newObj = oldObj;
-    if (oldObj && typeof oldObj === "object") {
-      newObj = Object.prototype.toString.call(oldObj) === "[object Array]" ? [] : {};
-      for (var i in oldObj) {
+  private deepCopy(oldObj: any) {
+    let newObj = oldObj;
+    if (oldObj && typeof oldObj === 'object') {
+      newObj = Object.prototype.toString.call(oldObj) === '[object Array]' ? [] : {};
+      for (let i in oldObj) {
         newObj[i] = this.deepCopy(oldObj[i]);
       }
     }

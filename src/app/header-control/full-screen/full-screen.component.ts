@@ -4,7 +4,8 @@ import { Component } from '@angular/core';
 // }
 @Component({
   selector: 'full-screen',
-  template: '<button class="btn btn-primary" (click)="openFullScreen()">Full Screen</button>'
+  styleUrls: [ 'full-screen.component.scss' ],
+  template: '<a href="#" class="ico-full-screen" (click)="openFullScreen()">Full Screena</a>'
 })
 export class FullScreenComponent {
   public openFullScreen(): void {

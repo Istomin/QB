@@ -1,10 +1,10 @@
 <div id="header" [style]="stylish">
   <!-- add logo img -->
-  <h1 class="logo" [style.color]="titleTextColor">Your Business Name Here</h1>
+  <h1 class="logo" [style.color]="titleTextColor">{{businessName}}</h1>
   <span class="clock" [style.color]="titleTextColor">Current Time: 17.07 17:14</span>
   <div class="app-logo"></div>
   <ul class="controls">
-    <li><a href="#" class="ico-full-screen">Full Screen</a></li>
+    <li><full-screen></full-screen></li>
     <li class="settings-modal"><settings-modal #lgModal></settings-modal></li>
   </ul>
 </div>

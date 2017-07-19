@@ -15,7 +15,6 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
   private titleBackground: string;
   private titleTextColor: string;
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer) {
-
   }
 
   public ngOnInit() {
@@ -29,7 +28,11 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
   }
 
   private onAppSettingsChanged(response: any) {
-    this[response.param] = response.color;
+    if (response.hasOwnProperty('color')) {
+      this[response.param] = response.color;
+    } else {
+      this[response.param] = response.value;
+    }
   }
 
   get stylish() {
