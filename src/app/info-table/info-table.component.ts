@@ -16,10 +16,9 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   public subscription: Subscription;
   private defaultBottomColor: string = '#001a22';
   private tableHeaderColor: string;
-  shipments: Shipment[];
+  private shipments: Shipment[];
   private errorMessage: any;
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService) {}
-
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {
       this.onAppSettingsChanged(response);
@@ -39,7 +38,6 @@ export class InfoTableComponent implements OnInit, OnDestroy {
     this.infoTableService.getShipments()
       .subscribe(
         (vehicles) => {
-
           alert(7);
           this.shipments = vehicles;
         },
@@ -48,7 +46,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
         }
       );
 
-    console.log(this.shipments, 'ssss')
+    console.log(this.shipments, 'ssss');
   }
 
   get stylish() {
