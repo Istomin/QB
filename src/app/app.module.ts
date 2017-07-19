@@ -42,6 +42,7 @@ import { LineDirective } from './running-line/line';
 import { FullScreenComponent } from './header-control/full-screen';
 import { AppSettingsService } from './core/app-settings.service';
 import { ClockComponent } from './header-control/clock';
+import { LoginModule } from './login/login.module';
 
 import 'hammerjs';
 import '../styles/styles.scss';
@@ -98,6 +99,7 @@ import 'rxjs/add/observable/throw';
     BrowserModule,
     FormsModule,
     HttpModule,
+    LoginModule,
     ModalModule.forRoot(),
     TabsModule.forRoot(),
     ColorPickerModule,
