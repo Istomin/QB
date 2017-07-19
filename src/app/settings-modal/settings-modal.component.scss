@@ -1,22 +1,11 @@
 .btn-modal-opener {
-	background: url(ico-settings.png);
-	width: 42px;
-	height: 41px;
-	text-indent: -9999px;
-	overflow: hidden;
-	border: none;
-	vertical-align: top;
-}
-.modal-dialog {
-	width: 685px !important;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-}
-.modal.in .modal-dialog {
-	-webkit-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
+  background: url(ico-settings.png);
+  width: 42px;
+  height: 41px;
+  text-indent: -9999px;
+  overflow: hidden;
+  border: none;
+  vertical-align: top;
 }
 .modal-content {
 	border: none;
@@ -44,11 +33,13 @@
 	padding: 0;
 }
 
-
 .settings-modal {
   position: absolute !important;
   .modal-dialog {
     position: absolute !important;
+    top: 0;
+    left: calc(50% - 348px);
+    width: 686px !important;
   }
 }
 

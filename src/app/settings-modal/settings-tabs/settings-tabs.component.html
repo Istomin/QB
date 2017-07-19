@@ -11,12 +11,12 @@
 					<input type="password" class="form-control" placeholder="QB_4453JHSF"/>
 				</div>
 				<strong class="group-title">Refresh Interval</strong>
-				<!--<md-slider	[(value)]="val"-->
-										<!--[max]="max"-->
-										<!--(input)="onSliderChanged($event)"-->
-										<!--[min]="min"-->
-										<!--[step]="step">-->
-				<!--</md-slider>-->
+        <md-slider	[(value)]="val"
+                    [max]="max"
+                    (input)="onSliderChanged($event)"
+                    [min]="min"
+                    [step]="step">
+        </md-slider>
 				<strong class="group-title">Scroll Interval</strong>
 			</div>
 			<div class="tab-col">
@@ -57,7 +57,10 @@
 				</div>
 			</div>
 		</tab>
-		<tab heading="Alerts1">Alerts</tab>
+		<tab heading="Alerts">
+
+
+    </tab>
 		<tab heading="Graphics">
       <div class="form-group">
         <label>Business Name</label>

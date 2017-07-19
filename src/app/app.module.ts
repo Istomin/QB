@@ -17,7 +17,7 @@ import {
 import { ModalModule, TabsModule  } from 'ngx-bootstrap';
 import { ColorPickerModule } from 'angular2-color-picker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {MdSliderModule} from '@angular/material';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -43,8 +43,7 @@ import { FullScreenComponent } from './header-control/full-screen';
 import { AppSettingsService } from './core/app-settings.service';
 import { ClockComponent } from './header-control/clock';
 
-
-
+import 'hammerjs';
 import '../styles/styles.scss';
 import '../styles/headings.css';
 
@@ -102,6 +101,7 @@ import 'rxjs/add/observable/throw';
     ModalModule.forRoot(),
     TabsModule.forRoot(),
     ColorPickerModule,
+    MdSliderModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
