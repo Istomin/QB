@@ -17,7 +17,7 @@ import {
 import { ModalModule, TabsModule  } from 'ngx-bootstrap';
 import { ColorPickerModule } from 'angular2-color-picker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MdSliderModule} from '@angular/material';
+import { MdSliderModule } from '@angular/material';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -43,6 +43,8 @@ import { FullScreenComponent } from './header-control/full-screen';
 import { AppSettingsService } from './core/app-settings.service';
 import { ClockComponent } from './header-control/clock';
 import { LoginModule } from './login/login.module';
+import { UserProfileService } from './core/user-profile.service';
+import { AuthGuard } from './core/auth-guard.service';
 
 import 'hammerjs';
 import '../styles/styles.scss';
@@ -61,7 +63,7 @@ type StoreType = {
 };
 
 import 'rxjs/add/operator/catch';
-// import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/do';
 // import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/map';
@@ -107,10 +109,13 @@ import 'rxjs/add/observable/throw';
     BrowserAnimationsModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
+  exports: [RouterModule],
   /**
    * Expose our Services and Providers into Angular's dependency injection.
    */
   providers: [
+    AuthGuard,
+    UserProfileService,
     AppSettingsService,
     ENV_PROVIDERS,
     APP_PROVIDERS
