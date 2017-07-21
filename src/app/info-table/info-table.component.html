@@ -11,70 +11,81 @@
     </tr>
   </thead>
   <tbody>
-    <tr [style.background]="tableRowColor1">
-      <td >180860258W</td>
-      <td>NTL</td>
-      <td>@OMAHA NE US</td>
-      <td>WN893</td>
-      <td>PDX</td>
-      <td>July 07, 9:19 AM</td>
-      <td>
-        <p>Tendered to Airline</p>
-        <p>July 07, 9:16 AM ONT</p>
-        <p>Expected: July 07. 11:15 AM</p>
-      </td>
-    </tr>
-    <tr>
-      <td [style.background]="tableRowColor2" [style.color]="tableTextColor">180860258W</td>
-      <td [style.background]="tableRowColor2" [style.color]="tableTextColor">NTL</td>
-      <td [style.background]="tableRowColor2" [style.color]="tableTextColor">C20B-AMERICAN RED CROSS-COLLECTIONS <br />BOZEMAN MT US</td>
-      <td [style.background]="tableRowColor2" [style.color]="tableTextColor">WN893</td>
-      <td [style.background]="tableRowColor2" [style.color]="tableTextColor">PDX</td>
-      <td [style.background]="tableRowColor2" [style.color]="tableTextColor">July 07, 9:19 AM</td>
-      <td [style.background]="tableRowColor2" [style.color]="tableTextColor">
-        <p>Tendered to Airline</p>
-        <p>July 07, 9:16 AM ONT</p>
-        <p>Expected: July 07. 11:15 AM</p>
-      </td>
-    </tr>
-    <tr>
-      <td>180860258W</td>
-      <td>NTL</td>
-      <td>C20B-AMERICAN RED CROSS-COLLECTIONS <br />BOZEMAN MT US</td>
-      <td>WN893</td>
-      <td>PDX</td>
-      <td>July 07, 9:19 AM</td>
-      <td>
-        <p>Tendered to Airline</p>
-        <p>July 07, 9:16 AM ONT</p>
-        <p>Expected: July 07. 11:15 AM</p>
-      </td>
-    </tr>
-    <tr>
-      <td>180860258W</td>
-      <td>NTL</td>
-      <td>C20B-AMERICAN RED CROSS-COLLECTIONS <br />BOZEMAN MT US</td>
-      <td>WN893</td>
-      <td>PDX</td>
-      <td>July 07, 9:19 AM</td>
-      <td>
-        <p>Tendered to Airline</p>
-        <p>July 07, 9:16 AM ONT</p>
-        <p>Expected: July 07. 11:15 AM</p>
-      </td>
-    </tr>
-    <tr>
-      <td>180860258W</td>
-      <td>NTL</td>
-      <td>C20B-AMERICAN RED CROSS-COLLECTIONS <br />BOZEMAN MT US</td>
-      <td>WN893</td>
-      <td>PDX</td>
-      <td>July 07, 9:19 AM</td>
-      <td>
-        <p>Tendered to Airline</p>
-        <p>July 07, 9:16 AM ONT</p>
-        <p>Expected: July 07. 11:15 AM</p>
-      </td>
-    </tr>
+  <tr *ngFor="let shipment of shipments; let i = index">
+    <td>{{shipment.bol_number}}</td>
+    <td>{{shipment.reference}}</td>
+    <td>{{shipment.shipper}}</td>
+    <td>{{shipment.Flight}}</td>
+    <td>{{shipment.ORG}}</td>
+    <td>{{shipment.eta}}</td>
+    <td>{{shipment.status}}</td>
+  </tr>
   </tbody>
+  <!--<tbody>-->
+    <!--<tr [style.background]="tableRowColor1">-->
+      <!--<td >180860258W</td>-->
+      <!--<td>NTL</td>-->
+      <!--<td>@OMAHA NE US</td>-->
+      <!--<td>WN893</td>-->
+      <!--<td>PDX</td>-->
+      <!--<td>July 07, 9:19 AM</td>-->
+      <!--<td>-->
+        <!--<p>Tendered to Airline</p>-->
+        <!--<p>July 07, 9:16 AM ONT</p>-->
+        <!--<p>Expected: July 07. 11:15 AM</p>-->
+      <!--</td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+      <!--<td [style.background]="tableRowColor2" [style.color]="tableTextColor">180860258W</td>-->
+      <!--<td [style.background]="tableRowColor2" [style.color]="tableTextColor">NTL</td>-->
+      <!--<td [style.background]="tableRowColor2" [style.color]="tableTextColor">C20B-AMERICAN RED CROSS-COLLECTIONS <br />BOZEMAN MT US</td>-->
+      <!--<td [style.background]="tableRowColor2" [style.color]="tableTextColor">WN893</td>-->
+      <!--<td [style.background]="tableRowColor2" [style.color]="tableTextColor">PDX</td>-->
+      <!--<td [style.background]="tableRowColor2" [style.color]="tableTextColor">July 07, 9:19 AM</td>-->
+      <!--<td [style.background]="tableRowColor2" [style.color]="tableTextColor">-->
+        <!--<p>Tendered to Airline</p>-->
+        <!--<p>July 07, 9:16 AM ONT</p>-->
+        <!--<p>Expected: July 07. 11:15 AM</p>-->
+      <!--</td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+      <!--<td>180860258W</td>-->
+      <!--<td>NTL</td>-->
+      <!--<td>C20B-AMERICAN RED CROSS-COLLECTIONS <br />BOZEMAN MT US</td>-->
+      <!--<td>WN893</td>-->
+      <!--<td>PDX</td>-->
+      <!--<td>July 07, 9:19 AM</td>-->
+      <!--<td>-->
+        <!--<p>Tendered to Airline</p>-->
+        <!--<p>July 07, 9:16 AM ONT</p>-->
+        <!--<p>Expected: July 07. 11:15 AM</p>-->
+      <!--</td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+      <!--<td>180860258W</td>-->
+      <!--<td>NTL</td>-->
+      <!--<td>C20B-AMERICAN RED CROSS-COLLECTIONS <br />BOZEMAN MT US</td>-->
+      <!--<td>WN893</td>-->
+      <!--<td>PDX</td>-->
+      <!--<td>July 07, 9:19 AM</td>-->
+      <!--<td>-->
+        <!--<p>Tendered to Airline</p>-->
+        <!--<p>July 07, 9:16 AM ONT</p>-->
+        <!--<p>Expected: July 07. 11:15 AM</p>-->
+      <!--</td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+      <!--<td>180860258W</td>-->
+      <!--<td>NTL</td>-->
+      <!--<td>C20B-AMERICAN RED CROSS-COLLECTIONS <br />BOZEMAN MT US</td>-->
+      <!--<td>WN893</td>-->
+      <!--<td>PDX</td>-->
+      <!--<td>July 07, 9:19 AM</td>-->
+      <!--<td>-->
+        <!--<p>Tendered to Airline</p>-->
+        <!--<p>July 07, 9:16 AM ONT</p>-->
+        <!--<p>Expected: July 07. 11:15 AM</p>-->
+      <!--</td>-->
+    <!--</tr>-->
+  <!--</tbody>-->
 </table>

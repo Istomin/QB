@@ -13,7 +13,7 @@ export class InfoTableService {
   getShipments(value?: string) {
     return this.http
       .get('http://208.17.192.85:6545/api/v2/')
-      .map((response: Response) => <Shipment[]>response.json().data)
+      .map((response: Response) => <Shipment[]>response.json().result)
       .do(data => console.log(data))
       .catch(this.handleError);
   }
