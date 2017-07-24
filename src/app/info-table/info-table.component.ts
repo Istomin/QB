@@ -41,7 +41,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
       .subscribe(
         (response) => {
           this.shipments = response.shipment;
-          console.log(this.shipments)
+          this.settingsService.emitRunningLineData(response.runningLine);
         },
         (error) =>  {
           this.errorMessage = <any>error;

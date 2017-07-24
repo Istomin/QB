@@ -4,6 +4,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 export class AppSettingsService {
   public navchange: EventEmitter<number> = new EventEmitter();
   public tablechange: EventEmitter<number> = new EventEmitter();
+  public runningLineDataChange: EventEmitter<number> = new EventEmitter();
   public emitNavChangeEvent(numb: any) {
     this.navchange.emit(numb);
   }
@@ -15,5 +16,11 @@ export class AppSettingsService {
   }
   public getTableChangeEmitter() {
     return this.tablechange;
+  }
+  public emitRunningLineData(data: any) {
+    this.tablechange.emit(data);
+  }
+  public getRunningLineData() {
+    return this.runningLineDataChange;
   }
 }
