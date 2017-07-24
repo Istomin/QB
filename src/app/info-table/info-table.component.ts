@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InfoTableService, Shipment } from '.././info-table/info-table.service';
 
+
 @Component({
   selector: 'info-table',
   styleUrls: [ 'info-table.component.scss' ],
@@ -18,6 +19,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private tableHeaderColor: string;
   private shipments: Shipment[];
   private errorMessage: any;
+
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService) {}
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {

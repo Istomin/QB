@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { GlobalVariable } from '.././core/global';
 
 export class Shipment {
   constructor(public bol_number: string, public status: string, public shipper: string, public reference: string, public  eta: any, public ORG: string, public Flight: string) { }
@@ -8,11 +9,12 @@ export class Shipment {
 
 @Injectable()
 export class InfoTableService {
+  private baseApiUrl = GlobalVariable.BASE_API_URL;
   constructor(private http: Http) { }
 
   getShipments(value?: string) {
     return this.http
-      .get('http://208.17.192.85:6545/api/v2/')
+      .get(this.makeApiUri(''))
       .map((response: Response) => <Shipment[]>response.json().result)
       .do(data => console.log(data))
       .catch(this.handleError);
@@ -22,6 +24,10 @@ export class InfoTableService {
     console.error(error);
     let msg = `Error status code ${error.status} at ${error.url}`;
     return Observable.throw(msg);
+  }
+
+  private makeApiUri(target) {
+    return [this.baseApiUrl, target].join('');
   }
 }
 

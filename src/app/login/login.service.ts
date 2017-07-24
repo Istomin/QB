@@ -1,30 +1,26 @@
 import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { UserProfileService } from '../core/user-profile.service';
+import { GlobalVariable } from '.././core/global';
 
 @Injectable()
-export class LoginService {
-  constructor(
-    private userProfileService: UserProfileService) { }
+export class LoginService {private baseApiUrl = GlobalVariable.BASE_API_URL;
+  constructor(private http: Http) { }
 
-  public login() {
-    return Observable.of(true)
-      .do((response) => {
-        console.log(response);
-      })
-      .delay(1000)
-      .do(this.toggleLogState.bind(this));
-    // .do((val: boolean) => {
-    //   this.isLoggedIn = true;
-    //   console.log(this.isLoggedIn);
-    // });
+  login(value?: string) {
+    return this.http
+      .post(this.makeApiUri('login'), {"login": "QB_4453JHSF", "password": "ERB577WAU"})
+      .do(data => console.log(data))
+      .catch(this.handleError);
   }
 
-  // logout() {
-  //   this.toggleLogState(false);
-  // }
+  private handleError(error: Response) {
+    let msg = `Error status code ${error.status} at ${error.url}`;
+    return Observable.throw(msg);
+  }
 
-  private toggleLogState(val: boolean) {
-    this.userProfileService.isLoggedIn = val;
+  private makeApiUri(target) {
+    return [this.baseApiUrl, target].join('');
   }
 }
+
