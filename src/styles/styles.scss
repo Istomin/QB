@@ -14,6 +14,8 @@ dashboard {
 	display: block;}
 main {
 	height: calc(100% - 70px);
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 nav {
   margin-top: 16px;
@@ -31,6 +33,9 @@ nav a {
   border-radius: 4px;
 }
 
+.table thead th:first-child {
+	width: 185px;
+}
 footer {
 	margin-top: -50px;
 	position: relative}
