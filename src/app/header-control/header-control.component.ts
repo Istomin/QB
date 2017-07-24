@@ -3,6 +3,9 @@ import { SettingsModalComponent } from '.././settings-modal';
 import { AppSettingsService } from '.././core/app-settings.service';
 import { Subscription } from 'rxjs/Subscription';
 import { DomSanitizer } from '@angular/platform-browser';
+
+import { SpinnerService } from '.././core/spinner/spinner.service'
+
 @Component({
   selector: 'header-control',
   styleUrls: [ 'header-control.component.scss' ],
@@ -14,13 +17,14 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
   private defaultBottomColor: any = '#262626';
   private titleBackground: string;
   private titleTextColor: string;
-  constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer) {
+  constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private spiner: SpinnerService) {
   }
 
   public ngOnInit() {
     this.subscription = this.settingsService.getNavChangeEmitter().subscribe((response) => {
       this.onAppSettingsChanged(response);
     });
+    console.log(this.spiner, 'sssssssssspiiiinneef')
   }
 
   public ngOnDestroy() {

@@ -45,6 +45,7 @@ import { ClockComponent } from './header-control/clock';
 import { LoginModule } from './login/login.module';
 import { UserProfileService } from './core/user-profile.service';
 import { AuthGuard } from './core/auth-guard.service';
+import { SpinnerModule } from './core/spinner/spinner.module';
 
 import 'hammerjs';
 import '../styles/styles.scss';
@@ -99,6 +100,7 @@ import 'rxjs/add/observable/throw';
    */
   imports: [
     BrowserModule,
+    SpinnerModule,
     FormsModule,
     HttpModule,
     LoginModule,
