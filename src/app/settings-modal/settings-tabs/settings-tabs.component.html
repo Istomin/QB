@@ -2,14 +2,7 @@
 	<tabset class="tab-container">
 		<tab heading="System">
 			<div class="tab-col">
-				<div class="form-group">
-					<label>User ID</label>
-					<input type="text" class="form-control" placeholder="QB_4453JHSF"/>
-				</div>
-				<div class="form-group">
-					<label>Password</label>
-					<input type="password" class="form-control" placeholder="QB_4453JHSF"/>
-				</div>
+				<a href="#">LOGOUT</a>
 				<strong class="group-title">Refresh Interval</strong>
         <md-slider	[(value)]="val"
                     [max]="max"
@@ -58,8 +51,19 @@
 			</div>
 		</tab>
 		<tab heading="Alerts">
-
-
+			<div class="tab-col">
+				<ul class="radio-list">
+					<li>
+						<input type="checkbox" id=""/>
+						<label for="expected-delivery">Primary Mark In Transit</label>
+					</li>
+				</ul>
+				<input type="text" placeholder="30"/> higher than hours
+				<div class="color-picker-holder">
+					<color-picker (changed)="onColorChanged($event)" [param]="'titleBackground'" [color]="pageSettings.settings.graphics.titleBackground"></color-picker>
+					<span>Title Bgnd Color</span>
+				</div>
+			</div>
     </tab>
 		<tab heading="Graphics">
       <div class="form-group">
