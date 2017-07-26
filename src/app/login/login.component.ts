@@ -35,29 +35,29 @@ export class LoginComponent implements OnDestroy {
   }
 
   private login() {
-    this.spinner.show();
+  //  this.spinner.show();
 
-    setTimeout(() => {
-      this.spinner.hide();
+    // setTimeout(() => {
+    //   this.spinner.hide();
+    //
+    //   this.userProfileService.isLoggedIn = true;
+    //   this.localStorage.set('Authorization', 'abcde');
+    //   this.router.navigate([ '/dashboard' ]);
+    //
+    // }, 2000)
 
-      this.userProfileService.isLoggedIn = true;
-      this.localStorage.set('Authorization', 'abcde');
-      this.router.navigate([ '/dashboard' ]);
 
-    }, 2000)
-
-
-    // this.loginSub = this.loginService
-    //   .login()
-    //   .mergeMap((loginResult) => this.route.queryParams)
-    //   .map((qp) => qp['redirectTo'])
-    //   .subscribe((redirectTo) => {
-    //     console.log(`Successfully logged in`);
-    //     if (this.userProfileService.isLoggedIn) {
-    //       let url = redirectTo ? [redirectTo] : [ '/dashboard' ];
-    //       this.router.navigate(url);
-    //     }
-    //   });
+    this.loginSub = this.loginService
+      .login()
+      .mergeMap((loginResult) => this.route.queryParams)
+      .map((qp) => qp['redirectTo'])
+      .subscribe((redirectTo) => {
+        console.log(`Successfully logged in`);
+        if (this.userProfileService.isLoggedIn) {
+          let url = redirectTo ? [redirectTo] : [ '/dashboard' ];
+          this.router.navigate(url);
+        }
+      });
   }
 
 }

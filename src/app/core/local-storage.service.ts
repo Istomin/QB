@@ -8,7 +8,7 @@ export class LocalStorageService {
     this.window.localStorage[key] = value;
   }
 
-  public get(key: string, value: any) {
+  public get(key: string, value?: any) {
     return this.window.localStorage[key] || value;
   }
 
