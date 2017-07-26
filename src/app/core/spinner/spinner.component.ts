@@ -18,14 +18,17 @@ export class SpinnerComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
-
     this.spinnerStateChanged = this.spinnerService.spinnerState
       .subscribe((state: SpinnerState) => {
-      console.log(state, 'statestatestate')
+        this.toggleVisibility(state.show);
       });
 
     this.toastElement = document.getElementById('spinner');
-    this.toastElement.style.display = 'none';
+    this.toggleVisibility(false);
+  }
+
+  toggleVisibility(state: boolean) {
+    this.toastElement.style.display = state ? 'block' : 'none';
   }
 
   ngOnDestroy() {

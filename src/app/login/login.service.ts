@@ -9,7 +9,7 @@ export class LoginService {private baseApiUrl = GlobalVariable.BASE_API_URL;
 
   login(value?: string) {
     return this.http
-      .post(this.makeApiUri('login'), {"login": "QB_4453JHSF", "password": "ERB577WAU"})
+      .post(this.makeApiUri('auth/login/'), {"login": "QB_4453JHSF", "password": "ERB577WAU"})
       .do(data => console.log(data))
       .catch(this.handleError);
   }

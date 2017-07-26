@@ -8,7 +8,10 @@ import { AuthGuard } from './core/auth-guard.service';
 import { DataResolver } from './app.resolver';
 
 export const ROUTES: Routes = [
-  { path: '',      component: DashboardComponent },
+  { path: '',      component: DashboardComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    canLoad: [AuthGuard] },
   { path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
