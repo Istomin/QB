@@ -30,7 +30,8 @@
 	}
 	.app-logo {
 		float: right;
-		background: url(logo-quick-board.png);
+		background: url(logo-quick-board.svg);
+		background-size: 100% 100%;
 		width: 256px;
 		height: 56px;
 		margin: 5px 3px 0 15px
@@ -40,12 +41,12 @@
 		padding: 0;
 		float: right;
 		list-style: none;
+		line-height: 40px;
 		* {
 			float: left;
 		}
 		li {
-			margin: 13px 0 0 17px;
+			margin: 15px 0 0 17px;
 		}
-
 	}
 }
