@@ -6,6 +6,8 @@ import { UserProfileService } from '../core/user-profile.service';
 import { LocalStorageService } from '../core/local-storage.service';
 import { SpinnerService } from '../core/spinner/spinner.service';
 
+import { User } from '../models/user';
+
 @Component({
   templateUrl: './login.component.html',
   styleUrls: [ './login.component.scss' ],
@@ -13,6 +15,8 @@ import { SpinnerService } from '../core/spinner/spinner.service';
 })
 export class LoginComponent implements OnDestroy {
   private loginSub: Subscription;
+  private user = new User('', '');
+  private active:boolean = true;
   constructor(
     private loginService: LoginService,
     private route: ActivatedRoute,
@@ -29,6 +33,7 @@ export class LoginComponent implements OnDestroy {
       this.loginSub.unsubscribe();
     }
   }
+
   private login() {
     this.spinner.show();
 
