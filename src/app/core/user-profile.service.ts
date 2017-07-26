@@ -5,6 +5,6 @@ import { LocalStorageService } from '.././core/local-storage.service'
 export class UserProfileService {
   public isLoggedIn: any = false;
   constructor(private localStorage: LocalStorageService) {
-    this.isLoggedIn = this.localStorage.get('Authorization');
+    this.isLoggedIn = this.localStorage.get('token');
   }
 }

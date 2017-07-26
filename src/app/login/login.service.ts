@@ -7,10 +7,10 @@ import { GlobalVariable } from '.././core/global';
 export class LoginService {private baseApiUrl = GlobalVariable.BASE_API_URL;
   constructor(private http: Http) { }
 
-  login(value?: string) {
+  login(obj: any) {
     return this.http
-      .post(this.makeApiUri('auth/login/'), {"login": "QB_4453JHSF", "password": "ERB577WAU"})
-      .do(data => console.log(data))
+      .post(this.makeApiUri('auth/login/'), obj)
+      .do(data => data)
       .catch(this.handleError);
   }
 
