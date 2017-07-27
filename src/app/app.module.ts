@@ -120,7 +120,6 @@ import {httpFactory} from "./core/http-factory";
    */
   providers: [
     AuthGuard,
-
     UserProfileService,
     AppSettingsService,
     ENV_PROVIDERS,

@@ -1,5 +1,5 @@
 <div class="running-line-holder">
-  <line>
-    <span class="slider">Click the preferences button on the top right to set your username and password. You can also set your company name and logo and set custom colors.</span>
+  <line *ngIf="text">
+    <span class="slider">{{text}}</span>
   </line>
 </div>

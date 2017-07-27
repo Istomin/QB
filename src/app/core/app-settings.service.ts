@@ -18,7 +18,7 @@ export class AppSettingsService {
     return this.tablechange;
   }
   public emitRunningLineData(data: any) {
-    this.tablechange.emit(data);
+    this.runningLineDataChange.emit(data);
   }
   public getRunningLineData() {
     return this.runningLineDataChange;

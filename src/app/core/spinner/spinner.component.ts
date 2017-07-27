@@ -31,6 +31,7 @@ export class SpinnerComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy() {
+
     this.spinnerStateChanged.unsubscribe();
   }
 }

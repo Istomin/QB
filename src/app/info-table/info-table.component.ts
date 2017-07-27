@@ -11,7 +11,7 @@ import {SpinnerService} from "../core/spinner/spinner.service";
   selector: 'info-table',
   styleUrls: [ 'info-table.component.scss' ],
   templateUrl: 'info-table.component.html',
-  providers: [InfoTableService]
+  providers: [InfoTableService, SpinnerService]
 })
 export class InfoTableComponent implements OnInit, OnDestroy {
   @ViewChild('lgModal') public  lgModal: SettingsModalComponent;
@@ -38,18 +38,20 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   }
 
   private getTableData() {
-    this.spinner.show();
-    this.infoTableService.getShipments()
-      .subscribe(
-        (response) => {
-          this.spinner.hide();
-          this.shipments = response.shipment;
-          // this.settingsService.emitRunningLineData(response.runningLine);
-        },
-        (error) =>  {
-          this.errorMessage = <any>error;
-        }
-      );
+    setTimeout(() => {
+      this.spinner.show();
+      this.infoTableService.getShipments()
+        .subscribe(
+          (response) => {
+            this.spinner.hide();
+            this.shipments = response.shipment;
+            this.settingsService.emitRunningLineData(response.ticker);
+          },
+          (error) =>  {
+            this.errorMessage = <any>error;
+          }
+        );
+    }, 100);
 
     console.log(this.shipments, 'ssss');
   }
