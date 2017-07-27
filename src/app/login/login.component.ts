@@ -54,10 +54,9 @@ export class LoginComponent implements OnDestroy {
           this.invalidCreds = true;
         } else {
           this.localStorage.set('token', loginResults.token);
-          if (this.userProfileService.isLoggedIn) {
-            let url = redirectTo ? [redirectTo] : ['/dashboard'];
-            this.router.navigate(url);
-          }
+          this.userProfileService.isLoggedIn = true;
+          let url = redirectTo ? [redirectTo] : ['/dashboard'];
+          this.router.navigate(url);
         }
         this.spinner.hide();
       });

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import {
   NgModule,
   ApplicationRef
@@ -74,6 +74,7 @@ import 'rxjs/add/operator/map';
 // import 'rxjs/add/observable/of';
 // import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/observable/throw';
+import {httpFactory} from "./core/http-factory";
 
 /**
  * `AppModule` is the main entry point into Angular2's bootstraping process
@@ -119,12 +120,18 @@ import 'rxjs/add/observable/throw';
    */
   providers: [
     AuthGuard,
-    LocalStorageService,
+
     UserProfileService,
     AppSettingsService,
     ENV_PROVIDERS,
     APP_PROVIDERS,
-    { provide: 'Window', useValue: window }
+    { provide: 'Window', useValue: window },
+    LocalStorageService,
+    {
+      provide: Http,
+      useFactory: httpFactory,
+      deps: [XHRBackend, RequestOptions, LocalStorageService]
+    }
   ]
 })
 export class AppModule {

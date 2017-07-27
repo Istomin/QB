@@ -24,7 +24,6 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
     this.subscription = this.settingsService.getNavChangeEmitter().subscribe((response) => {
       this.onAppSettingsChanged(response);
     });
-    console.log(this.spiner, 'sssssssssspiiiinneef')
   }
 
   public ngOnDestroy() {
