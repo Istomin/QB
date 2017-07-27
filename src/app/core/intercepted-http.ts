@@ -31,7 +31,6 @@ export class InterceptedHttp extends Http {
 
 
   private getRequestOptionArgs(options?: RequestOptionsArgs) : RequestOptionsArgs {
-console.log(this.localStorage.get('token'), 'asdas')
     if (options == null) {
       options = new RequestOptions();
     }
@@ -39,8 +38,10 @@ console.log(this.localStorage.get('token'), 'asdas')
       options.headers = new Headers();
     }
     options.headers.append('Content-Type', 'application/json');
-    options.headers.append('Authorization', 'JWT ' + this.localStorage.get('token'));
-console.log(options)
+    if(this.localStorage.get('token')) {
+      options.headers.append('Authorization', 'JWT ' + this.localStorage.get('token'));
+    }
+
     return options;
   }
 }

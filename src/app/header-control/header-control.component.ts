@@ -17,6 +17,7 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
   private defaultBottomColor: any = '#262626';
   private titleBackground: string;
   private titleTextColor: string;
+  private businessName: string = 'abc';
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private spiner: SpinnerService) {
   }
 

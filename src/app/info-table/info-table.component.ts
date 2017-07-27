@@ -4,6 +4,7 @@ import { AppSettingsService } from '.././core/app-settings.service';
 import { Subscription } from 'rxjs/Subscription';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InfoTableService, Shipment } from '.././info-table/info-table.service';
+import {SpinnerService} from "../core/spinner/spinner.service";
 
 
 @Component({
@@ -20,7 +21,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private shipments: Shipment[];
   private errorMessage: any;
 
-  constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService) {}
+  constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService) {}
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {
       this.onAppSettingsChanged(response);
@@ -37,11 +38,13 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   }
 
   private getTableData() {
+    this.spinner.show();
     this.infoTableService.getShipments()
       .subscribe(
         (response) => {
+          this.spinner.hide();
           this.shipments = response.shipment;
-          this.settingsService.emitRunningLineData(response.runningLine);
+          // this.settingsService.emitRunningLineData(response.runningLine);
         },
         (error) =>  {
           this.errorMessage = <any>error;

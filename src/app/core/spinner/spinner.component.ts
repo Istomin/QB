@@ -24,7 +24,6 @@ export class SpinnerComponent implements OnDestroy, OnInit {
       });
 
     this.toastElement = document.getElementById('spinner');
-    this.toggleVisibility(false);
   }
 
   toggleVisibility(state: boolean) {
