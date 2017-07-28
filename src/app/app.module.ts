@@ -48,7 +48,7 @@ import { UserProfileService } from './core/user-profile.service';
 import { AuthGuard } from './core/auth-guard.service';
 import { SpinnerModule } from './core/spinner/spinner.module';
 import { LocalStorageService } from  './core/local-storage.service';
-
+import { TableScrollerDirective } from './dashboard/table-scroller.directive';
 
 import 'hammerjs';
 import '../styles/styles.scss';
@@ -97,7 +97,8 @@ import {httpFactory} from "./core/http-factory";
     FullScreenComponent,
     LineDirective,
     ClockComponent,
-    XLargeDirective
+    XLargeDirective,
+    TableScrollerDirective
   ],
   /**
    * Import Angular's modules.
