@@ -71,11 +71,11 @@ export class SettingsTabsComponent implements OnInit {
     }
   }
 
-  imageFinishedUploading(file: FileHolder) {
+  imageFinishedUploading(file: any) {
     console.log(JSON.stringify(file.serverResponse), file);
   }
 
-  imageRemoved(file: FileHolder) {
+  imageRemoved(file: any) {
     // do some stuff with the removed file.
   }
 
