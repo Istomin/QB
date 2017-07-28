@@ -6,6 +6,7 @@ var jQuery = require("jquery");
 })
 export class TableScrollerDirective {
   private animSpeed: number = 15000;
+  private prevScrollOffset: number = -1;
   constructor(
     private renderer: Renderer2,
     private element: ElementRef
@@ -21,9 +22,23 @@ export class TableScrollerDirective {
 
   startScrolling(offset) {
     setInterval(() => {
+
+      let scrollTo = jQuery(this.element.nativeElement).scrollTop() + offset;
+
+      if(this.prevScrollOffset == jQuery(this.element.nativeElement).scrollTop()) {
+        scrollTo = 0;
+      }
+
       jQuery(this.element.nativeElement).animate({
-        scrollTop: jQuery(this.element.nativeElement).scrollTop() + offset
-      }, 500);
-    }, 10000)
+        scrollTop: scrollTo
+      }, 500, () => {
+
+      });
+
+
+      setTimeout(() => {
+        console.log(offset, jQuery(this.element.nativeElement).scrollTop(), jQuery(this.element.nativeElement).find('table').height())
+      }, 800)
+    }, 1000)
   }
 }
