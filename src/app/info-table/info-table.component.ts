@@ -20,6 +20,8 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private tableHeaderColor: string;
   private shipments: Shipment[];
   private errorMessage: any;
+  private tableRowColor1: any;
+  private tableRowColor2: any;
 
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService) {}
   public ngOnInit() {
@@ -53,7 +55,6 @@ export class InfoTableComponent implements OnInit, OnDestroy {
         );
     }, 100);
 
-    console.log(this.shipments, 'ssss');
   }
 
   get stylish() {

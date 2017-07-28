@@ -12,13 +12,13 @@
   </thead>
   <tbody>
   <tr *ngFor="let shipment of shipments; let i = index">
-    <td>{{shipment.bol_number}}</td>
-    <td>{{shipment.reference}}</td>
-    <td>{{shipment.shipper}}</td>
-    <td>{{shipment.Flight}}</td>
-    <td>{{shipment.ORG}}</td>
-    <td>{{shipment.eta}}</td>
-    <td>{{shipment.status}}</td>
+    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.bol_number}}</td>
+    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.reference}}</td>
+    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.shipper}}</td>
+    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.Flight}}</td>
+    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.ORG}}</td>
+    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.eta}}</td>
+    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.status}}</td>
   </tr>
   </tbody>
   <!--<tbody>-->
