@@ -22,8 +22,8 @@ export class RunningLineComponent implements OnInit {
       this.text = response[0];
 
       setTimeout(() => {
-        this.line.startAnimation();
-      }, 10)
+       //this.line.startAnimation();
+      }, 100)
     });
   }
 }

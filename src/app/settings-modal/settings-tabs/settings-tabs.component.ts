@@ -20,11 +20,13 @@ export class SettingsTabsComponent implements OnInit {
   private max: number = 20;
   private step: number = 1;
   private val: number = 5;
+  private name = 'aaa';
   private clonedSettings: {}&Settings;
   private dafaultSettings = GlobalVariable.SETTINGS;
   constructor(private settingsService: AppSettingsService, private localStorage: LocalStorageService, private userProfileService: UserProfileService, private router: Router,) { }
 
   public ngOnInit() {
+    console.log(1)
     this.pageSettings = this.localStorage.getObject('userSettings') && this.localStorage.getObject('userSettings').hasOwnProperty('settings') ? this.localStorage.getObject('userSettings') : this.dafaultSettings;
     this.clonedSettings = this.deepCopy(this.pageSettings);
     this.onTextLogoChanged(this.pageSettings.settings.graphics.businessName);
@@ -69,6 +71,17 @@ export class SettingsTabsComponent implements OnInit {
     }
   }
 
+  imageFinishedUploading(file: FileHolder) {
+    console.log(JSON.stringify(file.serverResponse), file);
+  }
+
+  imageRemoved(file: FileHolder) {
+    // do some stuff with the removed file.
+  }
+
+  uploadStateChange(state: boolean) {
+    console.log(JSON.stringify(state));
+  }
   private onSliderChanged($event) {
     this.val = $event.value;
   }

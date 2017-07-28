@@ -19,6 +19,7 @@ import { ColorPickerModule } from 'angular2-color-picker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdSliderModule } from '@angular/material';
 import { OrderModule  } from 'ngx-order-pipe';
+import { ImageUploadModule } from "angular2-image-upload";
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -115,6 +116,7 @@ import {httpFactory} from "./core/http-factory";
     MdSliderModule,
     BrowserAnimationsModule,
     OrderModule,
+    ImageUploadModule.forRoot(),
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
   exports: [RouterModule],
