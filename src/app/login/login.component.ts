@@ -58,7 +58,7 @@ export class LoginComponent implements OnDestroy {
           let url = redirectTo ? [redirectTo] : ['/dashboard'];
           this.router.navigate(url);
         }
-
+        this.spinner.hide();
       });
   }
 

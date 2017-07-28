@@ -17,11 +17,16 @@ export class SettingsModalComponent implements OnInit {
 
   }
   public ngOnInit() {
-    console.log(this.lgModal, 'fff');
+
   }
 
   cancelSaving() {
     this.settingsTabsComponent.resetToPreviousSettings();
+    this.lgModal.hide();
+  }
+
+  saveSettings() {
+    this.settingsTabsComponent.saveSettings();
     this.lgModal.hide();
   }
 

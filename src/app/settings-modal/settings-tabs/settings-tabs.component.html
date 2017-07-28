@@ -2,7 +2,7 @@
 	<tabset class="tab-container">
 		<tab heading="System">
 			<div class="tab-col">
-				<a href="#">LOGOUT</a>
+				<a (click)="logout()" href="#">LOGOUT</a>
 				<strong class="group-title">Refresh Interval</strong>
         <md-slider	[(value)]="val"
                     [max]="max"

@@ -2,6 +2,10 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { ColorPickerComponent } from '../color-picker'
 import { Settings } from '../../models/settings.model';
 import { AppSettingsService } from '../../core/app-settings.service';
+import {LocalStorageService} from "../../core/local-storage.service";
+import { GlobalVariable } from '../../core/global';
+import {UserProfileService} from "../../core/user-profile.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'settings-tabs',
@@ -9,6 +13,7 @@ import { AppSettingsService } from '../../core/app-settings.service';
   templateUrl: './settings-tabs.component.html'
 })
 export class SettingsTabsComponent implements OnInit {
+
   @ViewChild(ColorPickerComponent) public colorPickerComponent: ColorPickerComponent;
   private pageSettings: Settings;
   private min: number = 1;
@@ -16,48 +21,11 @@ export class SettingsTabsComponent implements OnInit {
   private step: number = 1;
   private val: number = 5;
   private clonedSettings: {}&Settings;
-  constructor(private settingsService: AppSettingsService) { }
+  private dafaultSettings = GlobalVariable.SETTINGS;
+  constructor(private settingsService: AppSettingsService, private localStorage: LocalStorageService, private userProfileService: UserProfileService, private router: Router,) { }
 
   public ngOnInit() {
-
-    this.pageSettings = {
-      settings: {
-        system: {
-          refreshInterval: 1,
-          scrollInterval: 1,
-          displayMode: 1,
-          flightDisplay: 1,
-          showTransit: true,
-          showTransitType: 1,
-          showExpectedDelivery: true,
-          dropDelivered: true
-        },
-        alerts: {
-          primaryInTransit: true,
-          primaryInTransitTime: 1,
-          primaryInTransitTextColor: '#f00',
-          primaryInTransitBackgroundColor: '#f00',
-          secondaryInTransit: true,
-          secondaryInTransitTime: 1,
-          secondaryInTransitTextColor: '#f00',
-          secondaryInTransitBackgroundColor: '#f00',
-          etaNote: true,
-          etaNoteType: 1,
-          etaNoteTextColor: '#f00',
-          etaNoteBackgroundColor: '#f00',
-        },
-        graphics: {
-          titleBackground: '#555',
-          titleTextColor: '#fff',
-          tableHeaderColor: '#016c8f',
-          tableTextColor: '#fff',
-          tableRowColor1: '#f00',
-          tableRowColor2: '#00325d',
-          businessName: 'Your Business Name Here'
-        }
-      }
-    };
-
+    this.pageSettings = this.localStorage.getObject('userSettings') && this.localStorage.getObject('userSettings').hasOwnProperty('settings') ? this.localStorage.getObject('userSettings') : this.dafaultSettings;
     this.clonedSettings = this.deepCopy(this.pageSettings);
     this.onTextLogoChanged(this.pageSettings.settings.graphics.businessName);
   }
@@ -83,6 +51,10 @@ export class SettingsTabsComponent implements OnInit {
     });
   }
 
+  public saveSettings() {
+    this.localStorage.setObject('userSettings', this.pageSettings);
+  }
+
   private onColorChanged(colorObj) {
     this.pageSettings.settings.graphics[colorObj.param] = colorObj.color;
     this.applySettings(colorObj);
@@ -106,6 +78,12 @@ export class SettingsTabsComponent implements OnInit {
       param: 'businessName',
       value: $event
     });
+  }
+
+  private logout() {
+    this.localStorage.set('token', '');
+    this.userProfileService.isLoggedIn = false;
+    this.router.navigate(['/login']);
   }
 
   private deepCopy(oldObj: any) {
