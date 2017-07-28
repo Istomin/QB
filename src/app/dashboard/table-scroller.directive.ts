@@ -15,7 +15,7 @@ export class TableScrollerDirective {
   }
   ngOnInit() {
     setTimeout(() => {
-      var offset = parseInt(jQuery(this.element.nativeElement).find('table').height() / 40);
+      var offset = Math.round(jQuery(this.element.nativeElement).find('table').height() / 40);
       this.startScrolling(offset);
     }, 10000)
   }
@@ -25,7 +25,7 @@ export class TableScrollerDirective {
 
       let scrollTo = jQuery(this.element.nativeElement).scrollTop() + offset;
 
-      if(this.prevScrollOffset == jQuery(this.element.nativeElement).scrollTop()) {
+      if(scrollTo + 700 > jQuery(this.element.nativeElement).find('table').height()) {
         scrollTo = 0;
       }
 
@@ -34,11 +34,6 @@ export class TableScrollerDirective {
       }, 500, () => {
 
       });
-
-
-      setTimeout(() => {
-        console.log(offset, jQuery(this.element.nativeElement).scrollTop(), jQuery(this.element.nativeElement).find('table').height())
-      }, 800)
-    }, 1000)
+    }, 10000);
   }
 }

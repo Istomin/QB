@@ -12,7 +12,10 @@ export class InterceptedHttp extends Http {
 
     return super.request(url, options).catch((err: any) => {
         alert(err.status);
-        if (err.status === 400 || err.status === 422) {
+        if(err.status == 0) {
+          alert('No server connection');
+          return Observable.empty();
+        } else if (err.status === 400 || err.status === 422) {
 
           return Observable.throw(err);
         } else if (err.status === 500) {
