@@ -22,7 +22,8 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private errorMessage: any;
   private tableRowColor1: any;
   private tableRowColor2: any;
-
+  order: string = 'eta';
+  reverse : boolean = false;
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService) {}
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {

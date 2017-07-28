@@ -42,8 +42,9 @@
 					background: linear-gradient(to bottom, #016c8f 0%,#001a22 100%);
 				}
 			}
+
 			.active {
-				background: #016c8f;
+				background: #016c8f !important;
 				background: -moz-linear-gradient(top, #016c8f 0%, #001a22 100%);
 				background: -webkit-linear-gradient(top, #016c8f 0%,#001a22 100%);
 				background: linear-gradient(to bottom, #016c8f 0%,#001a22 100%);
@@ -52,6 +53,9 @@
 					display: block;
 				}
 			}
+      .active.down {
+        background: grey !important;
+      }
 		}
 	}
 	tbody {

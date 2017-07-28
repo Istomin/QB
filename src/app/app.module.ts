@@ -18,6 +18,7 @@ import { ModalModule, TabsModule  } from 'ngx-bootstrap';
 import { ColorPickerModule } from 'angular2-color-picker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdSliderModule } from '@angular/material';
+import { OrderModule  } from 'ngx-order-pipe';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -112,6 +113,7 @@ import {httpFactory} from "./core/http-factory";
     ColorPickerModule,
     MdSliderModule,
     BrowserAnimationsModule,
+    OrderModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
   exports: [RouterModule],
