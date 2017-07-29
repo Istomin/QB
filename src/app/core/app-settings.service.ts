@@ -7,6 +7,7 @@ export class AppSettingsService {
   public runningLineDataChange: EventEmitter<number> = new EventEmitter();
   public userSettingsChange: EventEmitter<number> = new EventEmitter();
   public logoIdChange: EventEmitter<number> = new EventEmitter();
+  public scrollIntervalChange: EventEmitter<number> = new EventEmitter();
   public emitNavChangeEvent(numb: any) {
     this.navchange.emit(numb);
   }
@@ -39,5 +40,10 @@ export class AppSettingsService {
   public getLogoId() {
     return this.logoIdChange;
   }
-
+  public emitScrollInterval(data: any) {
+    this.scrollIntervalChange.emit(data);
+  }
+  public getScrollInterval() {
+    return this.scrollIntervalChange;
+  }
 }

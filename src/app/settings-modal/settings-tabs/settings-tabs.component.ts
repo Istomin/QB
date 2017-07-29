@@ -68,7 +68,7 @@ export class SettingsTabsComponent implements OnInit {
 
   public saveSettings() {
     this.prepareUserSettingsForSaving();
-
+    this.settingsService.emitScrollInterval(this.pageSettings.settings.system.scrollInterval);
     this.localStorage.setObject('userSettings', this.pageSettings);
   }
 
