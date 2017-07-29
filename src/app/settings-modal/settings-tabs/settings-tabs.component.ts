@@ -1,15 +1,16 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { ColorPickerComponent } from '../color-picker'
-import { Settings } from '../../models/settings.model';
-import { AppSettingsService } from '../../core/app-settings.service';
+import {Component, ViewChild, OnInit} from '@angular/core';
+import {ColorPickerComponent} from '../color-picker'
+import {Settings} from '../../models/settings.model';
+import {AppSettingsService} from '../../core/app-settings.service';
 import {LocalStorageService} from "../../core/local-storage.service";
-import { GlobalVariable } from '../../core/global';
+import {GlobalVariable} from '../../core/global';
 import {UserProfileService} from "../../core/user-profile.service";
 import {Router} from "@angular/router";
+import {LoginService} from  "../../login/login.service";
 
 @Component({
   selector: 'settings-tabs',
-  styleUrls: [ 'settings-tabs.component.scss'],
+  styleUrls: ['settings-tabs.component.scss'],
   templateUrl: './settings-tabs.component.html'
 })
 export class SettingsTabsComponent implements OnInit {
@@ -23,11 +24,17 @@ export class SettingsTabsComponent implements OnInit {
   private name = 'aaa';
   private clonedSettings: {}&Settings;
   private dafaultSettings = GlobalVariable.SETTINGS;
-  constructor(private settingsService: AppSettingsService, private localStorage: LocalStorageService, private userProfileService: UserProfileService, private router: Router,) { }
+
+  constructor(private settingsService: AppSettingsService, private localStorage: LocalStorageService, private userProfileService: UserProfileService, private router: Router, private loginService: LoginService) {
+  }
 
   public ngOnInit() {
-    console.log(1)
     this.pageSettings = this.localStorage.getObject('userSettings') && this.localStorage.getObject('userSettings').hasOwnProperty('settings') ? this.localStorage.getObject('userSettings') : this.dafaultSettings;
+
+    this.loginService.getUserInfo().subscribe((response: any) => {
+      this.settingsService.emitUserSettingsData(response['_body']);
+    });
+
     this.clonedSettings = this.deepCopy(this.pageSettings);
     this.onTextLogoChanged(this.pageSettings.settings.graphics.businessName);
   }
@@ -72,7 +79,10 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   imageFinishedUploading(file: any) {
-    console.log(JSON.stringify(file.serverResponse), file);
+    let fileObj = JSON.parse(file.serverResponse['_body']),
+      splittedString = fileObj.file.split('/'),
+      imgId = splittedString[splittedString.length - 1];
+    this.settingsService.emitLogoId(imgId);
   }
 
   imageRemoved(file: any) {
@@ -82,6 +92,7 @@ export class SettingsTabsComponent implements OnInit {
   uploadStateChange(state: boolean) {
     console.log(JSON.stringify(state));
   }
+
   private onSliderChanged($event) {
     this.val = $event.value;
   }

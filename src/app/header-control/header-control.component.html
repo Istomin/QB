@@ -1,5 +1,6 @@
 <div id="header" [style]="stylish">
   <!-- add logo img -->
+  <img class="logo-img" *ngIf="imgSrc" src="{{imgSrc}}" >
   <h1 class="logo" [style.color]="titleTextColor">{{businessName}}</h1>
   <span class="clock" [style.color]="titleTextColor">Current Time: 17.07 17:14</span>
   <div class="app-logo"></div>

@@ -5,6 +5,8 @@ export class AppSettingsService {
   public navchange: EventEmitter<number> = new EventEmitter();
   public tablechange: EventEmitter<number> = new EventEmitter();
   public runningLineDataChange: EventEmitter<number> = new EventEmitter();
+  public userSettingsChange: EventEmitter<number> = new EventEmitter();
+  public logoIdChange: EventEmitter<number> = new EventEmitter();
   public emitNavChangeEvent(numb: any) {
     this.navchange.emit(numb);
   }
@@ -23,4 +25,19 @@ export class AppSettingsService {
   public getRunningLineData() {
     return this.runningLineDataChange;
   }
+
+  public emitUserSettingsData(data: any) {
+    this.userSettingsChange.emit(data);
+  }
+  public getUserSettingsData() {
+    return this.userSettingsChange;
+  }
+
+  public emitLogoId(data: any) {
+    this.logoIdChange.emit(data);
+  }
+  public getLogoId() {
+    return this.logoIdChange;
+  }
+
 }
