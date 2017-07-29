@@ -3,8 +3,8 @@ export const GlobalVariable = Object.freeze({
   SETTINGS: {
     settings: {
       system: {
-        refreshInterval: 1,
-        scrollInterval: 1,
+        refreshInterval: 10,
+        scrollInterval: 10,
         displayMode: 1,
         flightDisplay: 1,
         showTransit: true,

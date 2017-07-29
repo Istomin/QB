@@ -17,10 +17,13 @@ export class SettingsTabsComponent implements OnInit {
 
   @ViewChild(ColorPickerComponent) public colorPickerComponent: ColorPickerComponent;
   private pageSettings: Settings;
-  private min: number = 1;
-  private max: number = 20;
+  private minRefreshInterval: number = 10;
+  private minScrollInterval: number = 10;
+  private maxRefreshInterval: number = 30;
+  private maxScrollInterval: number = 60;
   private step: number = 1;
-  private val: number = 5;
+  private refresh_int: number = 10;
+  private scroll_int: number = 10;
   private name = 'aaa';
   private clonedSettings: {}&Settings;
   private dafaultSettings = GlobalVariable.SETTINGS;
@@ -34,6 +37,9 @@ export class SettingsTabsComponent implements OnInit {
     this.loginService.getUserInfo().subscribe((response: any) => {
       this.settingsService.emitUserSettingsData(response['_body']);
     });
+
+    this.refresh_int =  this.pageSettings.settings.system.refreshInterval;
+    this.scroll_int = this.pageSettings.settings.system.scrollInterval;
 
     this.clonedSettings = this.deepCopy(this.pageSettings);
     this.onTextLogoChanged(this.pageSettings.settings.graphics.businessName);
@@ -61,7 +67,14 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   public saveSettings() {
+    this.prepareUserSettingsForSaving();
+
     this.localStorage.setObject('userSettings', this.pageSettings);
+  }
+
+  private prepareUserSettingsForSaving() {
+    this.pageSettings.settings.system.refreshInterval =  this.refresh_int;
+    this.pageSettings.settings.system.scrollInterval = this.scroll_int;
   }
 
   private onColorChanged(colorObj) {
@@ -93,8 +106,12 @@ export class SettingsTabsComponent implements OnInit {
     console.log(JSON.stringify(state));
   }
 
-  private onSliderChanged($event) {
-    this.val = $event.value;
+  private onRefreshSliderChanged($event) {
+    this.refresh_int = $event.value;
+  }
+
+  private onScrollSliderChanged($event) {
+    this.scroll_int = $event.value;
   }
 
   private onTextLogoChanged($event) {

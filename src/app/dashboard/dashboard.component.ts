@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'dashboard',
@@ -8,6 +8,10 @@ import {Component, OnInit} from '@angular/core';
 export class DashboardComponent implements OnInit {
   constructor() {}
   public ngOnInit() {
+
+  }
+
+  ngOnDestroy() {
 
   }
 }
