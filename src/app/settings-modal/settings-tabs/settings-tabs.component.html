@@ -14,18 +14,28 @@
 			</div>
 			<div class="tab-col">
 				<div class="form-group">
-					<strong class="group-title">Display Mode</strong>
-					<ul class="radio-list">
-						<li>
-							<input type="radio" name="list-1" id="shipped" checked="checked"/>
-							<label for="shipped">Shipped</label>
-						</li>
-						<li>
-							<input type="radio" name="list-1" id="shipped" />
-							<label for="shipped">Consignee</label>
-						</li>
-					</ul>
-					<strong class="group-title">Flight Display</strong>
+          <strong class="group-title">Display Mode</strong>
+          <ul class="radio-list">
+            <li>
+              <input type="radio" (change)="onTableColChange()"  [(ngModel)]="displayMode.model" [value]="0" name="list-1" id="shipped"/>
+              <label for="shipped">Shipped</label>
+            </li>
+            <li>
+              <input type="radio" (change)="onTableColChange()"  [(ngModel)]="displayMode.model"  [value]="1" name="list-1" id="consignee" />
+              <label for="shipped">Consignee</label>
+            </li>
+          </ul>
+          <strong class="group-title">Flight Display</strong>
+          <ul class="radio-list">
+            <li>
+              <input type="radio" (change)="onTableColChange()"  [(ngModel)]="flightDisplay.model" name="list-2" [value]="0" id="org"/>
+              <label for="org">Org</label>
+            </li>
+            <li>
+              <input type="radio" (change)="onTableColChange()" [(ngModel)]="flightDisplay.model" name="list-2" [value]="1" id="des" />
+              <label for="des">Des</label>
+            </li>
+          </ul>
 					<ul class="radio-list">
 						<li>
 							<input type="checkbox" id="transit" checked="checked"/>

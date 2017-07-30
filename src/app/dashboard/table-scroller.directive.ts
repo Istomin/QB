@@ -12,7 +12,8 @@ export class TableScrollerDirective {
   private animSpeed: number = 10000;
   private prevScrollOffset: number = -1;
   private startFlag: boolean = false;
-  private timer: NodeJS.Timer;
+  private timer: any;
+
   constructor(
     private renderer: Renderer2,
     private element: ElementRef,
@@ -53,8 +54,6 @@ export class TableScrollerDirective {
       }, 500, () => {
 
       });
-
-      console.log(this.animSpeed)
     }, this.animSpeed);
   }
 }

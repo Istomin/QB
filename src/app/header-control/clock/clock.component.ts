@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'clock',
-  template: '<div class="clock">Current time: {{dateObj | date :"short" }}</div>'
+  template: '<span class="clock">Current time: {{dateObj | date :"short" }}</span>'
 })
 export class ClockComponent implements OnInit {
   public dateObj;
@@ -10,6 +10,7 @@ export class ClockComponent implements OnInit {
     this.updateDate();
   }
   private updateDate() {
+
     setInterval(() => {
       this.dateObj = new Date();
     }, 500);

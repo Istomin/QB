@@ -27,19 +27,25 @@ export class SettingsTabsComponent implements OnInit {
   private name = 'aaa';
   private clonedSettings: {}&Settings;
   private dafaultSettings = GlobalVariable.SETTINGS;
+  private displayMode;
+  private flightDisplay;
 
   constructor(private settingsService: AppSettingsService, private localStorage: LocalStorageService, private userProfileService: UserProfileService, private router: Router, private loginService: LoginService) {
   }
 
   public ngOnInit() {
     this.pageSettings = this.localStorage.getObject('userSettings') && this.localStorage.getObject('userSettings').hasOwnProperty('settings') ? this.localStorage.getObject('userSettings') : this.dafaultSettings;
-
+    this.displayMode = {};
+    this.flightDisplay = {};
     this.loginService.getUserInfo().subscribe((response: any) => {
       this.settingsService.emitUserSettingsData(response['_body']);
     });
 
     this.refresh_int =  this.pageSettings.settings.system.refreshInterval;
     this.scroll_int = this.pageSettings.settings.system.scrollInterval;
+    this.displayMode['model'] = this.pageSettings.settings.system.displayMode;
+    this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
+    this.settingsService.emitTableCol(this.pageSettings);
 
     this.clonedSettings = this.deepCopy(this.pageSettings);
     this.onTextLogoChanged(this.pageSettings.settings.graphics.businessName);
@@ -61,6 +67,10 @@ export class SettingsTabsComponent implements OnInit {
         });
       }
     }
+
+    this.displayMode['model'] = this.pageSettings.settings.system.displayMode;
+    this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
+    this.settingsService.emitTableCol(this.pageSettings);
     array.forEach((obj) => {
       this.applySettings(obj);
     });
@@ -75,6 +85,14 @@ export class SettingsTabsComponent implements OnInit {
   private prepareUserSettingsForSaving() {
     this.pageSettings.settings.system.refreshInterval =  this.refresh_int;
     this.pageSettings.settings.system.scrollInterval = this.scroll_int;
+    this.pageSettings.settings.system.displayMode = this.displayMode['model'];
+    this.pageSettings.settings.system.flightDisplay = this.flightDisplay['model'];
+  }
+
+  private onTableColChange() {
+    this.pageSettings.settings.system.displayMode = this.displayMode['model'];
+    this.pageSettings.settings.system.flightDisplay = this.flightDisplay['model'];
+    this.settingsService.emitTableCol(this.pageSettings);
   }
 
   private onColorChanged(colorObj) {

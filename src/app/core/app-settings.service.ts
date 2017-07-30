@@ -8,6 +8,7 @@ export class AppSettingsService {
   public userSettingsChange: EventEmitter<number> = new EventEmitter();
   public logoIdChange: EventEmitter<number> = new EventEmitter();
   public scrollIntervalChange: EventEmitter<number> = new EventEmitter();
+  public tableColChange: EventEmitter<number> = new EventEmitter();
   public emitNavChangeEvent(numb: any) {
     this.navchange.emit(numb);
   }
@@ -45,5 +46,11 @@ export class AppSettingsService {
   }
   public getScrollInterval() {
     return this.scrollIntervalChange;
+  }
+  public emitTableCol(data: any) {
+    this.tableColChange.emit(data);
+  }
+  public getTableCol() {
+    return this.tableColChange;
   }
 }
