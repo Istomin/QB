@@ -4,13 +4,21 @@
 			<div class="tab-col">
 				<a (click)="logout()" href="#">LOGOUT</a>
 				<strong class="group-title">Refresh Interval</strong>
-        <md-slider	[(value)]="val"
-                    [max]="max"
-                    (input)="onSliderChanged($event)"
-                    [min]="min"
+        <md-slider	[(value)]="refresh_int"
+                    [max]="maxRefreshInterval"
+                    (input)="onRefreshSliderChanged($event)"
+                    [min]="minRefreshInterval"
                     [step]="step">
         </md-slider>
+        <span>{{refresh_int}} minutes</span>
 				<strong class="group-title">Scroll Interval</strong>
+        <md-slider	[(value)]="scroll_int"
+                    [max]="maxScrollInterval"
+                    (input)="onScrollSliderChanged($event)"
+                    [min]="minScrollInterval"
+                    [step]="step">
+        </md-slider>
+        <span>{{scroll_int}} seconds</span>
 			</div>
 			<div class="tab-col">
 				<div class="form-group">
