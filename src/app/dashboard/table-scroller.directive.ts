@@ -32,7 +32,7 @@ export class TableScrollerDirective {
 
     if(!this.startFlag) {
       setTimeout(() => {
-        this.animSpeed =  this.localStorage.getObject('userSettings').settings.system.scrollInterval * 1000;
+        this.animSpeed =  this.localStorage.getObject('userSettings').settings.system.scrollInterval * 1000 || 10000;
         this.startScrolling();
       }, 10000);
     }

@@ -77,7 +77,7 @@ import 'rxjs/add/operator/map';
 // import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/observable/throw';
 import {httpFactory} from "./core/http-factory";
-
+import { WindowRef } from "./core/window-ref";
 /**
  * `AppModule` is the main entry point into Angular2's bootstraping process
  */
@@ -129,7 +129,7 @@ import {httpFactory} from "./core/http-factory";
     AppSettingsService,
     ENV_PROVIDERS,
     APP_PROVIDERS,
-    { provide: 'Window', useValue: window },
+    WindowRef,
     LocalStorageService,
     {
       provide: Http,
