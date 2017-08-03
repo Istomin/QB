@@ -19,7 +19,7 @@ export class RunningLineComponent implements OnInit {
 
 
     this.subscription = this.settingsService.getRunningLineData().subscribe((response) => {
-      this.text = response[0];
+      this.text = response.toString();
 
       setTimeout(() => {
        //this.line.startAnimation();

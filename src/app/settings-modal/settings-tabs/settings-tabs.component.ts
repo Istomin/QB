@@ -133,6 +133,7 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   private onTextLogoChanged($event) {
+    this.pageSettings.settings.graphics.businessName = $event;
     this.settingsService.emitNavChangeEvent({
       param: 'businessName',
       value: $event

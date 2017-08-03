@@ -41,7 +41,9 @@
 					background: -webkit-linear-gradient(top, #016c8f 0%,#001a22 100%);
 					background: linear-gradient(to bottom, #016c8f 0%,#001a22 100%);
 				}
-			}
+				&:focus {
+					text-decoration: none
+				}			}
 
 			.active {
 				background: #016c8f !important;
@@ -53,9 +55,6 @@
 					display: block;
 				}
 			}
-      .active.down {
-        background: grey !important;
-      }
 		}
 	}
 	tbody {

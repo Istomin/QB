@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'clock',
-  template: '<span class="clock">Current time: {{dateObj | date :"short" }}</span>'
+  template: '<span class="clock">Current time: {{dateObj | date :"dd.MM hh:mm" }}</span>'
 })
 export class ClockComponent implements OnInit {
   public dateObj;

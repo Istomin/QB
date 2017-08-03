@@ -1,6 +1,8 @@
 .color-picker-area {
   position: relative;
   color: #000;
+	display: inline-block;
+	margin: 5px 0 10px;
   button {
     border: 0;
     background: none;
@@ -15,4 +17,7 @@
     width: 20px;
     height: 20px;
   }
+}
+.color-picker .arrow-right {
+	top: 4px
 }
