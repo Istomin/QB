@@ -5,7 +5,7 @@ var jQuery = require("jquery");
   selector: 'line'
 })
 export class LineDirective {
-  private animSpeed: number = 15000;
+  private animSpeed: number = 20000;
   constructor(
     private renderer: Renderer2,
     private element: ElementRef
