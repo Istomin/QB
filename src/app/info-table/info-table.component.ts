@@ -70,13 +70,4 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
   }
 
-  get stylish() {
-    let basicStyle = `linear-gradient(0deg, ${this.defaultBottomColor}, ${this.tableHeaderColor})`;
-    return this.sanitizer.bypassSecurityTrustStyle(`
-      background: -o-${basicStyle};
-      background: -moz-${basicStyle};
-      background: -webkit-${basicStyle};
-      background: ${basicStyle};
-    `);
-  }
 }

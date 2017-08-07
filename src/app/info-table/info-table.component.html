@@ -1,20 +1,20 @@
 <table class="table table-hover info-table">
   <thead>
     <tr>
-      <th><a [style]="stylish" href="#" (click)="order = 'bol_number'; reverse = !reverse;" [ngClass]="{'active': order == 'bol_number', 'up': order == 'bol_number' && reverse, 'down': order == 'bol_number' && !reverse}"><span [style.color]="tableTextColor">BOL Number</span></a></th>
-      <th><a [style]="stylish" href="#" (click)="order = 'reference'; reverse = !reverse;" [ngClass]="{'active': order == 'reference', 'up': order == 'reference' && reverse, 'down': order == 'reference' && !reverse}"><span [style.color]="tableTextColor">Reference</span></a></th>
+      <th><a  href="#" (click)="order = 'bol_number'; reverse = !reverse;" [ngClass]="{'active': order == 'bol_number', 'up': order == 'bol_number' && reverse, 'down': order == 'bol_number' && !reverse}"><span [style.color]="tableTextColor">BOL Number</span></a></th>
+      <th><a  href="#" (click)="order = 'reference'; reverse = !reverse;" [ngClass]="{'active': order == 'reference', 'up': order == 'reference' && reverse, 'down': order == 'reference' && !reverse}"><span [style.color]="tableTextColor">Reference</span></a></th>
       <th>
         <a *ngIf="showShipper"  [style]="stylish" href="#" (click)="order = 'shipper'; reverse = !reverse;" [ngClass]="{'active': order == 'shipper', 'up': order == 'shipper' && reverse, 'down': order == 'shipper' && !reverse}"><span [style.color]="tableTextColor">Shipper</span></a>
         <a *ngIf="!showShipper"  [style]="stylish" href="#" (click)="order = 'consignee'; reverse = !reverse;" [ngClass]="{'active': order == 'consignee', 'up': order == 'consignee' && reverse, 'down': order == 'consignee' && !reverse}"><span [style.color]="tableTextColor">Consignee</span></a>
       </th>
-      <th><a [style]="stylish" href="#" (click)="order = 'Flight'; reverse = !reverse;" [ngClass]="{'active': order == 'Flight', 'up': order == 'Flight' && reverse, 'down': order == 'Flight' && !reverse}"><span [style.color]="tableTextColor">Flight</span></a></th>
+      <th><a  href="#" (click)="order = 'Flight'; reverse = !reverse;" [ngClass]="{'active': order == 'Flight', 'up': order == 'Flight' && reverse, 'down': order == 'Flight' && !reverse}"><span [style.color]="tableTextColor">Flight</span></a></th>
       <th>
         <a *ngIf="showOrg" [style]="stylish" href="#" (click)="order = 'ORG'; reverse = !reverse;" [ngClass]="{'active': order == 'ORG', 'up': order == 'ORG' && reverse, 'down': order == 'ORG' && !reverse}"><span [style.color]="tableTextColor">ORG</span></a>
         <a *ngIf="!showOrg" [style]="stylish" href="#" (click)="order = 'DES'; reverse = !reverse;" [ngClass]="{'active': order == 'DES', 'up': order == 'DES' && reverse, 'down': order == 'DES' && !reverse}"><span [style.color]="tableTextColor">DES</span></a>
 
       </th>
-      <th><a [style]="stylish" href="#" (click)="order = 'eta'; reverse = !reverse;" [ngClass]="{'active': order == 'eta', 'up': order == 'eta' && reverse, 'down': order == 'eta' && !reverse}"><span [style.color]="tableTextColor">ETA</span></a></th>
-      <th><a [style]="stylish" href="#" (click)="order = 'status'; reverse = !reverse;" [ngClass]="{'active': order == 'status', 'up': order == 'status' && reverse, 'down': order == 'status' && !reverse}"><span [style.color]="tableTextColor">Status</span></a></th>
+      <th><a  href="#" (click)="order = 'eta'; reverse = !reverse;" [ngClass]="{'active': order == 'eta', 'up': order == 'eta' && reverse, 'down': order == 'eta' && !reverse}"><span [style.color]="tableTextColor">ETA</span></a></th>
+      <th><a  href="#" (click)="order = 'status'; reverse = !reverse;" [ngClass]="{'active': order == 'status', 'up': order == 'status' && reverse, 'down': order == 'status' && !reverse}"><span [style.color]="tableTextColor">Status</span></a></th>
     </tr>
   </thead>
   <tbody>
