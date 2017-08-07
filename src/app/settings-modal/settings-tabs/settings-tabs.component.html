@@ -136,6 +136,7 @@
 				<strong class="group-title">Business Logo</strong>
 				<image-upload
 					url="http://208.17.192.85:6544/api/v2/upload/"
+        [headers]="[{ header: 'Content-Type', value: 'multipart/form-data' }]"
 					(onFileUploadFinish)="imageFinishedUploading($event)"
 					(onRemove)="imageRemoved($event)"
 					(isPending)="uploadStateChange($event)">
