@@ -60,13 +60,4 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
     this.imgSrc = this.imgUrl + id;
   }
 
-  get stylish() {
-    let basicStyle = `linear-gradient(0deg, ${this.defaultBottomColor}, ${this.titleBackground})`;
-    return this.sanitizer.bypassSecurityTrustStyle(`
-      background: -o-${basicStyle};
-      background: -moz-${basicStyle};
-      background: -webkit-${basicStyle};
-      background: ${basicStyle};
-    `);
-  }
 }
