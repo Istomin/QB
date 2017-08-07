@@ -21,7 +21,7 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
   private titleTextColor: string;
   private businessName: string = '';
   private baseApiUrl = GlobalVariable.BASE_API_URL;
-  private imgUrl = 'http://208.17.192.85:6545/depot/';
+  private imgUrl = 'http://208.17.192.85:6545';
   private userSettings: any;
   private imgSrc: any;
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private spiner: SpinnerService) {
@@ -34,11 +34,11 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
 
     this.userSettingsSubscription = this.settingsService.getUserSettingsData().subscribe((response) => {
       this.userSettings = JSON.parse(response);
-      this.setLogo(this.userSettings.logo);
+      this.setLogo(this.userSettings.logo, true);
     });
 
     this.logoSubscription = this.settingsService.getLogoId().subscribe((logoId) => {
-      this.setLogo(logoId);
+      this.setLogo(logoId, false);
     });
   }
 
@@ -56,7 +56,7 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
     }
   }
 
-  private setLogo(id: string) {
+  private setLogo(id: string, fromSettings) {
     this.imgSrc = this.imgUrl + id;
   }
 

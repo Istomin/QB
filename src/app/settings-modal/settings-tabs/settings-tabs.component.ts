@@ -113,7 +113,7 @@ export class SettingsTabsComponent implements OnInit {
     let fileObj = JSON.parse(file.serverResponse['_body']),
       splittedString = fileObj.file.split('/'),
       imgId = splittedString[splittedString.length - 1];
-    this.settingsService.emitLogoId(imgId);
+    this.settingsService.emitLogoId(fileObj.file);
   }
 
   imageRemoved(file: any) {
