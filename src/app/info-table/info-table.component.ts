@@ -67,7 +67,5 @@ export class InfoTableComponent implements OnInit, OnDestroy {
           }
         );
     }, 100);
-
   }
-
 }
