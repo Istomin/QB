@@ -4,7 +4,9 @@ import { AppSettingsService } from '.././core/app-settings.service';
 import { Subscription } from 'rxjs/Subscription';
 import { DomSanitizer } from '@angular/platform-browser';
 import { GlobalVariable } from '.././core/global';
-import { SpinnerService } from '.././core/spinner/spinner.service'
+import { SpinnerService } from '.././core/spinner/spinner.service';
+import { LocalStorageService } from '.././core/local-storage.service';
+
 
 @Component({
   selector: 'header-control',
@@ -21,10 +23,10 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
   private titleTextColor: string;
   private businessName: string = '';
   private baseApiUrl = GlobalVariable.BASE_API_URL;
-  private imgUrl = 'http://208.17.192.85:6545';
+  private imgUrl = 'http://208.17.192.85:6544';
   private userSettings: any;
   private imgSrc: any;
-  constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private spiner: SpinnerService) {
+  constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private spiner: SpinnerService, private localStorage: LocalStorageService) {
   }
 
   public ngOnInit() {
@@ -34,11 +36,16 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
 
     this.userSettingsSubscription = this.settingsService.getUserSettingsData().subscribe((response) => {
       this.userSettings = JSON.parse(response);
+      this.localStorage.setObject('user', this.userSettings);
       this.setLogo(this.userSettings.logo, true);
     });
 
     this.logoSubscription = this.settingsService.getLogoId().subscribe((logoId) => {
-      this.setLogo(logoId, false);
+      if(logoId == null) {
+        this.setLogo(this.userSettings.logo, true);
+      } else {
+        this.setLogo(logoId, false);
+      }
     });
   }
 
@@ -57,7 +64,13 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
   }
 
   private setLogo(id: string, fromSettings) {
-    this.imgSrc = this.imgUrl + id;
+    if(fromSettings) {
+      this.imgSrc = this.imgUrl + id;
+    } else {
+      this.imgSrc = id;
+    }
+
+    console.log(id)
   }
 
 }

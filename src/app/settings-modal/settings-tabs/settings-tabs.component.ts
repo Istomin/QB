@@ -7,6 +7,7 @@ import {GlobalVariable} from '../../core/global';
 import {UserProfileService} from "../../core/user-profile.service";
 import {Router} from "@angular/router";
 import {LoginService} from  "../../login/login.service";
+import {UploadService} from  "../../core/upload.service";
 
 @Component({
   selector: 'settings-tabs',
@@ -26,14 +27,19 @@ export class SettingsTabsComponent implements OnInit {
   private scroll_int: number = 10;
   private name = 'aaa';
   private clonedSettings: {}&Settings;
+  private baseUrl = GlobalVariable.BASE_URL;
   private dafaultSettings = GlobalVariable.SETTINGS;
   private displayMode;
   private flightDisplay;
-
-  constructor(private settingsService: AppSettingsService, private localStorage: LocalStorageService, private userProfileService: UserProfileService, private router: Router, private loginService: LoginService) {
+  private imgSrc: string;
+  private user: {}|any;
+  private newLogoAdded: boolean;
+  private file: any;
+  constructor(private settingsService: AppSettingsService, private localStorage: LocalStorageService, private userProfileService: UserProfileService, private router: Router, private loginService: LoginService, private uploadService: UploadService) {
   }
 
   public ngOnInit() {
+
     this.pageSettings = this.localStorage.getObject('userSettings') && this.localStorage.getObject('userSettings').hasOwnProperty('settings') ? this.localStorage.getObject('userSettings') : this.dafaultSettings;
     this.displayMode = {};
     this.flightDisplay = {};
@@ -66,6 +72,10 @@ export class SettingsTabsComponent implements OnInit {
           color: this.pageSettings.settings.graphics[key]
         });
       }
+      if(this.imgSrc) {
+        this.settingsService.emitLogoId(null);
+      }
+
     }
 
     this.displayMode['model'] = this.pageSettings.settings.system.displayMode;
@@ -80,6 +90,18 @@ export class SettingsTabsComponent implements OnInit {
     this.prepareUserSettingsForSaving();
     this.settingsService.emitScrollInterval(this.pageSettings.settings.system.scrollInterval);
     this.localStorage.setObject('userSettings', this.pageSettings);
+    if(this.newLogoAdded) {
+      this.uploadService.uploadLogo(this.file).subscribe((response) => {
+        alert(12345)
+      });
+    }
+  }
+
+  public getSettings() {
+    this.user = this.localStorage.getObject('user');
+    if(this.user.logo) {
+      this.imgSrc = this.baseUrl + this.user.logo;
+    }
   }
 
   private prepareUserSettingsForSaving() {
@@ -99,7 +121,17 @@ export class SettingsTabsComponent implements OnInit {
     this.pageSettings.settings.graphics[colorObj.param] = colorObj.color;
     this.applySettings(colorObj);
   }
+  onChange(event) {
+    let  reader = new FileReader();
+    this.file = event.srcElement.files[0];
+    reader.onload = () =>{
+      this.imgSrc = reader.result;
+      this.settingsService.emitLogoId(this.imgSrc);
+      this.newLogoAdded = true;
+    };
+    reader.readAsDataURL(this.file);
 
+  }
   private applySettings(obj: any) {
     if (obj.param === 'tableRowColor1' || obj.param === 'tableRowColor2' ||
       obj.param === 'tableTextColor' || obj.param === 'tableHeaderColor') {
@@ -130,6 +162,10 @@ export class SettingsTabsComponent implements OnInit {
 
   private onScrollSliderChanged($event) {
     this.scroll_int = $event.value;
+  }
+
+  private removeLogo() {
+    this.imgSrc = null;
   }
 
   private onTextLogoChanged($event) {

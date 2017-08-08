@@ -1,6 +1,7 @@
 <div>
 	<tabset class="tab-container">
 		<tab heading="System">
+
 			<div class="tab-col">
 				<a class="logout-link" (click)="logout()" href="#">LOGOUT</a>
 				<strong class="group-title">Refresh Interval</strong>
@@ -134,23 +135,9 @@
 		<tab heading="Graphics">
 			<div class="tab-col">
 				<strong class="group-title">Business Logo</strong>
-				<image-upload
-					url="http://208.17.192.85:6544/api/v2/upload/"
-        [headers]="[{ header: 'Content-Type', value: 'multipart/form-data' }]"
-					(onFileUploadFinish)="imageFinishedUploading($event)"
-					(onRemove)="imageRemoved($event)"
-					(isPending)="uploadStateChange($event)">
-				</image-upload>
-				<!--<image-upload-->
-					<!--[max]="10"-->
-					<!--[headers]="[-->
-						<!--{ header: 'Authorization', value: 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOjEsImlhdCI6MTUwMTIyMjg5NX0.hCWHcQgwWzaUsUWi5sE3-hIL9LcT-XsCku0TSTSHFxxUdZIxrl8bpKCJC01toggXE931K0K3nh_u73kQLn9WDQ' }-->
-					<!--]"-->
-
-					<!--[url]="'http://208.17.192.85:6544/api/v2/upload/'"-->
-					<!--[buttonCaption]="'Select'"-->
-					<!--(uploadFinished)="uploadFinished($event)">-->
-				<!--</image-upload>-->
+        <input type="file" (change)="onChange($event)"/>
+        <button *ngIf="imgSrc" (click)="removeLogo()">Remove</button>
+        <img class="logo-img" *ngIf="imgSrc" src="{{imgSrc}}" >
 				<strong class="group-title">Business Name <!--{{name}}--></strong>
 				<input type="text" (ngModelChange)="onTextLogoChanged($event)" [ngModel]="pageSettings.settings.graphics.businessName" class="form-control" placeholder=""/>
 			</div>

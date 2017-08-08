@@ -20,6 +20,11 @@ export class SettingsModalComponent implements OnInit {
 
   }
 
+  showModal() {
+    this.lgModal.show();
+    this.settingsTabsComponent.getSettings();
+  }
+
   cancelSaving() {
     this.settingsTabsComponent.resetToPreviousSettings();
     this.lgModal.hide();

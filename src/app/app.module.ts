@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdSliderModule } from '@angular/material';
 import { OrderModule  } from 'ngx-order-pipe';
 import { ImageUploadModule } from "angular2-image-upload";
+import { ProgressHttpModule } from "angular-progress-http";
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -49,6 +50,7 @@ import { UserProfileService } from './core/user-profile.service';
 import { AuthGuard } from './core/auth-guard.service';
 import { SpinnerModule } from './core/spinner/spinner.module';
 import { LocalStorageService } from  './core/local-storage.service';
+import { UploadService } from  './core/upload.service';
 import { TableScrollerDirective } from './dashboard/table-scroller.directive';
 
 import 'hammerjs';
@@ -116,6 +118,7 @@ import { WindowRef } from "./core/window-ref";
     MdSliderModule,
     BrowserAnimationsModule,
     OrderModule,
+    ProgressHttpModule,
     ImageUploadModule.forRoot(),
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
@@ -130,6 +133,7 @@ import { WindowRef } from "./core/window-ref";
     ENV_PROVIDERS,
     APP_PROVIDERS,
     WindowRef,
+    UploadService,
     LocalStorageService,
     {
       provide: Http,
