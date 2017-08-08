@@ -135,7 +135,10 @@
 		<tab heading="Graphics">
 			<div class="tab-col">
 				<strong class="group-title">Business Logo</strong>
-        <input type="file" (change)="onChange($event)"/>
+        <label *ngIf="!imgSrc" for="file-upload" class="custom-file-upload">
+          SELECT
+        </label>
+        <input id="file-upload" class="custom-file-upload-input" type="file" (change)="onChange($event)"/>
         <button *ngIf="imgSrc" (click)="removeLogo()">Remove</button>
         <img class="logo-img" *ngIf="imgSrc" src="{{imgSrc}}" >
 				<strong class="group-title">Business Name <!--{{name}}--></strong>

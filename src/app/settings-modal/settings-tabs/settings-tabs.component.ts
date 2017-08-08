@@ -96,9 +96,10 @@ export class SettingsTabsComponent implements OnInit {
     this.localStorage.setObject('userSettings', this.pageSettings);
     if(this.isLogoRemoved) {
       this.uploadService.removeLogo().subscribe((response) => {
-        // this.settingsService.emitLogoId({
-        //   isDeleted: true
-        // });
+        this.settingsService.emitLogoId({
+          isDeleted: true
+        });
+        this.imgSrc = null;
       });
     } else {
       if(this.newLogoAdded) {
@@ -111,6 +112,7 @@ export class SettingsTabsComponent implements OnInit {
 
   public getSettings() {
     this.user = this.localStorage.getObject('user');
+    console.log(this.user, 'this.user')
     if(this.user.logo) {
       this.imgSrc = this.baseUrl + this.user.logo;
     }

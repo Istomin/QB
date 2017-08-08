@@ -51,6 +51,10 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
         }
       } else if(logoObj.isAdded) {
         this.setLogo(logoObj.logoId, false);
+      } else if(logoObj.isDeleted) {
+        this.imgSrc = null;
+        this.userSettings.logo = null;
+        this.localStorage.setObject('user', this.userSettings);
       }
     });
   }

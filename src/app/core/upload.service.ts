@@ -10,11 +10,7 @@ export class UploadService {
   constructor(private http: ProgressHttp, private localStorage: LocalStorageService) { }
 
   uploadLogo(file: any) {
-    var options = new RequestOptions();
-    options.headers = new Headers();
-    if(this.localStorage.get('token')) {
-      options.headers.append('Authorization', 'JWT ' + this.localStorage.get('token'));
-    }
+    let options = this.getOptions();
     const form = new FormData();
     form.append("image", file);
     return this.http
@@ -22,15 +18,19 @@ export class UploadService {
   }
 
   removeLogo() {
+    let options = this.getOptions();
+    return this.http
+      .delete(this.makeApiUri('upload/'), options);
+  }
+
+  private getOptions() {
     var options = new RequestOptions();
     options.headers = new Headers();
     if(this.localStorage.get('token')) {
       options.headers.append('Authorization', 'JWT ' + this.localStorage.get('token'));
     }
-    const form = new FormData();
 
-    return this.http
-      .delete(this.makeApiUri('upload/'), options);
+    return options;
   }
 
   private makeApiUri(target) {

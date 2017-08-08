@@ -2,13 +2,17 @@
 	color: #000;
 	display: block;
 	margin-bottom: 15px;
-}.logout-link {
+}
+.logout-link {
 	display: inline-block;
 	vertical-align: top;
-	text-decoration: underline;	margin-bottom: 30px;
-	&:hover,	&:focus {
+	text-decoration: underline;
+	margin-bottom: 30px;
+	&:hover,
+	&:focus {
 		text-decoration: none
-	}}
+	}
+}
 tab {
 	border-width: 0 1px 1px;
 	border-style: solid;
@@ -18,7 +22,9 @@ tab {
 	min-height: 365px;
 	&:after {
 		content: '';
-		display: block;		clear: both;	}
+		display: block;
+		clear: both;
+	}
 }
 .tab-col {
 	float: left;
@@ -89,4 +95,8 @@ tab {
 		background: gray;
 		color: #000;
 	}
+}
+
+.custom-file-upload-input {
+  display: none;
 }
