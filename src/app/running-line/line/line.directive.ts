@@ -13,9 +13,9 @@ export class LineDirective {
 
   }
   ngOnInit() {
-    setTimeout(() => {
-      this.startAnimation();
-    }, 100);
+    // setTimeout(() => {
+    //   this.startAnimation();
+    // }, 100);
   }
 
   public startAnimation() {

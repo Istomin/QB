@@ -1,5 +1,17 @@
-<div class="running-line-holder">
-  <line #line>
-    <span class="slider">{{text}}</span>
-  </line>
+<!--<div class="running-line-holder">-->
+  <!--<line #line>-->
+    <!--<span class="slider">{{text}}</span>-->
+  <!--</line>-->
+<!--</div>-->
+<div class="runtext-container">
+  <div class="main-runtext">
+    <marquee direction="" onmouseover="this.stop();" onmouseout="this.start();">
+
+      <div class="holder">
+        <div class="text-container" *ngFor="let text of texts">&nbsp;&nbsp; {{text.name}}</div>
+
+      </div>
+
+    </marquee>
+  </div>
 </div>

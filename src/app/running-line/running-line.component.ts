@@ -10,20 +10,21 @@ import {LineDirective} from '../running-line/line';
 export class RunningLineComponent implements OnInit {
   @ViewChild('line') public line: LineDirective;
   private subscription: any;
-  private text: string = 'Refreshing data';
+  private texts: [{name: string}];
 
   constructor(private settingsService: AppSettingsService) {
   }
 
   public ngOnInit() {
-
-
+    this.texts = [{
+      name: 'Refreshing data'
+    }];
     this.subscription = this.settingsService.getRunningLineData().subscribe((response) => {
-      this.text = response.toString();
+     // this.text = response.toString();
 
-      setTimeout(() => {
-       //this.line.startAnimation();
-      }, 100)
+      // setTimeout(() => {
+      //  this.line.startAnimation();
+      // }, 100);
     });
   }
 }
