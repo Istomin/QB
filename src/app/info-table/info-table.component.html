@@ -1,11 +1,11 @@
 <table class="table table-hover info-table">
   <thead>
     <tr>
-      <th><a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'bol_number'; reverse = !reverse;" [ngClass]="{'active': order == 'bol_number', 'up': order == 'bol_number' && reverse, 'down': order == 'bol_number' && !reverse}"><span [style.color]="tableTextColor">BOL Number</span></a></th>
-      <th><a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'reference'; reverse = !reverse;" [ngClass]="{'active': order == 'reference', 'up': order == 'reference' && reverse, 'down': order == 'reference' && !reverse}"><span [style.color]="tableTextColor">Reference</span></a></th>
+      <th><a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'ShipmentBOLNumber'; reverse = !reverse;" [ngClass]="{'active': order == 'ShipmentBOLNumber', 'up': order == 'ShipmentBOLNumber' && reverse, 'down': order == 'ShipmentBOLNumber' && !reverse}"><span [style.color]="tableTextColor">BOL Number</span></a></th>
+      <th><a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'ShippersReference'; reverse = !reverse;" [ngClass]="{'active': order == 'ShippersReference', 'up': order == 'ShippersReference' && reverse, 'down': order == 'ShippersReference' && !reverse}"><span [style.color]="tableTextColor">Reference</span></a></th>
       <th>
-        <a *ngIf="showShipper" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'shipper'; reverse = !reverse;" [ngClass]="{'active': order == 'shipper', 'up': order == 'shipper' && reverse, 'down': order == 'shipper' && !reverse}"><span [style.color]="tableTextColor">Shipper</span></a>
-        <a *ngIf="!showShipper" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'"  href="#" (click)="order = 'consignee'; reverse = !reverse;" [ngClass]="{'active': order == 'consignee', 'up': order == 'consignee' && reverse, 'down': order == 'consignee' && !reverse}"><span [style.color]="tableTextColor">Consignee</span></a>
+        <a *ngIf="showShipper" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'Shipper'; reverse = !reverse;" [ngClass]="{'active': order == 'Shipper', 'up': order == 'Shipper' && reverse, 'down': order == 'Shipper' && !reverse}"><span [style.color]="tableTextColor">Shipper</span></a>
+        <a *ngIf="!showShipper" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'"  href="#" (click)="order = 'Consignee'; reverse = !reverse;" [ngClass]="{'active': order == 'Consignee', 'up': order == 'Consignee' && reverse, 'down': order == 'Consignee' && !reverse}"><span [style.color]="tableTextColor">Consignee</span></a>
       </th>
       <th><a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'Flight'; reverse = !reverse;" [ngClass]="{'active': order == 'Flight', 'up': order == 'Flight' && reverse, 'down': order == 'Flight' && !reverse}"><span [style.color]="tableTextColor">Flight</span></a></th>
       <th>
@@ -19,13 +19,25 @@
   </thead>
   <tbody>
   <tr *ngFor="let shipment of shipments   | orderBy: order : reverse; let i = index">
-    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.bol_number}}</td>
-    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.reference}}</td>
+    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.ShipmentBOLNumber}}</td>
     <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
-      <span *ngIf="showShipper" >{{shipment.shipper}}</span>
-      <span *ngIf="!showShipper" >{{shipment.consignee}}</span>
+      <!-- {{shipment.ShippersReference}} -->
     </td>
-    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.Flight}}</td>
+    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
+      <span *ngIf="showShipper" >{{shipment.Shipper.Address.CompanyName}} <br>
+      {{shipment.Shipper.Address.City}} {{shipment.Shipper.Address.StateProvinceCode}} {{shipment.Shipper.Address.CountryCode}}
+      </span>
+
+      <span *ngIf="!showShipper" >
+        {{shipment.Consignee.Address.CompanyName}} <br>
+      {{shipment.Consignee.Address.City}} {{shipment.Consignee.Address.StateProvinceCode}} {{shipment.Consignee.Address.CountryCode}}
+      </span>
+    </td>
+    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
+      <div *ngIf="shipment.Flights && shipment.Flights.Flight.length">
+        <div  *ngFor="let flight of shipment.Flights.Flight">{{flight.AirlineCode}}{{flight.AirwayBillNumber}}</div>
+      </div>
+    </td>
     <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
       <span *ngIf="showOrg">{{shipment.ORG}}</span>
       <span *ngIf="!showOrg">{{shipment.DES}}</span>

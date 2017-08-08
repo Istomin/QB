@@ -59,8 +59,18 @@ export class InfoTableComponent implements OnInit, OnDestroy {
         .subscribe(
           (response) => {
             this.spinner.hide();
-            this.shipments = response.shipment;
-            this.settingsService.emitRunningLineData(response.ticker);
+            this.shipments = response.TransactionResponse.Shipments.Shipment;
+            var tickers = [];
+            console.log(this.shipments)
+            this.shipments.forEach((shipment) => {
+              if(shipment['ShipmentException']) {
+                let origin = shipment['Origin'] ? shipment['Origin'] : '';
+                tickers.push({
+                  name: '*** ' + shipment['ShipmentException'] + ' Shipment: ' +  shipment['ShipmentJobNumber'] + ' ' + origin + ' ***'
+                })
+              }
+            });
+            this.settingsService.emitRunningLineData(tickers);
           },
           (error) =>  {
             this.errorMessage = <any>error;

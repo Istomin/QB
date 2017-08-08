@@ -19,7 +19,10 @@ export class RunningLineComponent implements OnInit {
     this.texts = [{
       name: 'Refreshing data'
     }];
-    this.subscription = this.settingsService.getRunningLineData().subscribe((response) => {
+    this.subscription = this.settingsService.getRunningLineData().subscribe((tickers) => {
+      console.log(tickers, 'tickers')
+      this.texts.length = 0;
+      this.texts = tickers;
      // this.text = response.toString();
 
       // setTimeout(() => {

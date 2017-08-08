@@ -14,7 +14,7 @@ export class InfoTableService {
 
   getShipments(value?: string) {
     return this.http
-      .get(this.makeApiUri('data/'))
+      .get(this.makeApiUri('data2/'))
       .map((response: Response) => JSON.parse(response['_body']))
       .do(data => console.log(data))
       .catch(this.handleError);
