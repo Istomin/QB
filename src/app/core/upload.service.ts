@@ -18,10 +18,19 @@ export class UploadService {
     const form = new FormData();
     form.append("image", file);
     return this.http
-      .withUploadProgressListener(progress => { console.log(`Uploading ${progress.percentage}%`); })
-      .withDownloadProgressListener(progress => { console.log(`Downloading ${progress.percentage}%`); })
-      .post("http://208.17.192.85:6544/api/v2/upload/", form, options)
+      .post(this.makeApiUri('upload/'), form, options);
+  }
 
+  removeLogo() {
+    var options = new RequestOptions();
+    options.headers = new Headers();
+    if(this.localStorage.get('token')) {
+      options.headers.append('Authorization', 'JWT ' + this.localStorage.get('token'));
+    }
+    const form = new FormData();
+
+    return this.http
+      .delete(this.makeApiUri('upload/'), options);
   }
 
   private makeApiUri(target) {

@@ -40,11 +40,17 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
       this.setLogo(this.userSettings.logo, true);
     });
 
-    this.logoSubscription = this.settingsService.getLogoId().subscribe((logoId) => {
-      if(logoId == null) {
-        this.setLogo(this.userSettings.logo, true);
-      } else {
-        this.setLogo(logoId, false);
+    this.logoSubscription = this.settingsService.getLogoId().subscribe((logoObj) => {
+      if(logoObj.isRemoved) {
+        this.imgSrc = null;
+      } else if(logoObj.isCanceled) {
+        if(this.userSettings.logo) {
+          this.setLogo(this.userSettings.logo, true);
+        } else {
+          this.imgSrc = null;
+        }
+      } else if(logoObj.isAdded) {
+        this.setLogo(logoObj.logoId, false);
       }
     });
   }
@@ -69,8 +75,6 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
     } else {
       this.imgSrc = id;
     }
-
-    console.log(id)
   }
 
 }

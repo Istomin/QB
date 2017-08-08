@@ -35,6 +35,7 @@ export class SettingsTabsComponent implements OnInit {
   private user: {}|any;
   private newLogoAdded: boolean;
   private file: any;
+  private isLogoRemoved: boolean;
   constructor(private settingsService: AppSettingsService, private localStorage: LocalStorageService, private userProfileService: UserProfileService, private router: Router, private loginService: LoginService, private uploadService: UploadService) {
   }
 
@@ -72,11 +73,12 @@ export class SettingsTabsComponent implements OnInit {
           color: this.pageSettings.settings.graphics[key]
         });
       }
-      if(this.imgSrc) {
-        this.settingsService.emitLogoId(null);
-      }
 
     }
+
+    this.settingsService.emitLogoId({
+      isCanceled: true
+    });
 
     this.displayMode['model'] = this.pageSettings.settings.system.displayMode;
     this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
@@ -84,16 +86,26 @@ export class SettingsTabsComponent implements OnInit {
     array.forEach((obj) => {
       this.applySettings(obj);
     });
+
+    this.isLogoRemoved = false;
   }
 
   public saveSettings() {
     this.prepareUserSettingsForSaving();
     this.settingsService.emitScrollInterval(this.pageSettings.settings.system.scrollInterval);
     this.localStorage.setObject('userSettings', this.pageSettings);
-    if(this.newLogoAdded) {
-      this.uploadService.uploadLogo(this.file).subscribe((response) => {
-        alert(12345)
+    if(this.isLogoRemoved) {
+      this.uploadService.removeLogo().subscribe((response) => {
+        // this.settingsService.emitLogoId({
+        //   isDeleted: true
+        // });
       });
+    } else {
+      if(this.newLogoAdded) {
+        this.uploadService.uploadLogo(this.file).subscribe((response) => {
+
+        });
+      }
     }
   }
 
@@ -126,8 +138,12 @@ export class SettingsTabsComponent implements OnInit {
     this.file = event.srcElement.files[0];
     reader.onload = () =>{
       this.imgSrc = reader.result;
-      this.settingsService.emitLogoId(this.imgSrc);
+      this.settingsService.emitLogoId({
+        isAdded: true,
+        logoId: this.imgSrc
+      });
       this.newLogoAdded = true;
+      this.isLogoRemoved = false;
     };
     reader.readAsDataURL(this.file);
 
@@ -141,20 +157,6 @@ export class SettingsTabsComponent implements OnInit {
     }
   }
 
-  imageFinishedUploading(file: any) {
-    let fileObj = JSON.parse(file.serverResponse['_body']),
-      splittedString = fileObj.file.split('/'),
-      imgId = splittedString[splittedString.length - 1];
-    this.settingsService.emitLogoId(fileObj.file);
-  }
-
-  imageRemoved(file: any) {
-    // do some stuff with the removed file.
-  }
-
-  uploadStateChange(state: boolean) {
-    console.log(JSON.stringify(state));
-  }
 
   private onRefreshSliderChanged($event) {
     this.refresh_int = $event.value;
@@ -166,6 +168,10 @@ export class SettingsTabsComponent implements OnInit {
 
   private removeLogo() {
     this.imgSrc = null;
+    this.isLogoRemoved = true;
+    this.settingsService.emitLogoId({
+      isRemoved: true
+    });
   }
 
   private onTextLogoChanged($event) {
