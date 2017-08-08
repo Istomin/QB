@@ -16,6 +16,16 @@
 	border: none;
 	border-radius: 0;
 	padding: 20px;
+	footer {
+		text-align: center;
+		margin-top: 0;
+		button {
+			color: #000;
+			font-size: 20px;
+			text-transform: uppercase;
+			vertical-align: top;
+			width: 140px;
+			margin: 10px 10px 0;		}	}
 }
 .modal-header {
 	padding: 0;

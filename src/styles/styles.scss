@@ -17,7 +17,7 @@ dashboard {
 	display: block;
 }
 main {
-	height: calc(100% - 70px);
+	height: calc(100% - 120px);
 	overflow-x: hidden;
 	overflow-y: auto;
 }
@@ -38,12 +38,10 @@ nav a {
 }
 .nav>li>a {
 	font-size: 18px;
-	font-weight: bold;
-	color: #000;
+	font-weight: bold;	color: #000;
 }
 .nav>li>a:hover {
-	background: none;
-}
+	background: none;}
 .nav-tabs {
 	border-bottom-color: #000;
 }
@@ -52,20 +50,25 @@ nav a {
 	color: #000;
 }
 
-.table thead th:first-child {
-	width: 185px;
+.table {
+	margin: 0;
+	thead th:first-child {
+		width: 185px;
+	}
 }
 
 footer {
-	margin-top: -50px;
 	position: relative
 }
 
-.image-container {
-  //display: none !important;
-}
-.file-upload {
+div.file-upload {
+	padding: 0;
+	background: none;
   .clear.button {
-   // display: none !important;
+    display: none !important;
   }
+}
+
+.drag-box-message {
+	display: none;
 }
