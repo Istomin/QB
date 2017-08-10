@@ -21,6 +21,13 @@ export class LoginService {private baseApiUrl = GlobalVariable.BASE_API_URL;
       .catch(this.handleError);
   }
 
+  updateUserInfo(obj) {
+    return this.http
+      .put(this.makeApiUri('auth/me/'), obj)
+      .do(data => data)
+      .catch(this.handleError);
+  }
+
   private handleError(error: Response) {
     let msg = `Error status code ${error.status} at ${error.url}`;
     return Observable.throw(msg);

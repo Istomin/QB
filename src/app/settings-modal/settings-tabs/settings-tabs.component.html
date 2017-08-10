@@ -51,7 +51,7 @@
 							<label  for="transit">Show Transit</label>
 						</li>
 					</ul>
-					<select class="form-control">
+					<select [disabled]="!showTransit.model" class="form-control">
 						<option>From Collection</option>
 						<option>From Pack Out</option>
 						<option>From Alternate</option>

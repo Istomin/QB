@@ -39,11 +39,11 @@ export class SettingsTabsComponent implements OnInit {
   private newLogoAdded: boolean;
   private file: any;
   private isLogoRemoved: boolean;
+  userInfo: any;
   constructor(private settingsService: AppSettingsService, private localStorage: LocalStorageService, private userProfileService: UserProfileService, private router: Router, private loginService: LoginService, private uploadService: UploadService) {
   }
 
   public ngOnInit() {
-    let userInfo;
     this.pageSettings = this.localStorage.getObject('userSettings') && this.localStorage.getObject('userSettings').hasOwnProperty('settings') ? this.localStorage.getObject('userSettings') : this.dafaultSettings;
     this.displayMode = {};
     this.flightDisplay = {};
@@ -52,18 +52,18 @@ export class SettingsTabsComponent implements OnInit {
     this.showExpectedDelivery = {};
 
     this.loginService.getUserInfo().subscribe((response: any) => {
-      userInfo = JSON.parse(response['_body']);
-      this.settingsService.emitUserSettingsData(userInfo);
+      this.userInfo = JSON.parse(response['_body']);
+      this.settingsService.emitUserSettingsData(this.userInfo);
 
 
-      this.pageSettings.settings.graphics.businessName = userInfo.business_name;
-      this.pageSettings.settings.system.refreshInterval = userInfo.refresh_int == 0 ? 10 : userInfo.refresh_int;
-      this.pageSettings.settings.system.scrollInterval = userInfo.scroll_int * 10;
-      this.pageSettings.settings.system.displayMode = userInfo.display_mode == 'shipper' ? 0 : 1;
-      this.pageSettings.settings.system.flightDisplay = userInfo.flight_display == 'org' ? 0 : 1;
-      this.pageSettings.settings.system.dropDelivered = userInfo.drop_delivered;
-      this.pageSettings.settings.system.showTransit = userInfo.show_transit;
-      this.pageSettings.settings.system.showExpectedDelivery = userInfo.show_expect_delivery;
+      this.pageSettings.settings.graphics.businessName = this.userInfo.business_name;
+      this.pageSettings.settings.system.refreshInterval = this.userInfo.refresh_int == 0 ? 10 : this.userInfo.refresh_int;
+      this.pageSettings.settings.system.scrollInterval = this.userInfo.scroll_int * 10;
+      this.pageSettings.settings.system.displayMode = this.userInfo.display_mode == 'shipper' ? 0 : 1;
+      this.pageSettings.settings.system.flightDisplay = this.userInfo.flight_display == 'org' ? 0 : 1;
+      this.pageSettings.settings.system.dropDelivered = this.userInfo.drop_delivered;
+      this.pageSettings.settings.system.showTransit = this.userInfo.show_transit;
+      this.pageSettings.settings.system.showExpectedDelivery = this.userInfo.show_expect_delivery;
 
 
       this.refresh_int =  this.pageSettings.settings.system.refreshInterval;
@@ -125,13 +125,18 @@ export class SettingsTabsComponent implements OnInit {
         this.settingsService.emitLogoId({
           isDeleted: true
         });
+        this.userInfo.logo = null;
+        this.updateUser();
         this.imgSrc = null;
       });
     } else {
       if(this.newLogoAdded) {
         this.uploadService.uploadLogo(this.file).subscribe((response) => {
-
+          this.userInfo.logo = JSON.parse(response['_body']).image;
+          this.updateUser();
         });
+      } else {
+        this.updateUser();
       }
     }
   }
@@ -144,6 +149,12 @@ export class SettingsTabsComponent implements OnInit {
     }
   }
 
+  private updateUser() {
+    this.loginService.updateUserInfo(this.userInfo).subscribe((response: any) => {
+      alert(1)
+    });
+  }
+
   private prepareUserSettingsForSaving() {
     this.pageSettings.settings.system.refreshInterval =  this.refresh_int;
     this.pageSettings.settings.system.scrollInterval = this.scroll_int;
@@ -152,6 +163,19 @@ export class SettingsTabsComponent implements OnInit {
     this.pageSettings.settings.system.dropDelivered = this.dropDelivered['model'];
     this.pageSettings.settings.system.showTransit = this.showTransit['model'];
     this.pageSettings.settings.system.showExpectedDelivery = this.showExpectedDelivery['model'];
+
+    this.collectUserSettings();
+  }
+
+  private collectUserSettings() {
+    this.userInfo.business_name = this.pageSettings.settings.graphics.businessName;
+    this.userInfo.display_mode = this.pageSettings.settings.system.displayMode == 0 ? 'shipper' : 'consignee';
+    this.userInfo.drop_delivered = this.pageSettings.settings.system.dropDelivered;
+    this.userInfo.flight_display = this.pageSettings.settings.system.flightDisplay == 0 ? 'org' : 'des';
+    this.userInfo.show_expect_delivery = this.pageSettings.settings.system.showExpectedDelivery;
+    this.userInfo.refresh_int = this.pageSettings.settings.system.refreshInterval;
+    this.userInfo.scroll_int = this.pageSettings.settings.system.scrollInterval;
+    this.userInfo.show_transit = null;
   }
 
   private onTableColChange() {

@@ -122,8 +122,14 @@ export class InfoTableComponent implements OnInit, OnDestroy {
                 shipment['des'] = '';
               }
 
-              let expectedDeliveryMonth = shipment['DeadlineDateTime'].DateTime['@Month'][0] == 0 ? shipment['DeadlineDateTime'].DateTime['@Month'].substr(1) : shipment['DeadlineDateTime'].DateTime['@Month'];
-              shipment['expectedDelivery'] = expectedDeliveryMonth + ' .' + shipment['DeadlineDateTime'].DateTime['@Hour'] + ':'  + shipment['DeadlineDateTime'].DateTime['@Hour'];
+              if(shipment['DeadlineDateTime']) {
+
+                let expectedDeliveryMonth = shipment['DeadlineDateTime'].DateTime['@Month'][0] == 0 ? shipment['DeadlineDateTime'].DateTime['@Month'].substr(1) : shipment['DeadlineDateTime'].DateTime['@Month'];
+                shipment['expectedDelivery'] = expectedDeliveryMonth + ' .' + shipment['DeadlineDateTime'].DateTime['@Hour'] + ':'  + shipment['DeadlineDateTime'].DateTime['@Hour'];
+
+              } else {
+                shipment['expectedDelivery'] = '';
+              }
 
               shipment['isDelivered'] = shipment['ShipmentStatus'] == 'Delivered';
               let deliveryMonth = shipment['ShipmentStatusTime'].DateTime['@Month'][0] == 0 ? shipment['ShipmentStatusTime'].DateTime['@Month'].substr(1) : shipment['ShipmentStatusTime'].DateTime['@Month'];
