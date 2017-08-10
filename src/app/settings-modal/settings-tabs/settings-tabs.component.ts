@@ -32,6 +32,7 @@ export class SettingsTabsComponent implements OnInit {
   private displayMode;
   private flightDisplay;
   private dropDelivered;
+  private showTransit;
   private imgSrc: string;
   private user: {}|any;
   private newLogoAdded: boolean;
@@ -46,6 +47,7 @@ export class SettingsTabsComponent implements OnInit {
     this.displayMode = {};
     this.flightDisplay = {};
     this.dropDelivered = {};
+    this.showTransit = {};
     this.loginService.getUserInfo().subscribe((response: any) => {
       this.settingsService.emitUserSettingsData(response['_body']);
     });
@@ -55,6 +57,7 @@ export class SettingsTabsComponent implements OnInit {
     this.displayMode['model'] = this.pageSettings.settings.system.displayMode;
     this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
     this.dropDelivered['model'] = this.pageSettings.settings.system.dropDelivered;
+    this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
     this.settingsService.emitTableCol(this.pageSettings);
 
     this.clonedSettings = this.deepCopy(this.pageSettings);
@@ -84,6 +87,7 @@ export class SettingsTabsComponent implements OnInit {
     this.displayMode['model'] = this.pageSettings.settings.system.displayMode;
     this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
     this.dropDelivered['model'] = this.pageSettings.settings.system.dropDelivered;
+    this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
     this.settingsService.emitTableCol(this.pageSettings);
     array.forEach((obj) => {
       this.applySettings(obj);
@@ -126,12 +130,14 @@ export class SettingsTabsComponent implements OnInit {
     this.pageSettings.settings.system.displayMode = this.displayMode['model'];
     this.pageSettings.settings.system.flightDisplay = this.flightDisplay['model'];
     this.pageSettings.settings.system.dropDelivered = this.dropDelivered['model'];
+    this.pageSettings.settings.system.showTransit = this.showTransit['model'];
   }
 
   private onTableColChange() {
     this.pageSettings.settings.system.displayMode = this.displayMode['model'];
     this.pageSettings.settings.system.flightDisplay = this.flightDisplay['model'];
     this.pageSettings.settings.system.dropDelivered = this.dropDelivered['model'];
+    this.pageSettings.settings.system.showTransit = this.showTransit['model'];
     this.settingsService.emitTableCol(this.pageSettings);
   }
 

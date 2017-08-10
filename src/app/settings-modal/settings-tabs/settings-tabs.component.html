@@ -47,8 +47,8 @@
 					</ul>
 					<ul class="radio-list">
 						<li>
-							<input type="checkbox" id="transit" checked="checked"/>
-							<label for="transit">Show Transit</label>
+							<input (change)="onTableColChange()" [(ngModel)]="showTransit.model" type="checkbox" id="transit" checked="checked"/>
+							<label  for="transit">Show Transit</label>
 						</li>
 					</ul>
 					<select class="form-control">

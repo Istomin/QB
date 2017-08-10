@@ -29,6 +29,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private showShipper: boolean;
   private dropDelivered: boolean;
   private shipmentsClone: any;
+  private showTransit: boolean;
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService) {}
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {
@@ -53,6 +54,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
     this.showOrg = obj.settings.system.flightDisplay === 0;
     this.showShipper = obj.settings.system.displayMode === 0;
     this.dropDelivered = obj.settings.system.dropDelivered;
+    this.showTransit = obj.settings.system.showTransit;
 
     if(this.shipments && this.shipments.length) {
       if (this.dropDelivered ) {
