@@ -10,6 +10,7 @@ import { Component } from '@angular/core';
 export class FullScreenComponent {
   public openFullScreen(): void {
 
+    var document:any = window.document;
     if (!document.fullscreenElement &&    // alternative standard method
       !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {  // current working methods
       if (document.documentElement.requestFullscreen) {
@@ -19,7 +20,7 @@ export class FullScreenComponent {
       } else if (document.documentElement.mozRequestFullScreen) {
         document.documentElement.mozRequestFullScreen();
       } else if (document.documentElement.webkitRequestFullscreen) {
-        document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+        document.documentElement.webkitRequestFullscreen(Element['ALLOW_KEYBOARD_INPUT']);
       }
     } else {
       if (document.exitFullscreen) {
