@@ -109,8 +109,9 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
               if(shipment['ShipmentException']) {
                 let origin = shipment['Origin'] ? shipment['Origin'] : '';
+                console.log(shipment)
                 tickers.push({
-                  name: '*** ' + shipment['ShipmentException'] + ' Shipment: ' +  shipment['ShipmentJobNumber'] + ' ' + origin + ' ***'
+                  name: shipment['ShipmentException'] + ' Shipment: ' +  shipment['ShipmentJobNumber'] + ' ' + origin
                 });
               }
             });
@@ -118,8 +119,6 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
             this.shipmentsClone = this.deepCopy(this.shipments);
 
-
-            this.shipments = this.shipmentsClone.filter((shipment) => !shipment.isDelivered;
             if (this.dropDelivered ) {
               this.shipments = this.shipmentsClone.filter((shipment) => !shipment.isDelivered);
             } else {

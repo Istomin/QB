@@ -11,6 +11,7 @@ export class RunningLineComponent implements OnInit {
   @ViewChild('line') public line: LineDirective;
   private subscription: any;
   private texts: [{name: string}];
+  private defaultText: boolean;
 
   constructor(private settingsService: AppSettingsService) {
   }
@@ -19,8 +20,9 @@ export class RunningLineComponent implements OnInit {
     this.texts = [{
       name: 'Refreshing data'
     }];
+    this.defaultText = true;
     this.subscription = this.settingsService.getRunningLineData().subscribe((tickers) => {
-      console.log(tickers, 'tickers')
+      this.defaultText = false;
       this.texts.length = 0;
       this.texts = tickers;
      // this.text = response.toString();
