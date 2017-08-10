@@ -77,7 +77,7 @@ export class SettingsTabsComponent implements OnInit {
       this.settingsService.emitTableCol(this.pageSettings);
       this.clonedSettings = this.deepCopy(this.pageSettings);
       this.onTextLogoChanged(this.pageSettings.settings.graphics.businessName);
-
+      this.settingsService.emitRefreshInterval(this.pageSettings.settings.system.refreshInterval);
 
     });
   }
@@ -118,6 +118,7 @@ export class SettingsTabsComponent implements OnInit {
   public saveSettings() {
     this.prepareUserSettingsForSaving();
     this.settingsService.emitScrollInterval(this.pageSettings.settings.system.scrollInterval);
+    this.settingsService.emitRefreshInterval(this.pageSettings.settings.system.refreshInterval);
     this.localStorage.setObject('userSettings', this.pageSettings);
     if(this.isLogoRemoved) {
       this.uploadService.removeLogo().subscribe((response) => {

@@ -18,6 +18,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   @ViewChild('lgModal') public  lgModal: SettingsModalComponent;
   public subscription: Subscription;
   public tableColSubscription: Subscription;
+  public refreshIntervalSubscription: Subscription;
   private defaultBottomColor: string = '#001a22';
   private tableHeaderColor: string;
   private shipments: Shipment[];
@@ -32,6 +33,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private shipmentsClone: any;
   private showTransit: boolean;
   private showExpectedDelivery: boolean;
+  private refreshTimer: any;
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService, private uploadService: UploadService) {}
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {
@@ -40,11 +42,17 @@ export class InfoTableComponent implements OnInit, OnDestroy {
     this.tableColSubscription = this.settingsService.getTableCol().subscribe((obj) => {
       this.triggerColsVisibility(obj);
     });
-    this.getTableData();
+
+    this.getData();
+    this.refreshIntervalSubscription = this.settingsService.getRefreshInterval().subscribe((interval) => {
+      this.getTableData(interval);
+    });
+
   }
 
   public ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.refreshIntervalSubscription.unsubscribe();
     this.tableColSubscription.unsubscribe();
   }
 
@@ -68,7 +76,14 @@ export class InfoTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getTableData() {
+  private getTableData(interval: number) {
+    clearInterval(this.refreshTimer);
+    this.refreshTimer = setInterval(() => {
+      this.getData();
+    }, 600 * 100 * interval);
+  }
+
+  getData() {
     setTimeout(() => {
       this.spinner.show();
       this.uploadService.getTableData()
@@ -117,7 +132,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
               if(shipment['ETADateTime']) {
                 let etaMonth = shipment['ETADateTime'].DateTime['@Month'][0] == 0 ? shipment['ETADateTime'].DateTime['@Month'].substr(1) : shipment['ETADateTime'].DateTime['@Month'];
                 shipment.eta = etaMonth + ' .' + shipment['ETADateTime'].DateTime['@Hour'] + ':'  + shipment['ETADateTime'].DateTime['@Hour'];
-              console.log(shipment, 'shipment')
+                console.log(shipment, 'shipment')
               } else {
                 shipment.eta = '';
               }
