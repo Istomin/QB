@@ -86,11 +86,22 @@ export class InfoTableComponent implements OnInit, OnDestroy {
                 shipment.reference = '';
               }
 
-              if(shipment['Flights'] && shipment['Flights'].Flight.length) {
-                shipment['flight'] = shipment['Flights'].Flight[0].AirlineCode + shipment['Flights'].Flight[0].AirwayBillNumber;
+              if(shipment['Flights'] && shipment['Flights'].Flight) {
+                if(Array.isArray(shipment['Flights'].Flight)) {
+                  shipment['flight'] = shipment['Flights'].Flight[0].AirlineCode + shipment['Flights'].Flight[0].AirwayBillNumber;
+                  shipment['org'] = shipment['Flights'].Flight[0].OriginAirportCode;
+                  shipment['des'] = shipment['Flights'].Flight[0].DestinationAirportCode;
+                } else {
+                  shipment['flight'] = shipment['Flights'].Flight.AirlineCode + shipment['Flights'].Flight.AirwayBillNumber;
+                  shipment['org'] = shipment['Flights'].Flight.OriginAirportCode;
+                  shipment['des'] = shipment['Flights'].Flight.DestinationAirportCode;
+                }
               } else {
                 shipment['flight'] = '';
+                shipment['org'] = '';
+                shipment['des'] = '';
               }
+
 
               if(shipment['Origin'] || shipment['Destination']) {
 
@@ -109,7 +120,6 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
               if(shipment['ShipmentException']) {
                 let origin = shipment['Origin'] ? shipment['Origin'] : '';
-                console.log(shipment)
                 tickers.push({
                   name: shipment['ShipmentException'] + ' Shipment: ' +  shipment['ShipmentJobNumber'] + ' ' + origin
                 });

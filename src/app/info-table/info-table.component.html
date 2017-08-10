@@ -9,8 +9,8 @@
       </th>
       <th><a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'flight'; reverse = !reverse;" [ngClass]="{'active': order == 'flight', 'up': order == 'flight' && reverse, 'down': order == 'flight' && !reverse}"><span [style.color]="tableTextColor">Flight</span></a></th>
       <th>
-        <a *ngIf="showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'ORG'; reverse = !reverse;" [ngClass]="{'active': order == 'ORG', 'up': order == 'ORG' && reverse, 'down': order == 'ORG' && !reverse}"><span [style.color]="tableTextColor">ORG</span></a>
-        <a *ngIf="!showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'DES'; reverse = !reverse;" [ngClass]="{'active': order == 'DES', 'up': order == 'DES' && reverse, 'down': order == 'DES' && !reverse}"><span [style.color]="tableTextColor">DES</span></a>
+        <a *ngIf="showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'org'; reverse = !reverse;" [ngClass]="{'active': order == 'org', 'up': order == 'org' && reverse, 'down': order == 'org' && !reverse}"><span [style.color]="tableTextColor">ORG</span></a>
+        <a *ngIf="!showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'des'; reverse = !reverse;" [ngClass]="{'active': order == 'des', 'up': order == 'des' && reverse, 'down': order == 'des' && !reverse}"><span [style.color]="tableTextColor">DES</span></a>
 
       </th>
       <th><a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'eta'; reverse = !reverse;" [ngClass]="{'active': order == 'eta', 'up': order == 'eta' && reverse, 'down': order == 'eta' && !reverse}"><span [style.color]="tableTextColor">ETA</span></a></th>
@@ -21,7 +21,7 @@
   <tr  *ngFor="let shipment of shipments   | orderBy: order : reverse; let i = index">
     <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.ShipmentBOLNumber}}</td>
     <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
-      <span class="reference" >{{shipment.isDelivered}} {{dropDelivered}}</span>
+      <span class="reference" >{{shipment.isDelivered}}</span>
     </td>
     <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
       <span class="space" *ngIf="showShipper" >{{shipment.shipper}}</span>
@@ -31,8 +31,8 @@
       {{shipment.flight}}
     </td>
     <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
-      <span *ngIf="showOrg">{{shipment.ORG}}</span>
-      <span *ngIf="!showOrg">{{shipment.DES}}</span>
+      <span *ngIf="showOrg">{{shipment.org}}</span>
+      <span *ngIf="!showOrg">{{shipment.des}}</span>
     </td>
     <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.eta}}</td>
     <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
