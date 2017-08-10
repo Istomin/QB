@@ -80,9 +80,6 @@ export class SettingsTabsComponent implements OnInit {
 
 
     });
-
-
-    // this.uploadService.test().subscribe();
   }
 
   public resetToPreviousSettings() {

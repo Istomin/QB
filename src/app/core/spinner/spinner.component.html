@@ -1,1 +1,4 @@
-<div id="spinner"></div>
+<div id="spinner">
+  <span *ngIf="showProgress">{{progress}} %</span>
+  <span *ngIf="showProgress">Refreshing</span>
+</div>

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InfoTableService, Shipment } from '.././info-table/info-table.service';
 import {SpinnerService} from "../core/spinner/spinner.service";
+import { UploadService } from "../core/upload.service";
 
 
 @Component({
@@ -31,7 +32,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private shipmentsClone: any;
   private showTransit: boolean;
   private showExpectedDelivery: boolean;
-  constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService) {}
+  constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService, private uploadService: UploadService) {}
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {
       this.onAppSettingsChanged(response);
@@ -70,7 +71,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private getTableData() {
     setTimeout(() => {
       this.spinner.show();
-      this.infoTableService.getShipments()
+      this.uploadService.getTableData()
         .subscribe(
           (response) => {
             this.spinner.hide();

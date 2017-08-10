@@ -9,6 +9,7 @@ export class AppSettingsService {
   public logoIdChange: EventEmitter<number> = new EventEmitter();
   public scrollIntervalChange: EventEmitter<number> = new EventEmitter();
   public tableColChange: EventEmitter<number> = new EventEmitter();
+  public progressBarChange: EventEmitter<number> = new EventEmitter();
   public emitNavChangeEvent(numb: any) {
     this.navchange.emit(numb);
   }
@@ -52,5 +53,11 @@ export class AppSettingsService {
   }
   public getTableCol() {
     return this.tableColChange;
+  }
+  public emitProgressBarNumber(numb: any) {
+    this.progressBarChange.emit(numb);
+  }
+  public getProgressBarNumberEmitter() {
+    return this.progressBarChange;
   }
 }

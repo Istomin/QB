@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-
 import { SpinnerState, SpinnerService } from './spinner.service';
+import { AppSettingsService } from '../app-settings.service';
 
 @Component({
   selector: 'spinner',
@@ -10,14 +10,21 @@ import { SpinnerState, SpinnerService } from './spinner.service';
 })
 export class SpinnerComponent implements OnDestroy, OnInit {
   visible = false;
-
+  progress: any;
+  showProgress: boolean = false;
+  public subscription: Subscription;
   private spinnerStateChanged: Subscription;
   private toastElement: HTMLElement|any;
 
-  constructor(private spinnerService: SpinnerService) {
+  constructor(private spinnerService: SpinnerService, private settingsService: AppSettingsService) {
   }
 
   ngOnInit() {
+    this.subscription = this.settingsService.getProgressBarNumberEmitter().subscribe((percentage) => {
+      this.showProgress = percentage >=0 && percentage < 100;
+      this.progress = percentage;
+    });
+
     this.spinnerStateChanged = this.spinnerService.spinnerState
       .subscribe((state: SpinnerState) => {
         this.toggleVisibility(state.show);
@@ -32,6 +39,7 @@ export class SpinnerComponent implements OnDestroy, OnInit {
 
   ngOnDestroy() {
 
+    this.subscription.unsubscribe();
     this.spinnerStateChanged.unsubscribe();
   }
 }
