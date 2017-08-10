@@ -27,6 +27,8 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   reverse : boolean = false;
   private showOrg: boolean;
   private showShipper: boolean;
+  private dropDelivered: boolean;
+  private shipmentsClone: any;
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService) {}
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {
@@ -50,6 +52,15 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private triggerColsVisibility(obj) {
     this.showOrg = obj.settings.system.flightDisplay === 0;
     this.showShipper = obj.settings.system.displayMode === 0;
+    this.dropDelivered = obj.settings.system.dropDelivered;
+
+    if(this.shipments && this.shipments.length) {
+      if (this.dropDelivered ) {
+        this.shipments = this.shipmentsClone.filter((shipment) => !shipment.isDelivered);
+      } else {
+        this.shipments = this.deepCopy(this.shipmentsClone);
+      }
+    }
   }
 
   private getTableData() {
@@ -61,21 +72,75 @@ export class InfoTableComponent implements OnInit, OnDestroy {
             this.spinner.hide();
             this.shipments = response.TransactionResponse.Shipments.Shipment;
             var tickers = [];
-            console.log(this.shipments)
+
             this.shipments.forEach((shipment) => {
+              shipment['shipper'] = shipment['Shipper'].Address.CompanyName + "\n" + shipment['Shipper'].Address.City + ' ' + shipment['Shipper'].Address.StateProvinceCode + ' ' + shipment['Shipper'].Address.CountryCode;
+              shipment['consignee'] = shipment['Consignee'].Address.CompanyName + "\n" + shipment['Consignee'].Address.City + ' ' + shipment['Consignee'].Address.StateProvinceCode + ' ' + shipment['Consignee'].Address.CountryCode;
+              if(shipment['ShippersReference']) {
+                if(Array.isArray(shipment['ShippersReference'])) {
+                  shipment.reference = shipment['ShippersReference'].toString();
+                } else {
+                  shipment.reference = shipment['ShippersReference'];
+                }
+              } else {
+                shipment.reference = '';
+              }
+
+              if(shipment['Flights'] && shipment['Flights'].Flight.length) {
+                shipment['flight'] = shipment['Flights'].Flight[0].AirlineCode + shipment['Flights'].Flight[0].AirwayBillNumber;
+              } else {
+                shipment['flight'] = '';
+              }
+
+              if(shipment['Origin'] || shipment['Destination']) {
+
+              }
+
+              shipment['isDelivered'] = shipment['ShipmentStatus'] == 'Delivered';
+              let deliveryMonth = shipment['ShipmentStatusTime'].DateTime['@Month'][0] == 0 ? shipment['ShipmentStatusTime'].DateTime['@Month'].substr(1) : shipment['ShipmentStatusTime'].DateTime['@Month'];
+              shipment.status = shipment['ShipmentStatus'] + "\n" + deliveryMonth + ' .' + shipment['ShipmentStatusTime'].DateTime['@Hour'] + ':' + shipment['ShipmentStatusTime'].DateTime['@Minute'] + ' ' + shipment['ShipmentStatusLocation'];
+
+              if(shipment['ETADateTime']) {
+                let etaMonth = shipment['ETADateTime'].DateTime['@Month'][0] == 0 ? shipment['ETADateTime'].DateTime['@Month'].substr(1) : shipment['ETADateTime'].DateTime['@Month'];
+                shipment.eta = etaMonth + ' .' + shipment['ETADateTime'].DateTime['@Hour'] + ':'  + shipment['ETADateTime'].DateTime['@Hour'];
+              } else {
+                shipment.eta = '';
+              }
+
               if(shipment['ShipmentException']) {
                 let origin = shipment['Origin'] ? shipment['Origin'] : '';
                 tickers.push({
                   name: '*** ' + shipment['ShipmentException'] + ' Shipment: ' +  shipment['ShipmentJobNumber'] + ' ' + origin + ' ***'
-                })
+                });
               }
             });
             this.settingsService.emitRunningLineData(tickers);
+
+            this.shipmentsClone = this.deepCopy(this.shipments);
+
+
+            this.shipments = this.shipmentsClone.filter((shipment) => !shipment.isDelivered;
+            if (this.dropDelivered ) {
+              this.shipments = this.shipmentsClone.filter((shipment) => !shipment.isDelivered);
+            } else {
+              this.shipments = this.deepCopy(this.shipmentsClone);
+            }
           },
           (error) =>  {
             this.errorMessage = <any>error;
           }
         );
     }, 100);
+  }
+
+  private deepCopy(oldObj: any) {
+    let newObj = oldObj;
+    if (oldObj && typeof oldObj === 'object') {
+      newObj = Object.prototype.toString.call(oldObj) === '[object Array]' ? [] : {};
+      for (let i in oldObj) {
+        newObj[i] = this.deepCopy(oldObj[i]);
+      }
+    }
+    return newObj;
   }
 }

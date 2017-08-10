@@ -43,7 +43,8 @@
 				}
 				&:focus {
 					text-decoration: none
-				}			}
+				}
+			}
 
 			.active {
 				background: #016c8f !important;
@@ -58,12 +59,20 @@
 		}
 	}
 	tbody {
+    span.space {
+      white-space: pre-wrap;
+    }
 		tr:nth-child(2n) {
 			td {
 				background: #064778;
 			}
 		}
 		td {
+      .reference {
+        width: 150px;
+        display: block;
+        overflow: hidden;
+      }
 			font-size: 18px;
 			color: #fff;
 			line-height: 22px;

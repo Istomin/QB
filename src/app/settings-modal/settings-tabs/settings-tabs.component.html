@@ -62,7 +62,7 @@
 							<label for="expected-delivery">Show Expected Delivery</label>
 						</li>
 						<li>
-							<input type="checkbox" id="drop-delivery"/>
+							<input (change)="onTableColChange()" [(ngModel)]="dropDelivered.model" type="checkbox" id="drop-delivery"/>
 							<label for="drop-delivery">Drop Delivered</label>
 						</li>
 					</ul>
