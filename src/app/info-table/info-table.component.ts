@@ -117,6 +117,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
               if(shipment['ETADateTime']) {
                 let etaMonth = shipment['ETADateTime'].DateTime['@Month'][0] == 0 ? shipment['ETADateTime'].DateTime['@Month'].substr(1) : shipment['ETADateTime'].DateTime['@Month'];
                 shipment.eta = etaMonth + ' .' + shipment['ETADateTime'].DateTime['@Hour'] + ':'  + shipment['ETADateTime'].DateTime['@Hour'];
+              console.log(shipment, 'shipment')
               } else {
                 shipment.eta = '';
               }
