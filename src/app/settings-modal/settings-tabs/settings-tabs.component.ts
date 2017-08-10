@@ -43,28 +43,45 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   public ngOnInit() {
-
+    let userInfo;
     this.pageSettings = this.localStorage.getObject('userSettings') && this.localStorage.getObject('userSettings').hasOwnProperty('settings') ? this.localStorage.getObject('userSettings') : this.dafaultSettings;
     this.displayMode = {};
     this.flightDisplay = {};
     this.dropDelivered = {};
     this.showTransit = {};
     this.showExpectedDelivery = {};
+
     this.loginService.getUserInfo().subscribe((response: any) => {
-      this.settingsService.emitUserSettingsData(response['_body']);
+      userInfo = JSON.parse(response['_body']);
+      this.settingsService.emitUserSettingsData(userInfo);
+
+
+      this.pageSettings.settings.graphics.businessName = userInfo.business_name;
+      this.pageSettings.settings.system.refreshInterval = userInfo.refresh_int == 0 ? 10 : userInfo.refresh_int;
+      this.pageSettings.settings.system.scrollInterval = userInfo.scroll_int * 10;
+      this.pageSettings.settings.system.displayMode = userInfo.display_mode == 'shipper' ? 0 : 1;
+      this.pageSettings.settings.system.flightDisplay = userInfo.flight_display == 'org' ? 0 : 1;
+      this.pageSettings.settings.system.dropDelivered = userInfo.drop_delivered;
+      this.pageSettings.settings.system.showTransit = userInfo.show_transit;
+      this.pageSettings.settings.system.showExpectedDelivery = userInfo.show_expect_delivery;
+
+
+      this.refresh_int =  this.pageSettings.settings.system.refreshInterval;
+      this.scroll_int = this.pageSettings.settings.system.scrollInterval;
+      this.displayMode['model'] = this.pageSettings.settings.system.displayMode;
+      this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
+      this.dropDelivered['model'] = this.pageSettings.settings.system.dropDelivered;
+      this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
+      this.showExpectedDelivery['model'] = this.pageSettings.settings.system.showExpectedDelivery;
+
+      this.settingsService.emitTableCol(this.pageSettings);
+      this.clonedSettings = this.deepCopy(this.pageSettings);
+      this.onTextLogoChanged(this.pageSettings.settings.graphics.businessName);
+
+
     });
 
-    this.refresh_int =  this.pageSettings.settings.system.refreshInterval;
-    this.scroll_int = this.pageSettings.settings.system.scrollInterval;
-    this.displayMode['model'] = this.pageSettings.settings.system.displayMode;
-    this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
-    this.dropDelivered['model'] = this.pageSettings.settings.system.dropDelivered;
-    this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
-    this.showExpectedDelivery['model'] = this.pageSettings.settings.system.showExpectedDelivery;
-    this.settingsService.emitTableCol(this.pageSettings);
 
-    this.clonedSettings = this.deepCopy(this.pageSettings);
-    this.onTextLogoChanged(this.pageSettings.settings.graphics.businessName);
     // this.uploadService.test().subscribe();
   }
 

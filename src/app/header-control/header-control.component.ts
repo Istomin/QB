@@ -35,9 +35,11 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
     });
 
     this.userSettingsSubscription = this.settingsService.getUserSettingsData().subscribe((response) => {
-      this.userSettings = JSON.parse(response);
+      this.userSettings = response;
       this.localStorage.setObject('user', this.userSettings);
       this.setLogo(this.userSettings.logo, true);
+      console.log(this.userSettings, 'ME')
+      this.businessName = this.userSettings.business_name;
     });
 
     this.logoSubscription = this.settingsService.getLogoId().subscribe((logoObj) => {

@@ -30,6 +30,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private dropDelivered: boolean;
   private shipmentsClone: any;
   private showTransit: boolean;
+  private showExpectedDelivery: boolean;
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService) {}
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {
