@@ -21,7 +21,7 @@
   <tr  *ngFor="let shipment of shipments   | orderBy: order : reverse; let i = index">
     <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.ShipmentBOLNumber}}</td>
     <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
-      <span class="reference" >{{shipment.isDelivered}}</span>
+      <span class="reference" >{{shipment.reference}}</span>
     </td>
     <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
       <span class="space" *ngIf="showShipper" >{{shipment.shipper}}</span>
@@ -42,71 +42,5 @@
     </td>
   </tr>
   </tbody>
-  <!--<tbody>-->
-    <!--<tr [style.background]="tableRowColor1">-->
-      <!--<td >180860258W</td>-->
-      <!--<td>NTL</td>-->
-      <!--<td>@OMAHA NE US</td>-->
-      <!--<td>WN893</td>-->
-      <!--<td>PDX</td>-->
-      <!--<td>July 07, 9:19 AM</td>-->
-      <!--<td>-->
-        <!--<p>Tendered to Airline</p>-->
-        <!--<p>July 07, 9:16 AM ONT</p>-->
-        <!--<p>Expected: July 07. 11:15 AM</p>-->
-      <!--</td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-      <!--<td [style.background]="tableRowColor2" [style.color]="tableTextColor">180860258W</td>-->
-      <!--<td [style.background]="tableRowColor2" [style.color]="tableTextColor">NTL</td>-->
-      <!--<td [style.background]="tableRowColor2" [style.color]="tableTextColor">C20B-AMERICAN RED CROSS-COLLECTIONS <br />BOZEMAN MT US</td>-->
-      <!--<td [style.background]="tableRowColor2" [style.color]="tableTextColor">WN893</td>-->
-      <!--<td [style.background]="tableRowColor2" [style.color]="tableTextColor">PDX</td>-->
-      <!--<td [style.background]="tableRowColor2" [style.color]="tableTextColor">July 07, 9:19 AM</td>-->
-      <!--<td [style.background]="tableRowColor2" [style.color]="tableTextColor">-->
-        <!--<p>Tendered to Airline</p>-->
-        <!--<p>July 07, 9:16 AM ONT</p>-->
-        <!--<p>Expected: July 07. 11:15 AM</p>-->
-      <!--</td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-      <!--<td>180860258W</td>-->
-      <!--<td>NTL</td>-->
-      <!--<td>C20B-AMERICAN RED CROSS-COLLECTIONS <br />BOZEMAN MT US</td>-->
-      <!--<td>WN893</td>-->
-      <!--<td>PDX</td>-->
-      <!--<td>July 07, 9:19 AM</td>-->
-      <!--<td>-->
-        <!--<p>Tendered to Airline</p>-->
-        <!--<p>July 07, 9:16 AM ONT</p>-->
-        <!--<p>Expected: July 07. 11:15 AM</p>-->
-      <!--</td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-      <!--<td>180860258W</td>-->
-      <!--<td>NTL</td>-->
-      <!--<td>C20B-AMERICAN RED CROSS-COLLECTIONS <br />BOZEMAN MT US</td>-->
-      <!--<td>WN893</td>-->
-      <!--<td>PDX</td>-->
-      <!--<td>July 07, 9:19 AM</td>-->
-      <!--<td>-->
-        <!--<p>Tendered to Airline</p>-->
-        <!--<p>July 07, 9:16 AM ONT</p>-->
-        <!--<p>Expected: July 07. 11:15 AM</p>-->
-      <!--</td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-      <!--<td>180860258W</td>-->
-      <!--<td>NTL</td>-->
-      <!--<td>C20B-AMERICAN RED CROSS-COLLECTIONS <br />BOZEMAN MT US</td>-->
-      <!--<td>WN893</td>-->
-      <!--<td>PDX</td>-->
-      <!--<td>July 07, 9:19 AM</td>-->
-      <!--<td>-->
-        <!--<p>Tendered to Airline</p>-->
-        <!--<p>July 07, 9:16 AM ONT</p>-->
-        <!--<p>Expected: July 07. 11:15 AM</p>-->
-      <!--</td>-->
-    <!--</tr>-->
-  <!--</tbody>-->
+
 </table>
