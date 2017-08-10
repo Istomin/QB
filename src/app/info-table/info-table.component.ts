@@ -94,6 +94,11 @@ export class InfoTableComponent implements OnInit, OnDestroy {
             var tickers = [];
 
             this.shipments.forEach((shipment) => {
+
+              if(shipment.ShipmentBOLNumber == 75801504) {
+                console.log(shipment, 'shipmentshipmentshipment')
+              }
+
               shipment['shipper'] = shipment['Shipper'].Address.CompanyName + "\n" + shipment['Shipper'].Address.City + ' ' + shipment['Shipper'].Address.StateProvinceCode + ' ' + shipment['Shipper'].Address.CountryCode;
               shipment['consignee'] = shipment['Consignee'].Address.CompanyName + "\n" + shipment['Consignee'].Address.City + ' ' + shipment['Consignee'].Address.StateProvinceCode + ' ' + shipment['Consignee'].Address.CountryCode;
               if(shipment['ShippersReference']) {
@@ -137,7 +142,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
               if(shipment['ETADateTime']) {
                 let etaMonth = shipment['ETADateTime'].DateTime['@Month'][0] == 0 ? shipment['ETADateTime'].DateTime['@Month'].substr(1) : shipment['ETADateTime'].DateTime['@Month'];
-                shipment.eta = etaMonth + ' .' + shipment['ETADateTime'].DateTime['@Hour'] + ':'  + shipment['ETADateTime'].DateTime['@Hour'];
+                shipment.eta = etaMonth + ' .' + shipment['ETADateTime'].DateTime['@Hour'] + ':'  + shipment['ETADateTime'].DateTime['@Minute'];
                 console.log(shipment, 'shipment')
               } else {
                 shipment.eta = '';

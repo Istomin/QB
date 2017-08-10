@@ -125,14 +125,14 @@ export class SettingsTabsComponent implements OnInit {
         this.settingsService.emitLogoId({
           isDeleted: true
         });
-        this.userInfo.logo = null;
+        //this.userInfo.logo = null;
         this.updateUser();
         this.imgSrc = null;
       });
     } else {
       if(this.newLogoAdded) {
         this.uploadService.uploadLogo(this.file).subscribe((response) => {
-          this.userInfo.logo = JSON.parse(response['_body']).image;
+         // this.userInfo.logo = JSON.parse(response['_body']).image;
           this.updateUser();
         });
       } else {
@@ -150,6 +150,7 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   private updateUser() {
+    delete this.userInfo.logo;
     this.loginService.updateUserInfo(this.userInfo).subscribe((response: any) => {
       alert(1)
     });
