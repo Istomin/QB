@@ -38,6 +38,7 @@
     <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
       <span class="space">{{shipment.status}}</span>
       <span *ngIf="showTransit" class="in-transit">{{shipment.InTransitTime}}</span>
+      <span *ngIf="showExpectedDelivery" class="in-transit">Expected: {{shipment.expectedDelivery}}</span>
     </td>
   </tr>
   </tbody>

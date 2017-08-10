@@ -33,6 +33,7 @@ export class SettingsTabsComponent implements OnInit {
   private flightDisplay;
   private dropDelivered;
   private showTransit;
+  private showExpectedDelivery;
   private imgSrc: string;
   private user: {}|any;
   private newLogoAdded: boolean;
@@ -48,6 +49,7 @@ export class SettingsTabsComponent implements OnInit {
     this.flightDisplay = {};
     this.dropDelivered = {};
     this.showTransit = {};
+    this.showExpectedDelivery = {};
     this.loginService.getUserInfo().subscribe((response: any) => {
       this.settingsService.emitUserSettingsData(response['_body']);
     });
@@ -58,10 +60,12 @@ export class SettingsTabsComponent implements OnInit {
     this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
     this.dropDelivered['model'] = this.pageSettings.settings.system.dropDelivered;
     this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
+    this.showExpectedDelivery['model'] = this.pageSettings.settings.system.showExpectedDelivery;
     this.settingsService.emitTableCol(this.pageSettings);
 
     this.clonedSettings = this.deepCopy(this.pageSettings);
     this.onTextLogoChanged(this.pageSettings.settings.graphics.businessName);
+    // this.uploadService.test().subscribe();
   }
 
   public resetToPreviousSettings() {
@@ -88,6 +92,7 @@ export class SettingsTabsComponent implements OnInit {
     this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
     this.dropDelivered['model'] = this.pageSettings.settings.system.dropDelivered;
     this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
+    this.showTransit['showExpectedDelivery'] = this.pageSettings.settings.system.showExpectedDelivery;
     this.settingsService.emitTableCol(this.pageSettings);
     array.forEach((obj) => {
       this.applySettings(obj);
@@ -131,6 +136,7 @@ export class SettingsTabsComponent implements OnInit {
     this.pageSettings.settings.system.flightDisplay = this.flightDisplay['model'];
     this.pageSettings.settings.system.dropDelivered = this.dropDelivered['model'];
     this.pageSettings.settings.system.showTransit = this.showTransit['model'];
+    this.pageSettings.settings.system.showExpectedDelivery = this.showExpectedDelivery['model'];
   }
 
   private onTableColChange() {
@@ -138,6 +144,7 @@ export class SettingsTabsComponent implements OnInit {
     this.pageSettings.settings.system.flightDisplay = this.flightDisplay['model'];
     this.pageSettings.settings.system.dropDelivered = this.dropDelivered['model'];
     this.pageSettings.settings.system.showTransit = this.showTransit['model'];
+    this.pageSettings.settings.system.showExpectedDelivery = this.showExpectedDelivery['model'];
     this.settingsService.emitTableCol(this.pageSettings);
   }
 

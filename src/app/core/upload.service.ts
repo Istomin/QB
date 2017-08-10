@@ -17,6 +17,14 @@ export class UploadService {
       .post(this.makeApiUri('upload/'), form, options);
   }
 
+  test() {
+    let options = this.getOptions();
+    return this.http
+      .withUploadProgressListener(progress => { console.log(`Uploading ${progress.percentage}%`); })
+      .withDownloadProgressListener(progress => { console.log(`Downloading ${progress.percentage}%`); })
+      .get(this.makeApiUri('data2/'), options)
+  }
+
   removeLogo() {
     let options = this.getOptions();
     return this.http

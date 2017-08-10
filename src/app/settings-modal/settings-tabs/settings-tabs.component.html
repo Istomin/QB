@@ -58,7 +58,7 @@
 					</select>
 					<ul class="radio-list">
 						<li>
-							<input type="checkbox" id="expected-delivery"/>
+							<input (change)="onTableColChange()" [(ngModel)]="showExpectedDelivery.model" type="checkbox" id="expected-delivery"/>
 							<label for="expected-delivery">Show Expected Delivery</label>
 						</li>
 						<li>
