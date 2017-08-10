@@ -8,7 +8,7 @@ import {UserProfileService} from "../../core/user-profile.service";
 import {Router} from "@angular/router";
 import {LoginService} from  "../../login/login.service";
 import {UploadService} from  "../../core/upload.service";
-
+var jQuery = require("jquery");
 @Component({
   selector: 'settings-tabs',
   styleUrls: ['settings-tabs.component.scss'],
@@ -140,6 +140,7 @@ export class SettingsTabsComponent implements OnInit {
     this.applySettings(colorObj);
   }
   onChange(event) {
+    console.log(event, 'eventeventevent')
     let  reader = new FileReader();
     this.file = event.srcElement.files[0];
     reader.onload = () =>{
@@ -175,6 +176,7 @@ export class SettingsTabsComponent implements OnInit {
   private removeLogo() {
     this.imgSrc = null;
     this.isLogoRemoved = true;
+    jQuery("#file-upload")[0].value = "";
     this.settingsService.emitLogoId({
       isRemoved: true
     });
