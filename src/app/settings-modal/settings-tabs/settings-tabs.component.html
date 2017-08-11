@@ -51,10 +51,8 @@
 							<label  for="transit">Show Transit</label>
 						</li>
 					</ul>
-					<select [disabled]="!showTransit.model" class="form-control">
-						<option>From Collection</option>
-						<option>From Pack Out</option>
-						<option>From Alternate</option>
+					<select [disabled]="!showTransit.model" [ngModel]="selectedTransitOption" (change)="onTransitSelectChange($event)" class="form-control">
+            <option [value]="i" *ngFor="let i of transitArrayNames">{{i}}</option>
 					</select>
 					<ul class="radio-list">
 						<li>

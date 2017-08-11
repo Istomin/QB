@@ -9,6 +9,13 @@ import {Router} from "@angular/router";
 import {LoginService} from  "../../login/login.service";
 import {UploadService} from  "../../core/upload.service";
 var jQuery = require("jquery");
+
+enum transit {
+  PU = <any>'From Collection',
+  PO = <any>'From Pack Out',
+  AL = <any>'From Alternate'
+}
+
 @Component({
   selector: 'settings-tabs',
   styleUrls: ['settings-tabs.component.scss'],
@@ -40,21 +47,26 @@ export class SettingsTabsComponent implements OnInit {
   private file: any;
   private isLogoRemoved: boolean;
   userInfo: any;
+  private selectedTransitOption: any;
+  private transitArrayNames: [transit, transit, transit];
+  private show_transit: any;
   constructor(private settingsService: AppSettingsService, private localStorage: LocalStorageService, private userProfileService: UserProfileService, private router: Router, private loginService: LoginService, private uploadService: UploadService) {
   }
 
   public ngOnInit() {
+    this.transitArrayNames = [transit.PU, transit.PO, transit.AL];
     this.pageSettings = this.localStorage.getObject('userSettings') && this.localStorage.getObject('userSettings').hasOwnProperty('settings') ? this.localStorage.getObject('userSettings') : this.dafaultSettings;
     this.displayMode = {};
     this.flightDisplay = {};
     this.dropDelivered = {};
     this.showTransit = {};
     this.showExpectedDelivery = {};
-
+    this.selectedTransitOption = this.transitArrayNames[0];
+    this.show_transit = transit[this.selectedTransitOption];
     this.loginService.getUserInfo().subscribe((response: any) => {
       this.userInfo = JSON.parse(response['_body']);
       this.settingsService.emitUserSettingsData(this.userInfo);
-
+console.log(this.userInfo)
 
       this.pageSettings.settings.graphics.businessName = this.userInfo.business_name;
       this.pageSettings.settings.system.refreshInterval = this.userInfo.refresh_int == 0 ? 10 : this.userInfo.refresh_int;
@@ -67,7 +79,7 @@ export class SettingsTabsComponent implements OnInit {
 
 
       this.refresh_int =  this.pageSettings.settings.system.refreshInterval;
-      this.scroll_int = this.pageSettings.settings.system.scrollInterval;
+      this.scroll_int = this.pageSettings.settings.system.scrollInterval / 10;
       this.displayMode['model'] = this.pageSettings.settings.system.displayMode;
       this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
       this.dropDelivered['model'] = this.pageSettings.settings.system.dropDelivered;
@@ -174,7 +186,7 @@ export class SettingsTabsComponent implements OnInit {
     this.userInfo.show_expect_delivery = this.pageSettings.settings.system.showExpectedDelivery;
     this.userInfo.refresh_int = this.pageSettings.settings.system.refreshInterval;
     this.userInfo.scroll_int = this.pageSettings.settings.system.scrollInterval;
-    this.userInfo.show_transit = null;
+    this.userInfo.show_transit = this.showTransit['model'] ? this.show_transit : null;
   }
 
   private onTableColChange() {
@@ -245,6 +257,11 @@ export class SettingsTabsComponent implements OnInit {
     this.localStorage.set('token', '');
     this.userProfileService.isLoggedIn = false;
     this.router.navigate(['/login']);
+  }
+
+  onTransitSelectChange(event) {
+    this.selectedTransitOption = event.target.value;
+    this.show_transit = transit[this.selectedTransitOption];
   }
 
   private deepCopy(oldObj: any) {
