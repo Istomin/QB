@@ -3,7 +3,25 @@
   color: #000;
 	display: inline-block;
 	margin: 5px 0 10px;
-  button {
+	width: 22px;
+	height: 22px;
+	border: 1px solid #404040;
+	padding: 2px;
+	background: #fff;
+	&:after {
+		content: '';
+		border-width: 3px;		border-style: solid;		border-color: #2e2e2e transparent transparent;
+		position: absolute;		bottom: -1px;
+		right: 2px;
+		z-index: 1;	}
+	&:before {
+		content: '';
+		position: absolute;
+		bottom: 2px;
+		right: 2px;		width: 8px;
+		height: 6px;
+		background: #fff;
+		border-width: 1px 0 0 1px;		border-style: solid;		border-color: #001a2f;	}  button {
     border: 0;
     background: none;
     position: absolute;
@@ -14,10 +32,12 @@
   }
   input {
     padding: 0;
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
+		border: 1px solid #001a2f;
+		background: #fff;
   }
 }
-.color-picker .arrow-right {
-	top: 4px
+.color-picker[_ngcontent-c11]   .arrow-right[_ngcontent-c11] {
+	top: 2px
 }

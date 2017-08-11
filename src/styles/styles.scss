@@ -20,6 +20,7 @@ main {
 	height: calc(100% - 120px);
 	overflow-x: hidden;
 	overflow-y: auto;
+	position: relative;
 }
 nav {
   margin-top: 16px;
