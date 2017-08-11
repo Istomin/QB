@@ -95,9 +95,9 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
             this.shipments.forEach((shipment) => {
 
-              if(shipment.ShipmentBOLNumber == 75801504) {
-                console.log(shipment, 'shipmentshipmentshipment')
-              }
+              // if(shipment.ShipmentBOLNumber == 77786575) {
+              //   console.log(shipment, 'shipmentshipmentshipment')
+              // }
 
               shipment['shipper'] = shipment['Shipper'].Address.CompanyName + "\n" + shipment['Shipper'].Address.City + ' ' + shipment['Shipper'].Address.StateProvinceCode + ' ' + shipment['Shipper'].Address.CountryCode;
               shipment['consignee'] = shipment['Consignee'].Address.CompanyName + "\n" + shipment['Consignee'].Address.City + ' ' + shipment['Consignee'].Address.StateProvinceCode + ' ' + shipment['Consignee'].Address.CountryCode;
@@ -113,40 +113,43 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
               if(shipment['Flights'] && shipment['Flights'].Flight) {
                 if(Array.isArray(shipment['Flights'].Flight)) {
-                  shipment['flight'] = shipment['Flights'].Flight[0].AirlineCode + shipment['Flights'].Flight[0].AirwayBillNumber;
+                  shipment['flight'] = shipment['Flights'].Flight[0].AirlineCode + shipment['Flights'].Flight[0].FlightNumber;
                   shipment['org'] = shipment['Flights'].Flight[0].OriginAirportCode;
                   shipment['des'] = shipment['Flights'].Flight[0].DestinationAirportCode;
+
+                  shipment['eta_arrival'] = this.refactorValue(shipment['Flights'].Flight[0].ArrivalDateTime.DateTime['@Day']) + ' .' + this.refactorValue(shipment['Flights'].Flight[0].ArrivalDateTime.DateTime['@Hour']) + ':'  + shipment['Flights'].Flight[0].ArrivalDateTime.DateTime['@Minute'];
+                  shipment['eta_departure'] = this.refactorValue(shipment['Flights'].Flight[0].DepartureDateTime.DateTime['@Day']) + ' .' + this.refactorValue(shipment['Flights'].Flight[0].DepartureDateTime.DateTime['@Hour']) + ':'  + shipment['Flights'].Flight[0].DepartureDateTime.DateTime['@Minute'];
                 } else {
-                  shipment['flight'] = shipment['Flights'].Flight.AirlineCode + shipment['Flights'].Flight.AirwayBillNumber;
+                  shipment['flight'] = shipment['Flights'].Flight.AirlineCode + shipment['Flights'].Flight.FlightNumber;
                   shipment['org'] = shipment['Flights'].Flight.OriginAirportCode;
                   shipment['des'] = shipment['Flights'].Flight.DestinationAirportCode;
+                  shipment['eta_arrival'] = this.refactorValue(shipment['Flights'].Flight.ArrivalDateTime.DateTime['@Day']) + ' .' + this.refactorValue(shipment['Flights'].Flight.ArrivalDateTime.DateTime['@Hour']) + ':'  + shipment['Flights'].Flight.ArrivalDateTime.DateTime['@Minute'];
+                  shipment['eta_departure'] = this.refactorValue(shipment['Flights'].Flight.DepartureDateTime.DateTime['@Day']) + ' .' + this.refactorValue(shipment['Flights'].Flight.DepartureDateTime.DateTime['@Hour']) + ':'  + shipment['Flights'].Flight.DepartureDateTime.DateTime['@Minute'];
                 }
               } else {
                 shipment['flight'] = '';
                 shipment['org'] = '';
                 shipment['des'] = '';
+                shipment['eta_arrival'] = '';
+                shipment['eta_departure'] = '';
               }
 
               if(shipment['DeadlineDateTime']) {
-
-                let expectedDeliveryMonth = shipment['DeadlineDateTime'].DateTime['@Month'][0] == 0 ? shipment['DeadlineDateTime'].DateTime['@Month'].substr(1) : shipment['DeadlineDateTime'].DateTime['@Month'];
-                shipment['expectedDelivery'] = expectedDeliveryMonth + ' .' + shipment['DeadlineDateTime'].DateTime['@Hour'] + ':'  + shipment['DeadlineDateTime'].DateTime['@Hour'];
-
+                 shipment['expectedDelivery'] = this.refactorValue(shipment['DeadlineDateTime'].DateTime['@Day']) + ' .' + shipment['DeadlineDateTime'].DateTime['@Hour'] + ':'  + shipment['DeadlineDateTime'].DateTime['@Minute'];
               } else {
                 shipment['expectedDelivery'] = '';
               }
 
               shipment['isDelivered'] = shipment['ShipmentStatus'] == 'Delivered';
-              let deliveryMonth = shipment['ShipmentStatusTime'].DateTime['@Month'][0] == 0 ? shipment['ShipmentStatusTime'].DateTime['@Month'].substr(1) : shipment['ShipmentStatusTime'].DateTime['@Month'];
-              shipment.status = shipment['ShipmentStatus'] + "\n" + deliveryMonth + ' .' + shipment['ShipmentStatusTime'].DateTime['@Hour'] + ':' + shipment['ShipmentStatusTime'].DateTime['@Minute'] + ' ' + shipment['ShipmentStatusLocation'];
+              shipment.status = shipment['ShipmentStatus'] + "\n" + this.refactorValue(shipment['ShipmentStatusTime'].DateTime['@Day']) + ' .' + this.refactorValue(shipment['ShipmentStatusTime'].DateTime['@Hour']) + ':' + shipment['ShipmentStatusTime'].DateTime['@Minute'] + ' ' + shipment['ShipmentStatusLocation'];
 
-              if(shipment['ETADateTime']) {
-                let etaMonth = shipment['ETADateTime'].DateTime['@Month'][0] == 0 ? shipment['ETADateTime'].DateTime['@Month'].substr(1) : shipment['ETADateTime'].DateTime['@Month'];
-                shipment.eta = etaMonth + ' .' + shipment['ETADateTime'].DateTime['@Hour'] + ':'  + shipment['ETADateTime'].DateTime['@Minute'];
-                console.log(shipment, 'shipment')
-              } else {
-                shipment.eta = '';
-              }
+              // if(shipment['ETADateTime']) {
+              //   let etaMonth = shipment['ETADateTime'].DateTime['@Month'][0] == 0 ? shipment['ETADateTime'].DateTime['@Month'].substr(1) : shipment['ETADateTime'].DateTime['@Month'];
+              //   shipment.eta = etaMonth + ' .' + shipment['ETADateTime'].DateTime['@Hour'] + ':'  + shipment['ETADateTime'].DateTime['@Minute'];
+              //   console.log(shipment, 'shipment')
+              // } else {
+              //   shipment.eta = '';
+              // }
 
               if(shipment['ShipmentException']) {
                 let origin = shipment['Origin'] ? shipment['Origin'] : '';
@@ -170,6 +173,11 @@ export class InfoTableComponent implements OnInit, OnDestroy {
           }
         );
     }, 100);
+  }
+
+  refactorValue(val: any) {
+    let value = val[0] == 0 ? val.substr(1) : val;
+    return value;
   }
 
   private deepCopy(oldObj: any) {

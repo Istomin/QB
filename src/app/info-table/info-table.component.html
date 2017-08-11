@@ -11,9 +11,11 @@
       <th>
         <a *ngIf="showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'org'; reverse = !reverse;" [ngClass]="{'active': order == 'org', 'up': order == 'org' && reverse, 'down': order == 'org' && !reverse}"><span [style.color]="tableTextColor">ORG</span></a>
         <a *ngIf="!showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'des'; reverse = !reverse;" [ngClass]="{'active': order == 'des', 'up': order == 'des' && reverse, 'down': order == 'des' && !reverse}"><span [style.color]="tableTextColor">DES</span></a>
-
       </th>
-      <th><a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'eta'; reverse = !reverse;" [ngClass]="{'active': order == 'eta', 'up': order == 'eta' && reverse, 'down': order == 'eta' && !reverse}"><span [style.color]="tableTextColor">Flt ETD</span></a></th>
+      <th>
+        <a *ngIf="showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'eta_departure'; reverse = !reverse;" [ngClass]="{'active': order == 'eta_departure', 'up': order == 'eta_departure' && reverse, 'down': order == 'eta_departure' && !reverse}"><span [style.color]="tableTextColor">Flt ETD</span></a>
+        <a *ngIf="!showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'"  href="#" (click)="order = 'eta_arrival'; reverse = !reverse;" [ngClass]="{'active': order == 'eta_arrival', 'up': order == 'eta_arrival' && reverse, 'down': order == 'eta_arrival' && !reverse}"><span [style.color]="tableTextColor">Flt ETA</span></a>
+      </th>
       <th><a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'status'; reverse = !reverse;" [ngClass]="{'active': order == 'status', 'up': order == 'status' && reverse, 'down': order == 'status' && !reverse}"><span [style.color]="tableTextColor">Status</span></a></th>
     </tr>
   </thead>
@@ -34,11 +36,14 @@
       <span *ngIf="showOrg">{{shipment.org}}</span>
       <span *ngIf="!showOrg">{{shipment.des}}</span>
     </td>
-    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.eta}}</td>
+    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
+      <span *ngIf="showOrg">{{shipment.eta_departure}}</span>
+      <span *ngIf="!showOrg">{{shipment.eta_arrival}}</span>
+    </td>
     <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
       <span class="space">{{shipment.status}}</span>
       <span *ngIf="showTransit" class="in-transit">Total Time: {{shipment.InTransitTime}}</span>
-      <span *ngIf="showExpectedDelivery" class="in-transit">Expected: {{shipment.expectedDelivery}}</span>
+      <span *ngIf="showExpectedDelivery && !shipment.isDelivered" class="in-transit">Expected: {{shipment.expectedDelivery}}</span>
     </td>
   </tr>
   </tbody>
