@@ -69,11 +69,11 @@ export class SettingsTabsComponent implements OnInit {
     this.showExpectedDelivery = {};
     this.selectedTransitOption = this.transitArrayNames[0];
     this.show_transit = transit[this.selectedTransitOption];
+
+    console.log(this.pageSettings , 'FXXSS')
     this.loginService.getUserInfo().subscribe((response: any) => {
       this.userInfo = JSON.parse(response['_body']);
       this.settingsService.emitUserSettingsData(this.userInfo);
-
-
       this.pageSettings.settings.graphics.businessName = this.userInfo.business_name;
       this.pageSettings.settings.system.refreshInterval = this.userInfo.refresh_int == 0 ? 10 : this.userInfo.refresh_int;
       this.pageSettings.settings.system.scrollInterval = this.userInfo.scroll_int * 10;
@@ -82,8 +82,6 @@ export class SettingsTabsComponent implements OnInit {
       this.pageSettings.settings.system.dropDelivered = this.userInfo.drop_delivered;
       this.pageSettings.settings.system.showTransit = this.userInfo.show_transit;
       this.pageSettings.settings.system.showExpectedDelivery = this.userInfo.show_expect_delivery;
-
-
       this.refresh_int =  this.pageSettings.settings.system.refreshInterval;
       this.scroll_int = this.pageSettings.settings.system.scrollInterval / 10;
       this.displayMode['model'] = this.pageSettings.settings.system.displayMode;
@@ -96,6 +94,7 @@ export class SettingsTabsComponent implements OnInit {
       this.clonedSettings = this.deepCopy(this.pageSettings);
       this.onTextLogoChanged(this.pageSettings.settings.graphics.businessName);
       this.settingsService.emitRefreshInterval(this.pageSettings.settings.system.refreshInterval);
+      this.settingsService.emitAlertsSettingsChange(this.pageSettings.settings.alerts);
 
     });
   }
@@ -103,6 +102,7 @@ export class SettingsTabsComponent implements OnInit {
   public resetToPreviousSettings() {
     let array = [];
     this.pageSettings = this.clonedSettings;
+    console.log(this.pageSettings.settings.graphics, 'this.pageSettings.settings.graphicsthis.pageSettings.settings.graphicsthis.pageSettings.settings.graphics')
     for (let key in this.pageSettings.settings.graphics) {
       if (key === 'businessName') {
         array.push({
@@ -126,6 +126,7 @@ export class SettingsTabsComponent implements OnInit {
     this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
     this.showTransit['showExpectedDelivery'] = this.pageSettings.settings.system.showExpectedDelivery;
     this.settingsService.emitTableCol(this.pageSettings);
+
     array.forEach((obj) => {
       this.applySettings(obj);
     });
@@ -205,6 +206,7 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   private onColorChanged(colorObj) {
+    console.log(colorObj, 'colorObj')
     this.pageSettings.settings.graphics[colorObj.param] = colorObj.color;
     this.applySettings(colorObj);
   }
@@ -217,7 +219,6 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   onChange(event) {
-    console.log(event, 'eventeventevent')
     let  reader = new FileReader();
     this.file = event.srcElement.files[0];
     reader.onload = () =>{
@@ -235,7 +236,7 @@ export class SettingsTabsComponent implements OnInit {
   private applySettings(obj: any) {
     if (obj.param === 'tableRowColor1' || obj.param === 'tableRowColor2' ||
       obj.param === 'tableTextColor' || obj.param === 'tableHeaderColor') {
-      this.settingsService.emitTableChangeEvent(obj);
+        this.settingsService.emitTableChangeEvent(obj);
     } else {
       this.settingsService.emitNavChangeEvent(obj);
     }

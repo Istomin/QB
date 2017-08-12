@@ -75,7 +75,7 @@
 						<label for="">Primary Mark In Transit</label>
 					</li>
 				</ul>
-				<input (ngModelChange)="onAlertColorChanged($event)" [ngModel]="pageSettings.settings.alerts.primaryInTransitTime"  type="text" /> higher than hours
+				<input (ngModelChange)="onAlertColorChanged($event)" [(ngModel)]="pageSettings.settings.alerts.primaryInTransitTime"  type="text" /> higher than hours
 				<div class="color-picker-holder">
 					<color-picker (changed)="onAlertColorChanged($event)" [param]="'primaryInTransitTextColor'" [color]="pageSettings.settings.alerts.primaryInTransitTextColor"></color-picker>
 					<span>Text Color</span>

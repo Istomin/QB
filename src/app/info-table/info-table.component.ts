@@ -6,6 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { InfoTableService, Shipment } from '.././info-table/info-table.service';
 import {SpinnerService} from "../core/spinner/spinner.service";
 import { UploadService } from "../core/upload.service";
+import {LocalStorageService} from "../core/local-storage.service";
 
 
 @Component({
@@ -35,13 +36,15 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private showTransit: boolean;
   private showExpectedDelivery: boolean;
   private refreshTimer: any;
-  constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService, private uploadService: UploadService) {}
+  private pageSettings: any;
+  constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService, private uploadService: UploadService, private localStorage: LocalStorageService) {}
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {
       this.onAppSettingsChanged(response);
     });
     this.tableColSubscription = this.settingsService.getTableCol().subscribe((obj) => {
       this.triggerColsVisibility(obj);
+
     });
 
     this.getData();
@@ -171,12 +174,14 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
             this.shipmentsClone = this.deepCopy(this.shipments);
 
-
-
             if (this.dropDelivered ) {
               this.shipments = this.shipmentsClone.filter((shipment) => !shipment.isDelivered);
             } else {
               this.shipments = this.deepCopy(this.shipmentsClone);
+            }
+
+            if(this.localStorage.getObject('userSettings') && this.localStorage.getObject('userSettings').hasOwnProperty('settings')) {
+              this.applyAlertsSettings(this.localStorage.getObject('userSettings').settings.alerts);
             }
           },
           (error) =>  {
@@ -194,21 +199,46 @@ export class InfoTableComponent implements OnInit, OnDestroy {
           shipment['bgColor'] = null;
           shipment['textColor'] = null;
         }
+        console.log(shipment.ETANote, 'ETANote')
       });
       if(settings.secondaryInTransit) {
-          this.shipments.forEach((shipment) => {
-            if(!shipment['isDelivered'] && shipment['InTransitTime']) {
-              let hour = shipment['InTransitTime'].split(' ')[0],
-                  min = shipment['InTransitTime'].split(' ')[2];
+        this.shipments.forEach((shipment) => {
+          if(!shipment['isDelivered'] && shipment['InTransitTime']) {
+            let hour = shipment['InTransitTime'].split(' ')[0],
+              min = shipment['InTransitTime'].split(' ')[2];
 
-                  if(hour > settings.secondaryInTransitTime && min > 0) {
-                    shipment['bgColor'] = settings.secondaryInTransitBackgroundColor;
-                    shipment['textColor'] = settings.secondaryInTransitTextColor;
+            if(hour > +settings.secondaryInTransitTime && min > 0) {
+              shipment['bgColor'] = settings.secondaryInTransitBackgroundColor;
+              shipment['textColor'] = settings.secondaryInTransitTextColor;
 
-                  }
             }
-          });
+          }
+        });
       }
+
+      if(settings.primaryInTransit) {
+        this.shipments.forEach((shipment) => {
+          if(!shipment['isDelivered'] && shipment['InTransitTime']) {
+            let hour = shipment['InTransitTime'].split(' ')[0],
+              min = shipment['InTransitTime'].split(' ')[2];
+
+            if(hour > +settings.primaryInTransitTime && min > 0) {
+              shipment['bgColor'] = settings.primaryInTransitBackgroundColor;
+              shipment['textColor'] = settings.primaryInTransitTextColor;
+
+            }
+          }
+        });
+      }
+
+      if(settings.etaNote) {
+        this.shipments.forEach((shipment) => {
+          if(shipment['ETANote']) {
+console.log(shipment, 'shipment')
+          }
+        });
+      }
+
     }
   }
 
