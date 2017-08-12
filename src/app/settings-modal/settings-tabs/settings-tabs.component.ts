@@ -210,7 +210,10 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   onAlertColorChanged(obj) {
-//console.log(obj, this.pageSettings.settings.alerts)
+    if(obj) {
+      this.pageSettings.settings.alerts[obj.param] = obj.color;
+    }
+    this.settingsService.emitAlertsSettingsChange(this.pageSettings.settings.alerts);
   }
 
   onChange(event) {

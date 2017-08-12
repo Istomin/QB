@@ -21,26 +21,26 @@
   </thead>
   <tbody>
   <tr  *ngFor="let shipment of shipments   | orderBy: order : reverse; let i = index">
-    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">{{shipment.ShipmentBOLNumber}}</td>
-    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
+    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2}">{{shipment.ShipmentBOLNumber}}</td>
+    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2}">
       <span class="reference" >{{shipment.reference}}</span>
     </td>
-    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
+    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2}">
       <span class="space" *ngIf="showShipper" >{{shipment.shipper}}</span>
       <span  class="space" *ngIf="!showShipper" >{{shipment.consignee}}</span>
     </td>
-    <td [ngStyle] = "{'color': shipment.isAlert ? 'red' : tableTextColor, 'background': i % 2 == 0 ? tableRowColor1 : tableRowColor2}" >
+    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2}" >
       {{shipment.flight}}
     </td>
-    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
+    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2}">
       <span *ngIf="showOrg">{{shipment.org}}</span>
       <span *ngIf="!showOrg">{{shipment.des}}</span>
     </td>
-    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
+    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2}">
       <span *ngIf="showOrg">{{shipment.eta_departure}}</span>
       <span *ngIf="!showOrg">{{shipment.eta_arrival}}</span>
     </td>
-    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
+    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2}">
       <span class="space">{{shipment.status}}</span>
       <span *ngIf="showTransit" class="in-transit">Total Time: {{shipment.InTransitTime}}</span>
       <span *ngIf="showExpectedDelivery && !shipment.isDelivered" class="in-transit">Expected: {{shipment.expectedDelivery}}</span>

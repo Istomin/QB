@@ -91,7 +91,7 @@
 						<label for="">Secondary Mark In Transit</label>
 					</li>
 				</ul>
-				<input type="text" (ngModelChange)="onAlertColorChanged($event)" [ngModel]="pageSettings.settings.alerts.secondaryInTransitTime" /> higher than hours
+				<input type="text" (ngModelChange)="onAlertColorChanged($event)" [(ngModel)]="pageSettings.settings.alerts.secondaryInTransitTime" /> higher than hours
 				<div class="color-picker-holder">
 					<color-picker (changed)="onAlertColorChanged($event)" [param]="'secondaryInTransitTextColor'" [color]="pageSettings.settings.alerts.secondaryInTransitTextColor"></color-picker>
 					<span>Text Color</span>

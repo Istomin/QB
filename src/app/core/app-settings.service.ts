@@ -67,4 +67,10 @@ export class AppSettingsService {
   public getProgressBarNumberEmitter() {
     return this.progressBarChange;
   }
+  public emitAlertsSettingsChange(numb: any) {
+    this.navchange.emit(numb);
+  }
+  public getAlertsSettingsEmitter() {
+    return this.navchange;
+  }
 }

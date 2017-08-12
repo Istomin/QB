@@ -19,6 +19,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   public subscription: Subscription;
   public tableColSubscription: Subscription;
   public refreshIntervalSubscription: Subscription;
+  public alertsSettingsSubscription: Subscription;
   private defaultBottomColor: string = '#001a22';
   private tableHeaderColor: string;
   private shipments: Shipment[];
@@ -48,11 +49,15 @@ export class InfoTableComponent implements OnInit, OnDestroy {
       this.getTableData(interval);
     });
 
+    this.alertsSettingsSubscription = this.settingsService.getAlertsSettingsEmitter().subscribe((settings) => {
+      this.applyAlertsSettings(settings);
+    });
   }
 
   public ngOnDestroy() {
     this.subscription.unsubscribe();
     this.refreshIntervalSubscription.unsubscribe();
+    this.alertsSettingsSubscription.unsubscribe();
     this.tableColSubscription.unsubscribe();
   }
 
@@ -95,9 +100,13 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
             this.shipments.forEach((shipment) => {
 
-              // if(shipment.ShipmentBOLNumber == '181121322T') {
-              //   console.log(shipment, 'shipmentshipmentshipment')
-              // }
+              if(shipment.ShipmentBOLNumber == '181211575W') {
+                console.log(shipment, 'SSSSSSSSSSSSSSSSs')
+              }
+
+              if(shipment.ShipmentBOLNumber == '181121441T') {
+                console.log(shipment, 'TTTTTTTTTTTT')
+              }
 
               shipment['shipper'] = shipment['Shipper'].Address.CompanyName + "\n" + shipment['Shipper'].Address.City + ' ' + shipment['Shipper'].Address.StateProvinceCode + ' ' + shipment['Shipper'].Address.CountryCode;
               shipment['consignee'] = shipment['Consignee'].Address.CompanyName + "\n" + shipment['Consignee'].Address.City + ' ' + shipment['Consignee'].Address.StateProvinceCode + ' ' + shipment['Consignee'].Address.CountryCode;
@@ -150,10 +159,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
               // } else {
               //   shipment.eta = '';
               // }
-              if(!shipment.isDelivered) {
-                console.log(shipment)
-               // shipment.isAlert = true;
-              }
+
               if(shipment['ShipmentException']) {
                 let origin = shipment['Origin'] ? shipment['Origin'] : '';
                 tickers.push({
@@ -178,6 +184,32 @@ export class InfoTableComponent implements OnInit, OnDestroy {
           }
         );
     }, 100);
+  }
+
+  applyAlertsSettings(settings: any) {
+    if(this.shipments && this.shipments.length) {
+      console.log(settings);
+      this.shipments.forEach((shipment) => {
+        if(shipment.hasOwnProperty('bgColor')) {
+          shipment['bgColor'] = null;
+          shipment['textColor'] = null;
+        }
+      });
+      if(settings.secondaryInTransit) {
+          this.shipments.forEach((shipment) => {
+            if(!shipment['isDelivered'] && shipment['InTransitTime']) {
+              let hour = shipment['InTransitTime'].split(' ')[0],
+                  min = shipment['InTransitTime'].split(' ')[2];
+
+                  if(hour > settings.secondaryInTransitTime && min > 0) {
+                    shipment['bgColor'] = settings.secondaryInTransitBackgroundColor;
+                    shipment['textColor'] = settings.secondaryInTransitTextColor;
+
+                  }
+            }
+          });
+      }
+    }
   }
 
   refactorValue(val: any) {
