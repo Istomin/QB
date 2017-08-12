@@ -29,7 +29,7 @@
       <span class="space" *ngIf="showShipper" >{{shipment.shipper}}</span>
       <span  class="space" *ngIf="!showShipper" >{{shipment.consignee}}</span>
     </td>
-    <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">
+    <td [ngStyle] = "{'color': shipment.isAlert ? 'red' : tableTextColor, 'background': i % 2 == 0 ? tableRowColor1 : tableRowColor2}" >
       {{shipment.flight}}
     </td>
     <td [style.background]="i % 2 == 0 ? tableRowColor1 : tableRowColor2" [style.color]="tableTextColor">

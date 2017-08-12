@@ -71,61 +71,61 @@
 			<div class="tab-col">
 				<ul class="radio-list">
 					<li>
-						<input type="checkbox" id="" checked="checked"/>
+						<input (change)="onAlertColorChanged()" [(ngModel)]="pageSettings.settings.alerts.primaryInTransit" type="checkbox" id="" checked="checked"/>
 						<label for="">Primary Mark In Transit</label>
 					</li>
 				</ul>
-				<input type="text" placeholder="30"/> higher than hours
+				<input (ngModelChange)="onAlertColorChanged($event)" [ngModel]="pageSettings.settings.alerts.primaryInTransitTime"  type="text" /> higher than hours
 				<div class="color-picker-holder">
-					<color-picker (changed)="onColorChanged($event)" [param]="'titleBackground'" [color]="pageSettings.settings.graphics.titleBackground"></color-picker>
+					<color-picker (changed)="onAlertColorChanged($event)" [param]="'primaryInTransitTextColor'" [color]="pageSettings.settings.alerts.primaryInTransitTextColor"></color-picker>
 					<span>Text Color</span>
 				</div>
 				<div class="color-picker-holder">
-					<color-picker (changed)="onColorChanged($event)" [param]="'titleBackground'" [color]="pageSettings.settings.graphics.titleBackground"></color-picker>
+					<color-picker (changed)="onAlertColorChanged($event)" [param]="'primaryInTransitBackgroundColor'" [color]="pageSettings.settings.alerts.primaryInTransitBackgroundColor"></color-picker>
 					<span>BG Color</span>
 				</div>
 				<br />
 				<ul class="radio-list">
 					<li>
-						<input type="checkbox" id=""/>
+						<input (change)="onAlertColorChanged()" [(ngModel)]="pageSettings.settings.alerts.secondaryInTransit" type="checkbox" />
 						<label for="">Secondary Mark In Transit</label>
 					</li>
 				</ul>
-				<input type="text" placeholder="68"/> higher than hours
+				<input type="text" (ngModelChange)="onAlertColorChanged($event)" [ngModel]="pageSettings.settings.alerts.secondaryInTransitTime" /> higher than hours
 				<div class="color-picker-holder">
-					<color-picker (changed)="onColorChanged($event)" [param]="'titleBackground'" [color]="pageSettings.settings.graphics.titleBackground"></color-picker>
+					<color-picker (changed)="onAlertColorChanged($event)" [param]="'secondaryInTransitTextColor'" [color]="pageSettings.settings.alerts.secondaryInTransitTextColor"></color-picker>
 					<span>Text Color</span>
 				</div>
 				<div class="color-picker-holder">
-					<color-picker (changed)="onColorChanged($event)" [param]="'titleBackground'" [color]="pageSettings.settings.graphics.titleBackground"></color-picker>
+					<color-picker (changed)="onAlertColorChanged($event)" [param]="'secondaryInTransitBackgroundColor'" [color]="pageSettings.settings.alerts.secondaryInTransitBackgroundColor"></color-picker>
 					<span>BG Color</span>
 				</div>
 			</div>
 			<div class="tab-col">
 				<ul class="radio-list">
 					<li class="mark-eta-indent">
-						<input type="checkbox" id=""/>
+						<input type="checkbox" (change)="onAlertColorChanged()" [(ngModel)]="pageSettings.settings.alerts.etaNote" />
 						<label for="">Mark ETA Note</label>
 					</li>
 					<li>
-						<input type="radio" id="" name="eta-note"/>
+						<input (change)="onAlertColorChanged()"	[(ngModel)]="pageSettings.settings.alerts.etaNoteType" [value]="0" type="radio" id="" name="eta-note"/>
 						<label for="">Weather Delay</label>
 					</li>
 					<li>
-						<input type="radio" id="" name="eta-note"/>
+						<input (change)="onAlertColorChanged()"	[(ngModel)]="pageSettings.settings.alerts.etaNoteType" [value]="1" type="radio" id="" name="eta-note"/>
 						<label for="">No Show Airline</label>
 					</li>
 					<li>
-						<input type="radio" id="" name="eta-note"/>
+						<input (change)="onAlertColorChanged()"	[(ngModel)]="pageSettings.settings.alerts.etaNoteType" [value]="2" type="radio" id="" name="eta-note"/>
 						<label for="">Airline Delay</label>
 					</li>
 				</ul>
 				<div class="color-picker-holder">
-					<color-picker (changed)="onColorChanged($event)" [param]="'titleBackground'" [color]="pageSettings.settings.graphics.titleBackground"></color-picker>
+					<color-picker (changed)="onAlertColorChanged($event)" [param]="'etaNoteTextColor'" [color]="pageSettings.settings.alerts.etaNoteTextColor"></color-picker>
 					<span>Text Color</span>
 				</div>
 				<div class="color-picker-holder">
-					<color-picker (changed)="onColorChanged($event)" [param]="'titleBackground'" [color]="pageSettings.settings.graphics.titleBackground"></color-picker>
+					<color-picker (changed)="onAlertColorChanged($event)" [param]="'etaNoteBackgroundColor'" [color]="pageSettings.settings.alerts.etaNoteBackgroundColor"></color-picker>
 					<span>BG Color</span>
 				</div>
 			</div>

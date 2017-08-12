@@ -95,7 +95,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
             this.shipments.forEach((shipment) => {
 
-              // if(shipment.ShipmentBOLNumber == 77786575) {
+              // if(shipment.ShipmentBOLNumber == '181121322T') {
               //   console.log(shipment, 'shipmentshipmentshipment')
               // }
 
@@ -150,7 +150,10 @@ export class InfoTableComponent implements OnInit, OnDestroy {
               // } else {
               //   shipment.eta = '';
               // }
-
+              if(!shipment.isDelivered) {
+                console.log(shipment)
+               // shipment.isAlert = true;
+              }
               if(shipment['ShipmentException']) {
                 let origin = shipment['Origin'] ? shipment['Origin'] : '';
                 tickers.push({
@@ -161,6 +164,8 @@ export class InfoTableComponent implements OnInit, OnDestroy {
             this.settingsService.emitRunningLineData(tickers);
 
             this.shipmentsClone = this.deepCopy(this.shipments);
+
+
 
             if (this.dropDelivered ) {
               this.shipments = this.shipmentsClone.filter((shipment) => !shipment.isDelivered);
@@ -179,6 +184,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
     let value = val[0] == 0 ? val.substr(1) : val;
     return value;
   }
+
 
   private deepCopy(oldObj: any) {
     let newObj = oldObj;

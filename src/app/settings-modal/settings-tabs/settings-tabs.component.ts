@@ -16,6 +16,12 @@ enum transit {
   AL = <any>'From Alternate'
 }
 
+enum ETANote {
+  PU = <any>'From Collection',
+  PO = <any>'From Pack Out',
+  AL = <any>'From Alternate'
+}
+
 @Component({
   selector: 'settings-tabs',
   styleUrls: ['settings-tabs.component.scss'],
@@ -66,7 +72,7 @@ export class SettingsTabsComponent implements OnInit {
     this.loginService.getUserInfo().subscribe((response: any) => {
       this.userInfo = JSON.parse(response['_body']);
       this.settingsService.emitUserSettingsData(this.userInfo);
-console.log(this.userInfo)
+
 
       this.pageSettings.settings.graphics.businessName = this.userInfo.business_name;
       this.pageSettings.settings.system.refreshInterval = this.userInfo.refresh_int == 0 ? 10 : this.userInfo.refresh_int;
@@ -202,6 +208,11 @@ console.log(this.userInfo)
     this.pageSettings.settings.graphics[colorObj.param] = colorObj.color;
     this.applySettings(colorObj);
   }
+
+  onAlertColorChanged(obj) {
+//console.log(obj, this.pageSettings.settings.alerts)
+  }
+
   onChange(event) {
     console.log(event, 'eventeventevent')
     let  reader = new FileReader();
