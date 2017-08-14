@@ -220,7 +220,8 @@ export class SettingsTabsComponent implements OnInit {
 
   onChange(event) {
     let  reader = new FileReader();
-    this.file = event.srcElement.files[0];
+    var target = event.target || event.srcElement;
+    this.file = target.files[0];
     reader.onload = () =>{
       this.imgSrc = reader.result;
       this.settingsService.emitLogoId({
