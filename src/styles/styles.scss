@@ -42,13 +42,17 @@ nav a {
 	font-weight: bold;	color: #000;
 }
 .nav>li>a:hover {
-	background: none;}
+	background: none;
+}
 .nav-tabs {
 	border-bottom-color: #000;
 }
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
-	border-color: #000 #000 #fff;
-	color: #000;
+.nav-tabs>li>a:hover {
+	border-color: transparent !important;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus {
+	border-color: #000 #000 #fff !important;
+	color: #000 !important;
 }
 
 .table {

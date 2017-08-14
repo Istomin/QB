@@ -1,11 +1,13 @@
 #header {
 	height: 70px;
-	overflow: hidden;
 	color: #fff;
 	padding: 0 10px;
 	line-height: 70px;
 	min-width: 1320px;
-	.logo-img {
+	&:after {
+		content: '';
+		display: block;
+		clear: both;	}	.logo-img {
 		float: left;
 		width: auto;
 		height: 70px;

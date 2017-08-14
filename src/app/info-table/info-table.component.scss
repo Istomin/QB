@@ -13,10 +13,7 @@
 				color: #fff;
 				display: block;
 				position: relative;
-				//background: #027ba3;
-				//background: -moz-linear-gradient(top, #027ba3 0%, #013c50 100%);
-				//background: -webkit-linear-gradient(top, #027ba3 0%,#013c50 100%);
-				//background: linear-gradient(to bottom, #027ba3 0%,#013c50 100%);
+				white-space: nowrap;
 				padding: 0 10px;
 				&:after {
 					content: '';

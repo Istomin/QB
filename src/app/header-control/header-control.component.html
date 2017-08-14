@@ -1,11 +1,12 @@
 <div [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + titleBackground+')'" id="header">
-  <!-- add logo img -->
-  <img class="logo-img" *ngIf="imgSrc" src="{{imgSrc}}" >
-  <h1 class="logo" [style.color]="titleTextColor">{{businessName}}</h1>
-  <span class="clock" [style.color]="titleTextColor"><clock></clock></span>
-  <div class="app-logo"></div>
-  <ul class="controls">
-    <li><full-screen></full-screen></li>
-    <li class="settings-modal"><settings-modal #lgModal></settings-modal></li>
-  </ul>
+	<!-- add logo img -->
+	<img class="logo-img" *ngIf="imgSrc" src="{{imgSrc}}" >
+	<h1 class="logo" [style.color]="titleTextColor">{{businessName}}</h1>
+	<span class="clock" [style.color]="titleTextColor"><clock></clock></span>
+	<div class="app-logo"></div>
+	<ul class="controls">
+		<li><full-screen></full-screen></li>
+		<li class="settings-modal"><button class="btn btn-primary btn-modal-opener" (click)="showModal()"><i class="glyphicon glyphicon-cog"></i></button></li>
+	</ul>
 </div>
+<settings-modal #lgModal></settings-modal>
