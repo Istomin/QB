@@ -67,6 +67,10 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
     this.logoSubscription.unsubscribe();
   }
 
+  showModal() {
+    this.lgModal.showModal();
+  }
+
   private onAppSettingsChanged(response: any) {
     if (response.hasOwnProperty('color')) {
       this[response.param] = response.color;

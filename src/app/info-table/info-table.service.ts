@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { GlobalVariable } from '.././core/global';
 
 export class Shipment {
-  constructor(public ShipmentBOLNumber: number, public status: string, public shipper: string, public reference: string, public  eta: any, public DES: string, public ORG: string, public Flight: string) { }
+  constructor(public ShipmentBOLNumber: number, public ETANote: string, public status: string, public shipper: string, public reference: string, public  eta: any, public DES: string, public ORG: string, public Flight: string) { }
 }
 
 @Injectable()

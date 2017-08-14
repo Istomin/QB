@@ -103,13 +103,13 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
             this.shipments.forEach((shipment) => {
 
-              if(shipment.ShipmentBOLNumber == '181211575W') {
-                console.log(shipment, 'SSSSSSSSSSSSSSSSs')
-              }
-
-              if(shipment.ShipmentBOLNumber == '181121441T') {
-                console.log(shipment, 'TTTTTTTTTTTT')
-              }
+              // if(shipment.ShipmentBOLNumber == '181211575W') {
+              //   console.log(shipment, 'SSSSSSSSSSSSSSSSs')
+              // }
+              //
+              // if(shipment.ShipmentBOLNumber == '181121441T') {
+              //   console.log(shipment, 'TTTTTTTTTTTT')
+              // }
 
               shipment['shipper'] = shipment['Shipper'].Address.CompanyName + "\n" + shipment['Shipper'].Address.City + ' ' + shipment['Shipper'].Address.StateProvinceCode + ' ' + shipment['Shipper'].Address.CountryCode;
               shipment['consignee'] = shipment['Consignee'].Address.CompanyName + "\n" + shipment['Consignee'].Address.City + ' ' + shipment['Consignee'].Address.StateProvinceCode + ' ' + shipment['Consignee'].Address.CountryCode;
@@ -244,6 +244,7 @@ console.log(shipment, 'shipment')
 
   refactorValue(val: any) {
     let value = val[0] == 0 ? val.substr(1) : val;
+
     return value;
   }
 
