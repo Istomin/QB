@@ -42,7 +42,7 @@
     </td>
     <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2}">
       <span class="space">{{shipment.status}}</span>
-      <span *ngIf="showTransit" class="in-transit">Total Time: {{shipment.InTransitTime}}</span>
+      <span *ngIf="showTransit && shipment.InTransitTime" class="in-transit">Total Time: {{shipment.InTransitTime}}</span>
       <span *ngIf="showExpectedDelivery && !shipment.isDelivered" class="in-transit">Expected: {{shipment.expectedDelivery}}</span>
     </td>
   </tr>
