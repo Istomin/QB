@@ -22,9 +22,16 @@ export class RunningLineComponent implements OnInit {
     }];
     this.defaultText = true;
     this.subscription = this.settingsService.getRunningLineData().subscribe((tickers) => {
-      this.defaultText = false;
-      this.texts.length = 0;
-      this.texts = tickers;
+      if(tickers.length == 0) {
+        this.texts = [{
+          name: 'Refreshing data'
+        }];
+      } else {
+        this.defaultText = false;
+        this.texts.length = 0;
+        this.texts = tickers;
+      }
+
      // this.text = response.toString();
 
       // setTimeout(() => {

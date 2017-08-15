@@ -162,7 +162,7 @@ export class SettingsTabsComponent implements OnInit {
     this.userInfo = this.localStorage.getObject('user');
     this.pageSettings = this.localStorage.getObject('userSettings');
     this.clonedSettings = this.deepCopy(this.pageSettings);
-console.log(this.showTransit['model'], 'asd')
+
     this.prevTransitOption = this.userInfo.show_transit;
 
     if(this.userInfo.logo) {
@@ -171,18 +171,14 @@ console.log(this.showTransit['model'], 'asd')
   }
 
   private updateUser() {
+    let current = this.userInfo.show_transit;
     this.localStorage.setObject('user', this.userInfo);
     delete this.userInfo.logo;
-    // this.loginService.updateUserInfo(this.userInfo).subscribe((response: any) => {
-    //
-    // });
-console.log(this.userInfo.show_transit);
-console.log(this.prevTransitOption)
-    if(this.userInfo.show_transit != this.prevTransitOption) {
-console.log('TADAM')
-   //   this.settingsService.emitTableDataChange();
-    }
-
+    this.loginService.updateUserInfo(this.userInfo).subscribe((response: any) => {
+      if(current != this.prevTransitOption) {
+        this.settingsService.emitTableDataChange();
+      }
+    });
   }
 
   private prepareUserSettingsForSaving() {

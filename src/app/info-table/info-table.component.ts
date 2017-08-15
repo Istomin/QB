@@ -57,6 +57,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
     this.tableDataChangeSubscription = this.settingsService.getTableDataChangeEmitter().subscribe(() => {
       this.shipments = null;
+      this.settingsService.emitRunningLineData([]);
       this.getData(true);
     });
 
