@@ -24,7 +24,7 @@ export class UploadService {
       .withDownloadProgressListener((progress) => {
         this.appSettings.emitProgressBarNumber(progress.percentage);
       })
-      .get(this.makeApiUri('data2/'), options)
+      .get(this.makeApiUri('data/'), options)
       .map((response: Response) => JSON.parse(response['_body']))
   }
 
