@@ -69,8 +69,6 @@ export class SettingsTabsComponent implements OnInit {
     this.showExpectedDelivery = {};
     this.selectedTransitOption = this.transitArrayNames[0];
     this.show_transit = transit[this.selectedTransitOption];
-
-    console.log(this.pageSettings , 'FXXSS')
     this.loginService.getUserInfo().subscribe((response: any) => {
       this.userInfo = JSON.parse(response['_body']);
       this.settingsService.emitUserSettingsData(this.userInfo);
@@ -102,7 +100,7 @@ export class SettingsTabsComponent implements OnInit {
   public resetToPreviousSettings() {
     let array = [];
     this.pageSettings = this.clonedSettings;
-    console.log(this.pageSettings.settings.graphics, 'this.pageSettings.settings.graphicsthis.pageSettings.settings.graphicsthis.pageSettings.settings.graphics')
+
     for (let key in this.pageSettings.settings.graphics) {
       if (key === 'businessName') {
         array.push({
@@ -136,6 +134,7 @@ export class SettingsTabsComponent implements OnInit {
 
   public saveSettings() {
     this.prepareUserSettingsForSaving();
+
     this.settingsService.emitScrollInterval(this.pageSettings.settings.system.scrollInterval);
     this.settingsService.emitRefreshInterval(this.pageSettings.settings.system.refreshInterval);
     this.localStorage.setObject('userSettings', this.pageSettings);
@@ -160,7 +159,6 @@ export class SettingsTabsComponent implements OnInit {
 
   public getSettings() {
     this.user = this.localStorage.getObject('user');
-    console.log(this.user, 'this.user')
     if(this.user.logo) {
       this.imgSrc = this.baseUrl + this.user.logo;
     }
@@ -171,6 +169,12 @@ export class SettingsTabsComponent implements OnInit {
     this.loginService.updateUserInfo(this.userInfo).subscribe((response: any) => {
 
     });
+
+    if(this.clonedSettings.settings.system.showTransit != this.pageSettings.settings.system.showTransit) {
+      alert('REFRESH DATA123')
+      this.settingsService.emitTableDataChange();
+    }
+
   }
 
   private prepareUserSettingsForSaving() {
@@ -206,7 +210,6 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   private onColorChanged(colorObj) {
-    console.log(colorObj, 'colorObj')
     this.pageSettings.settings.graphics[colorObj.param] = colorObj.color;
     this.applySettings(colorObj);
   }

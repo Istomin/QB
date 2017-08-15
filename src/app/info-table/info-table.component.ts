@@ -8,6 +8,7 @@ import {SpinnerService} from "../core/spinner/spinner.service";
 import { UploadService } from "../core/upload.service";
 import {LocalStorageService} from "../core/local-storage.service";
 
+const ETANoteType = ['WEATHER DELAY', 'NO SHOW AIRLINE', 'FLIGHT DELAY'];
 
 @Component({
   selector: 'info-table',
@@ -20,6 +21,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   public subscription: Subscription;
   public tableColSubscription: Subscription;
   public refreshIntervalSubscription: Subscription;
+  public tableDataChangeSubscription: Subscription;
   public alertsSettingsSubscription: Subscription;
   private defaultBottomColor: string = '#001a22';
   private tableHeaderColor: string;
@@ -37,6 +39,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private showExpectedDelivery: boolean;
   private refreshTimer: any;
   private pageSettings: any;
+  private interval: number;
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService, private uploadService: UploadService, private localStorage: LocalStorageService) {}
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {
@@ -52,6 +55,10 @@ export class InfoTableComponent implements OnInit, OnDestroy {
       this.getTableData(interval);
     });
 
+    // this.tableDataChangeSubscription = this.settingsService.getTableChangeEmitter().subscribe(() => {
+    //   this.getTableData(null);
+    // });
+
     this.alertsSettingsSubscription = this.settingsService.getAlertsSettingsEmitter().subscribe((settings) => {
       this.applyAlertsSettings(settings);
     });
@@ -62,6 +69,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
     this.refreshIntervalSubscription.unsubscribe();
     this.alertsSettingsSubscription.unsubscribe();
     this.tableColSubscription.unsubscribe();
+    this.tableDataChangeSubscription.unsubscribe();
   }
 
   private onAppSettingsChanged(response: any) {
@@ -85,13 +93,19 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   }
 
   private getTableData(interval: number) {
+
+    if(interval) {
+      this.interval = interval;
+    }
     clearInterval(this.refreshTimer);
+
     this.refreshTimer = setInterval(() => {
       this.getData();
-    }, 600 * 100 * interval);
+    }, 600 * 100 * this.interval);
   }
 
   getData() {
+
     setTimeout(() => {
       this.spinner.show();
       this.uploadService.getTableData()
@@ -102,15 +116,6 @@ export class InfoTableComponent implements OnInit, OnDestroy {
             var tickers = [];
 
             this.shipments.forEach((shipment) => {
-
-              // if(shipment.ShipmentBOLNumber == '181211575W') {
-              //   console.log(shipment, 'SSSSSSSSSSSSSSSSs')
-              // }
-              //
-              // if(shipment.ShipmentBOLNumber == '181121441T') {
-              //   console.log(shipment, 'TTTTTTTTTTTT')
-              // }
-
               shipment['shipper'] = shipment['Shipper'].Address.CompanyName + "\n" + shipment['Shipper'].Address.City + ' ' + shipment['Shipper'].Address.StateProvinceCode + ' ' + shipment['Shipper'].Address.CountryCode;
               shipment['consignee'] = shipment['Consignee'].Address.CompanyName + "\n" + shipment['Consignee'].Address.City + ' ' + shipment['Consignee'].Address.StateProvinceCode + ' ' + shipment['Consignee'].Address.CountryCode;
               if(shipment['ShippersReference']) {
@@ -155,14 +160,6 @@ export class InfoTableComponent implements OnInit, OnDestroy {
               shipment['isDelivered'] = shipment['ShipmentStatus'] == 'Delivered';
               shipment.status = shipment['ShipmentStatus'] + "\n" + this.refactorValue(shipment['ShipmentStatusTime'].DateTime['@Day']) + ' .' + this.refactorValue(shipment['ShipmentStatusTime'].DateTime['@Hour']) + ':' + shipment['ShipmentStatusTime'].DateTime['@Minute'] + ' ' + shipment['ShipmentStatusLocation'];
 
-              // if(shipment['ETADateTime']) {
-              //   let etaMonth = shipment['ETADateTime'].DateTime['@Month'][0] == 0 ? shipment['ETADateTime'].DateTime['@Month'].substr(1) : shipment['ETADateTime'].DateTime['@Month'];
-              //   shipment.eta = etaMonth + ' .' + shipment['ETADateTime'].DateTime['@Hour'] + ':'  + shipment['ETADateTime'].DateTime['@Minute'];
-              //   console.log(shipment, 'shipment')
-              // } else {
-              //   shipment.eta = '';
-              // }
-
               if(shipment['ShipmentException']) {
                 let origin = shipment['Origin'] ? shipment['Origin'] : '';
                 tickers.push({
@@ -193,13 +190,12 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
   applyAlertsSettings(settings: any) {
     if(this.shipments && this.shipments.length) {
-      console.log(settings);
+
       this.shipments.forEach((shipment) => {
         if(shipment.hasOwnProperty('bgColor')) {
           shipment['bgColor'] = null;
           shipment['textColor'] = null;
         }
-        console.log(shipment.ETANote, 'ETANote')
       });
       if(settings.secondaryInTransit) {
         this.shipments.forEach((shipment) => {
@@ -225,7 +221,6 @@ export class InfoTableComponent implements OnInit, OnDestroy {
             if(hour > +settings.primaryInTransitTime && min > 0) {
               shipment['bgColor'] = settings.primaryInTransitBackgroundColor;
               shipment['textColor'] = settings.primaryInTransitTextColor;
-
             }
           }
         });
@@ -233,8 +228,9 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
       if(settings.etaNote) {
         this.shipments.forEach((shipment) => {
-          if(shipment['ETANote']) {
-console.log(shipment, 'shipment')
+          if(shipment['ETANote'] && shipment['ETANote'].indexOf(ETANoteType[settings.etaNoteType]) >= 0) {
+            shipment['bgColor'] = settings.etaNoteBackgroundColor;
+            shipment['textColor'] = settings.etaNoteTextColor;
           }
         });
       }

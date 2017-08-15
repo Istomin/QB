@@ -8,6 +8,7 @@ export class AppSettingsService {
   public userSettingsChange: EventEmitter<number> = new EventEmitter();
   public logoIdChange: EventEmitter<number> = new EventEmitter();
   public scrollIntervalChange: EventEmitter<number> = new EventEmitter();
+  public datachange: EventEmitter<number> = new EventEmitter();
   public refreshIntervalChange: EventEmitter<number> = new EventEmitter();
   public tableColChange: EventEmitter<number> = new EventEmitter();
   public progressBarChange: EventEmitter<number> = new EventEmitter();
@@ -72,5 +73,12 @@ export class AppSettingsService {
   }
   public getAlertsSettingsEmitter() {
     return this.navchange;
+  }
+
+  public emitTableDataChange() {
+    this.datachange.emit();
+  }
+  public getTableDataChangeEmitter() {
+    return this.datachange;
   }
 }
