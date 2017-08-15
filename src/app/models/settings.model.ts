@@ -6,7 +6,7 @@ export class Settings {
       displayMode: number,
       flightDisplay: number,
       showTransit: boolean,
-      showTransitType: number,
+      showTransitType: any,
       showExpectedDelivery: boolean,
       dropDelivered: boolean
     },

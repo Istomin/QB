@@ -56,6 +56,7 @@ export class SettingsTabsComponent implements OnInit {
   private selectedTransitOption: any;
   private transitArrayNames: [transit, transit, transit];
   private show_transit: any;
+  private prevTransitOption: any;
   constructor(private settingsService: AppSettingsService, private localStorage: LocalStorageService, private userProfileService: UserProfileService, private router: Router, private loginService: LoginService, private uploadService: UploadService) {
   }
 
@@ -87,7 +88,7 @@ export class SettingsTabsComponent implements OnInit {
       this.dropDelivered['model'] = this.pageSettings.settings.system.dropDelivered;
       this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
       this.showExpectedDelivery['model'] = this.pageSettings.settings.system.showExpectedDelivery;
-
+      this.selectedTransitOption = transit[this.userInfo.show_transit];
       this.settingsService.emitTableCol(this.pageSettings);
       this.clonedSettings = this.deepCopy(this.pageSettings);
       this.onTextLogoChanged(this.pageSettings.settings.graphics.businessName);
@@ -158,21 +159,28 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   public getSettings() {
-    this.user = this.localStorage.getObject('user');
-    if(this.user.logo) {
-      this.imgSrc = this.baseUrl + this.user.logo;
+    this.userInfo = this.localStorage.getObject('user');
+    this.pageSettings = this.localStorage.getObject('userSettings');
+    this.clonedSettings = this.deepCopy(this.pageSettings);
+console.log(this.showTransit['model'], 'asd')
+    this.prevTransitOption = this.userInfo.show_transit;
+
+    if(this.userInfo.logo) {
+      this.imgSrc = this.baseUrl + this.userInfo.logo;
     }
   }
 
   private updateUser() {
+    this.localStorage.setObject('user', this.userInfo);
     delete this.userInfo.logo;
-    this.loginService.updateUserInfo(this.userInfo).subscribe((response: any) => {
-
-    });
-
-    if(this.clonedSettings.settings.system.showTransit != this.pageSettings.settings.system.showTransit) {
-      alert('REFRESH DATA123')
-      this.settingsService.emitTableDataChange();
+    // this.loginService.updateUserInfo(this.userInfo).subscribe((response: any) => {
+    //
+    // });
+console.log(this.userInfo.show_transit);
+console.log(this.prevTransitOption)
+    if(this.userInfo.show_transit != this.prevTransitOption) {
+console.log('TADAM')
+   //   this.settingsService.emitTableDataChange();
     }
 
   }
@@ -197,6 +205,7 @@ export class SettingsTabsComponent implements OnInit {
     this.userInfo.show_expect_delivery = this.pageSettings.settings.system.showExpectedDelivery;
     this.userInfo.refresh_int = this.pageSettings.settings.system.refreshInterval;
     this.userInfo.scroll_int = this.pageSettings.settings.system.scrollInterval;
+
     this.userInfo.show_transit = this.showTransit['model'] ? this.show_transit : null;
   }
 
@@ -281,6 +290,7 @@ export class SettingsTabsComponent implements OnInit {
   onTransitSelectChange(event) {
     this.selectedTransitOption = event.target.value;
     this.show_transit = transit[this.selectedTransitOption];
+    console.log(this.show_transit)
   }
 
   private deepCopy(oldObj: any) {

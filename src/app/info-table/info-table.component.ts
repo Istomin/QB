@@ -50,14 +50,15 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
     });
 
-    this.getData();
+    this.getData(false);
     this.refreshIntervalSubscription = this.settingsService.getRefreshInterval().subscribe((interval) => {
       this.getTableData(interval);
     });
 
-    // this.tableDataChangeSubscription = this.settingsService.getTableChangeEmitter().subscribe(() => {
-    //   this.getTableData(null);
-    // });
+    this.tableDataChangeSubscription = this.settingsService.getTableDataChangeEmitter().subscribe(() => {
+      this.shipments = null;
+      this.getData(true);
+    });
 
     this.alertsSettingsSubscription = this.settingsService.getAlertsSettingsEmitter().subscribe((settings) => {
       this.applyAlertsSettings(settings);
@@ -93,19 +94,15 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   }
 
   private getTableData(interval: number) {
-
-    if(interval) {
-      this.interval = interval;
-    }
+    this.interval = interval ? interval : this.interval;
     clearInterval(this.refreshTimer);
 
     this.refreshTimer = setInterval(() => {
-      this.getData();
+      this.getData(false);
     }, 600 * 100 * this.interval);
   }
 
-  getData() {
-
+  getData(needUpdate: boolean) {
     setTimeout(() => {
       this.spinner.show();
       this.uploadService.getTableData()
@@ -180,6 +177,8 @@ export class InfoTableComponent implements OnInit, OnDestroy {
             if(this.localStorage.getObject('userSettings') && this.localStorage.getObject('userSettings').hasOwnProperty('settings')) {
               this.applyAlertsSettings(this.localStorage.getObject('userSettings').settings.alerts);
             }
+
+            this.getTableData(null);
           },
           (error) =>  {
             this.errorMessage = <any>error;
