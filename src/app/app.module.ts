@@ -32,7 +32,6 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
 import { HeaderControlComponent } from './header-control';
-import { AboutComponent } from './about';
 import { DashboardComponent } from './dashboard';
 import { InfoTableComponent } from './info-table';
 import { RunningLineComponent } from './running-line';
@@ -87,7 +86,6 @@ import { WindowRef } from "./core/window-ref";
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    AboutComponent,
     HomeComponent,
     DashboardComponent,
     HeaderControlComponent,
