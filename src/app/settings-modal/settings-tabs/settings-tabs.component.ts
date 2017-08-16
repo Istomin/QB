@@ -93,7 +93,7 @@ export class SettingsTabsComponent implements OnInit {
       this.clonedSettings = this.deepCopy(this.pageSettings);
       this.onTextLogoChanged(this.pageSettings.settings.graphics.businessName);
       this.settingsService.emitRefreshInterval(this.pageSettings.settings.system.refreshInterval);
-    //  this.settingsService.emitAlertsSettingsChange(this.pageSettings.settings.alerts);
+      this.settingsService.emitAlertsSettingsChange(this.pageSettings.settings.alerts);
     });
   }
 
@@ -221,9 +221,9 @@ export class SettingsTabsComponent implements OnInit {
 
   onAlertColorChanged(obj) {
     if(obj) {
-     // this.pageSettings.settings.alerts[obj.param] = obj.color;
+      this.pageSettings.settings.alerts[obj.param] = obj.color;
     }
-   // this.settingsService.emitAlertsSettingsChange(this.pageSettings.settings.alerts);
+   this.settingsService.emitAlertsSettingsChange(this.pageSettings.settings.alerts);
   }
 
   onChange(event) {
