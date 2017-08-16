@@ -40,6 +40,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private refreshTimer: any;
   private pageSettings: any;
   private interval: number;
+  private monthes = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService, private uploadService: UploadService, private localStorage: LocalStorageService) {}
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {
@@ -132,14 +133,14 @@ export class InfoTableComponent implements OnInit, OnDestroy {
                   shipment['org'] = shipment['Flights'].Flight[0].OriginAirportCode;
                   shipment['des'] = shipment['Flights'].Flight[0].DestinationAirportCode;
 
-                  shipment['eta_arrival'] = this.refactorValue(shipment['Flights'].Flight[0].ArrivalDateTime.DateTime['@Day']) + ' .' + this.refactorValue(shipment['Flights'].Flight[0].ArrivalDateTime.DateTime['@Hour']) + ':'  + shipment['Flights'].Flight[0].ArrivalDateTime.DateTime['@Minute'];
-                  shipment['eta_departure'] = this.refactorValue(shipment['Flights'].Flight[0].DepartureDateTime.DateTime['@Day']) + ' .' + this.refactorValue(shipment['Flights'].Flight[0].DepartureDateTime.DateTime['@Hour']) + ':'  + shipment['Flights'].Flight[0].DepartureDateTime.DateTime['@Minute'];
+                  shipment['eta_arrival'] = this.refactorValue(shipment['Flights'].Flight[0].ArrivalDateTime.DateTime['@Day']) + ' ' + this.monthes[+shipment['Flights'].Flight[0].ArrivalDateTime.DateTime['@Month']] + ' ' + this.refactorValue(shipment['Flights'].Flight[0].ArrivalDateTime.DateTime['@Hour']) + ':'  + shipment['Flights'].Flight[0].ArrivalDateTime.DateTime['@Minute'];
+                  shipment['eta_departure'] = this.refactorValue(shipment['Flights'].Flight[0].DepartureDateTime.DateTime['@Day']) + ' ' + this.monthes[+shipment['Flights'].Flight[0].ArrivalDateTime.DateTime['@Month']] + ' ' + this.refactorValue(shipment['Flights'].Flight[0].DepartureDateTime.DateTime['@Hour']) + ':'  + shipment['Flights'].Flight[0].DepartureDateTime.DateTime['@Minute'];
                 } else {
                   shipment['flight'] = shipment['Flights'].Flight.AirlineCode + shipment['Flights'].Flight.FlightNumber;
                   shipment['org'] = shipment['Flights'].Flight.OriginAirportCode;
                   shipment['des'] = shipment['Flights'].Flight.DestinationAirportCode;
-                  shipment['eta_arrival'] = this.refactorValue(shipment['Flights'].Flight.ArrivalDateTime.DateTime['@Day']) + ' .' + this.refactorValue(shipment['Flights'].Flight.ArrivalDateTime.DateTime['@Hour']) + ':'  + shipment['Flights'].Flight.ArrivalDateTime.DateTime['@Minute'];
-                  shipment['eta_departure'] = this.refactorValue(shipment['Flights'].Flight.DepartureDateTime.DateTime['@Day']) + ' .' + this.refactorValue(shipment['Flights'].Flight.DepartureDateTime.DateTime['@Hour']) + ':'  + shipment['Flights'].Flight.DepartureDateTime.DateTime['@Minute'];
+                  shipment['eta_arrival'] = this.refactorValue(shipment['Flights'].Flight.ArrivalDateTime.DateTime['@Day']) + ' ' + this.monthes[+shipment['Flights'].Flight.ArrivalDateTime.DateTime['@Month']] + ' ' + this.refactorValue(shipment['Flights'].Flight.ArrivalDateTime.DateTime['@Hour']) + ':'  + shipment['Flights'].Flight.ArrivalDateTime.DateTime['@Minute'];
+                  shipment['eta_departure'] = this.refactorValue(shipment['Flights'].Flight.DepartureDateTime.DateTime['@Day']) + ' ' + this.monthes[+shipment['Flights'].Flight.ArrivalDateTime.DateTime['@Month']] + ' ' + this.refactorValue(shipment['Flights'].Flight.DepartureDateTime.DateTime['@Hour']) + ':'  + shipment['Flights'].Flight.DepartureDateTime.DateTime['@Minute'];
                 }
               } else {
                 shipment['flight'] = '';
@@ -150,13 +151,13 @@ export class InfoTableComponent implements OnInit, OnDestroy {
               }
 
               if(shipment['DeadlineDateTime']) {
-                 shipment['expectedDelivery'] = this.refactorValue(shipment['DeadlineDateTime'].DateTime['@Day']) + ' .' + shipment['DeadlineDateTime'].DateTime['@Hour'] + ':'  + shipment['DeadlineDateTime'].DateTime['@Minute'];
+                 shipment['expectedDelivery'] = this.refactorValue(shipment['DeadlineDateTime'].DateTime['@Day']) + ' ' +  this.monthes[+shipment['DeadlineDateTime'].DateTime['@Month']]  + ' ' +  shipment['DeadlineDateTime'].DateTime['@Hour'] + ':'  + shipment['DeadlineDateTime'].DateTime['@Minute'];
               } else {
                 shipment['expectedDelivery'] = '';
               }
 
               shipment['isDelivered'] = shipment['ShipmentStatus'] == 'Delivered';
-              shipment.status = shipment['ShipmentStatus'] + "\n" + this.refactorValue(shipment['ShipmentStatusTime'].DateTime['@Day']) + ' .' + this.refactorValue(shipment['ShipmentStatusTime'].DateTime['@Hour']) + ':' + shipment['ShipmentStatusTime'].DateTime['@Minute'] + ' ' + shipment['ShipmentStatusLocation'];
+              shipment.status = shipment['ShipmentStatus'] + "\n" + this.refactorValue(shipment['ShipmentStatusTime'].DateTime['@Day']) + ' ' +  this.monthes[+shipment['ShipmentStatusTime'].DateTime['@Month']]   + ' ' +  this.refactorValue(shipment['ShipmentStatusTime'].DateTime['@Hour']) + ':' + shipment['ShipmentStatusTime'].DateTime['@Minute'] + ' ' + shipment['ShipmentStatusLocation'];
 
               if(shipment['ShipmentException']) {
                 let origin = shipment['Origin'] ? shipment['Origin'] : '';
