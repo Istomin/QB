@@ -223,7 +223,9 @@ export class SettingsTabsComponent implements OnInit {
     if(obj) {
       this.pageSettings.settings.alerts[obj.param] = obj.color;
     }
-   this.settingsService.emitAlertsSettingsChange(this.pageSettings.settings.alerts);
+   setTimeout(() => {
+     this.settingsService.emitAlertsSettingsChange(this.pageSettings.settings.alerts);
+   }, 300);
   }
 
   onChange(event) {

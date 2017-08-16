@@ -206,7 +206,6 @@ export class InfoTableComponent implements OnInit, OnDestroy {
             if(hour > +settings.secondaryInTransitTime && min > 0) {
               shipment['bgColor'] = settings.secondaryInTransitBackgroundColor;
               shipment['textColor'] = settings.secondaryInTransitTextColor;
-
             }
           }
         });
