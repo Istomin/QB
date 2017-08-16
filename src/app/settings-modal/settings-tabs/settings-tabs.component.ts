@@ -124,7 +124,7 @@ export class SettingsTabsComponent implements OnInit {
     this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
     this.showTransit['showExpectedDelivery'] = this.pageSettings.settings.system.showExpectedDelivery;
     this.settingsService.emitTableCol(this.pageSettings);
-
+    this.settingsService.emitAlertsSettingsChange(this.clonedSettings.settings.alerts);
     array.forEach((obj) => {
       this.applySettings(obj);
     });

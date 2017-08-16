@@ -34,8 +34,4 @@ export class SettingsModalComponent implements OnInit {
     this.settingsTabsComponent.saveSettings();
     this.lgModal.hide();
   }
-
-  testMe() {
-    this.settingsService.emitNavChangeEvent(1);
-  }
 }

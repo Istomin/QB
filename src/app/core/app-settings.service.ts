@@ -3,6 +3,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 @Injectable()
 export class AppSettingsService {
   public navchange: EventEmitter<number> = new EventEmitter();
+  public alertschange: EventEmitter<number> = new EventEmitter();
   public tablechange: EventEmitter<number> = new EventEmitter();
   public runningLineDataChange: EventEmitter<number> = new EventEmitter();
   public userSettingsChange: EventEmitter<number> = new EventEmitter();
@@ -69,10 +70,10 @@ export class AppSettingsService {
     return this.progressBarChange;
   }
   public emitAlertsSettingsChange(numb: any) {
-    this.navchange.emit(numb);
+    this.alertschange.emit(numb);
   }
   public getAlertsSettingsEmitter() {
-    return this.navchange;
+    return this.alertschange;
   }
 
   public emitTableDataChange() {
