@@ -40,7 +40,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private refreshTimer: any;
   private pageSettings: any;
   private interval: number;
-  private monthes = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  private monthes = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService, private uploadService: UploadService, private localStorage: LocalStorageService) {}
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {
