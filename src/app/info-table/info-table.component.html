@@ -37,15 +37,14 @@
       <span *ngIf="!showOrg">{{shipment.des}}</span>
     </td>
     <td class="etd-cell" [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2}">
-      <span *ngIf="showOrg">{{shipment.eta_departure}}</span>
-      <span *ngIf="!showOrg">{{shipment.eta_arrival}}</span>
+      <span *ngIf="showOrg && shipment.eta_departure">{{shipment.eta_departure| date: 'MMM d'}}, {{shipment.eta_departure | date: 'shortTime'}}</span>
+      <span *ngIf="!showOrg && shipment.eta_arrival">{{shipment.eta_arrival | date: 'MMM d'}}, {{shipment.eta_arrival | date: 'shortTime'}}</span>
     </td>
     <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2}">
       <span class="space">{{shipment.status}}</span>
       <span *ngIf="showTransit && shipment.InTransitTime" class="in-transit">Total Time: {{shipment.InTransitTime}}</span>
-      <span *ngIf="showExpectedDelivery && !shipment.isDelivered" class="in-transit">Expected: {{shipment.expectedDelivery}}</span>
+      <span *ngIf="showExpectedDelivery && !shipment.isDelivered && shipment.expectedDelivery" class="in-transit">Expected: {{shipment.expectedDelivery | date: 'MMM d'}}, {{shipment.expectedDelivery| date: 'shortTime'}}</span>
     </td>
   </tr>
   </tbody>
-
 </table>

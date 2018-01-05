@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { SettingsModalComponent } from '.././settings-modal';
 import { AppSettingsService } from '.././core/app-settings.service';
@@ -14,7 +15,7 @@ const ETANoteType = ['WEATHER DELAY', 'NO SHOW AIRLINE', 'FLIGHT DELAY'];
   selector: 'info-table',
   styleUrls: [ 'info-table.component.scss' ],
   templateUrl: 'info-table.component.html',
-  providers: [InfoTableService, SpinnerService]
+  providers: [InfoTableService, SpinnerService, DatePipe]
 })
 export class InfoTableComponent implements OnInit, OnDestroy {
   @ViewChild('lgModal') public  lgModal: SettingsModalComponent;
@@ -29,7 +30,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private errorMessage: any;
   private tableRowColor1: any;
   private tableRowColor2: any;
-  order: string = 'eta';
+  order: string;
   reverse : boolean = false;
   private showOrg: boolean;
   private showShipper: boolean;
@@ -40,8 +41,8 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private refreshTimer: any;
   private pageSettings: any;
   private interval: number;
-  private monthes = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-  constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService, private uploadService: UploadService, private localStorage: LocalStorageService) {}
+
+  constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService, private uploadService: UploadService, private localStorage: LocalStorageService, private datePipe: DatePipe) {}
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {
       this.onAppSettingsChanged(response);
@@ -81,6 +82,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
   private triggerColsVisibility(obj) {
     this.showOrg = obj.settings.system.flightDisplay === 0;
+    this.order = this.showOrg && 'eta_departure' || 'eta_arrival';
     this.showShipper = obj.settings.system.displayMode === 0;
     this.dropDelivered = obj.settings.system.dropDelivered;
     this.showTransit = obj.settings.system.showTransit;
@@ -119,13 +121,14 @@ export class InfoTableComponent implements OnInit, OnDestroy {
               shipment['consignee'] = shipment['Consignee'].Address.CompanyName + "\n" + shipment['Consignee'].Address.City + ' ' + shipment['Consignee'].Address.StateProvinceCode + ' ' + shipment['Consignee'].Address.CountryCode;
               if(shipment['ShippersReference']) {
                 if(Array.isArray(shipment['ShippersReference'])) {
-                  shipment.reference = shipment['ShippersReference'].toString();
+                  shipment.reference = shipment['ShippersReference'].join(', ');
                 } else {
                   shipment.reference = shipment['ShippersReference'];
                 }
               } else {
                 shipment.reference = '';
               }
+
               if(shipment['Flights'] && shipment['Flights'].Flight) {
                 if(Array.isArray(shipment['Flights'].Flight)) {
                     if (this.showOrg){
@@ -136,16 +139,19 @@ export class InfoTableComponent implements OnInit, OnDestroy {
                     shipment['flight'] = flight.AirlineCode + flight.FlightNumber;
                     shipment['org'] = flight.OriginAirportCode;
                     shipment['des'] = flight.DestinationAirportCode;
-
-                    shipment['eta_arrival'] = this.refactorValue(flight.ArrivalDateTime.DateTime['@Day']) + ' ' + this.monthes[this.refactorValue(flight.ArrivalDateTime.DateTime['@Month'])] + ' ' + this.refactorValue(flight.ArrivalDateTime.DateTime['@Hour']) + ':'  + flight.ArrivalDateTime.DateTime['@Minute'];
-                    shipment['eta_departure'] = this.refactorValue(flight.DepartureDateTime.DateTime['@Day']) + ' ' + this.monthes[this.refactorValue(flight.DepartureDateTime.DateTime['@Month'])] + ' ' + this.refactorValue(flight.DepartureDateTime.DateTime['@Hour']) + ':'  + flight.DepartureDateTime.DateTime['@Minute'];
+                    let arrival_date = flight.ArrivalDateTime.DateTime;
+                    let departure_date = flight.DepartureDateTime.DateTime;
+                    shipment['eta_arrival'] = arrival_date['@Year'] + '-' + arrival_date['@Month'] + '-' +  arrival_date['@Day'] + 'T' +  arrival_date['@Hour'] + ':'  +  arrival_date['@Minute'];
+                    shipment['eta_departure'] = departure_date['@Year'] + '-' + departure_date['@Month'] + '-' +  departure_date['@Day'] + 'T' +  departure_date['@Hour'] + ':'  +  departure_date['@Minute'];
 
                 } else {
                   shipment['flight'] = shipment['Flights'].Flight.AirlineCode + shipment['Flights'].Flight.FlightNumber;
                   shipment['org'] = shipment['Flights'].Flight.OriginAirportCode;
                   shipment['des'] = shipment['Flights'].Flight.DestinationAirportCode;
-                  shipment['eta_arrival'] = this.refactorValue(shipment['Flights'].Flight.ArrivalDateTime.DateTime['@Day']) + ' ' + this.monthes[this.refactorValue(shipment['Flights'].Flight.ArrivalDateTime.DateTime['@Month'])] + ' ' + this.refactorValue(shipment['Flights'].Flight.ArrivalDateTime.DateTime['@Hour']) + ':'  + shipment['Flights'].Flight.ArrivalDateTime.DateTime['@Minute'];
-                  shipment['eta_departure'] = this.refactorValue(shipment['Flights'].Flight.DepartureDateTime.DateTime['@Day']) + ' ' + this.monthes[this.refactorValue(shipment['Flights'].Flight.DepartureDateTime.DateTime['@Month'])] + ' ' + this.refactorValue(shipment['Flights'].Flight.DepartureDateTime.DateTime['@Hour']) + ':'  + shipment['Flights'].Flight.DepartureDateTime.DateTime['@Minute'];
+                  let arrival_date = shipment['Flights'].Flight.ArrivalDateTime.DateTime;
+                  let departure_date = shipment['Flights'].Flight.DepartureDateTime.DateTime;
+                  shipment['eta_arrival'] = arrival_date['@Year'] + '-' + arrival_date['@Month'] + '-' +  arrival_date['@Day'] + 'T' +  arrival_date['@Hour'] + ':'  +  arrival_date['@Minute'];
+                  shipment['eta_departure'] = departure_date['@Year'] + '-' + departure_date['@Month'] + '-' +  departure_date['@Day'] + 'T' +  departure_date['@Hour'] + ':'  +  departure_date['@Minute'];
                 }
               } else {
                 shipment['flight'] = '';
@@ -155,15 +161,19 @@ export class InfoTableComponent implements OnInit, OnDestroy {
                 shipment['eta_departure'] = '';
               }
               if(shipment['DeadlineDateTime']) {
-                 shipment['expectedDelivery'] = this.refactorValue(shipment['DeadlineDateTime'].DateTime['@Day']) + ' ' +  this.monthes[this.refactorValue(shipment['DeadlineDateTime'].DateTime['@Month'])]  + ' ' +  shipment['DeadlineDateTime'].DateTime['@Hour'] + ':'  + shipment['DeadlineDateTime'].DateTime['@Minute'];
+                  let deadline_time = shipment['DeadlineDateTime'].DateTime;
+                  shipment['expectedDelivery'] = deadline_time['@Year'] + '-' + deadline_time['@Month'] + '-' +  deadline_time['@Day'] + 'T' +  deadline_time['@Hour'] + ':'  +  deadline_time['@Minute'];
               } else {
                 shipment['expectedDelivery'] = '';
               }
 
               shipment['isDelivered'] = shipment['ShipmentStatus'] == 'Delivered';
-              shipment.status = shipment['ShipmentStatus'] + "\n" + this.refactorValue(shipment['ShipmentStatusTime'].DateTime['@Day']) + ' ' +  this.monthes[this.refactorValue(shipment['ShipmentStatusTime'].DateTime['@Month'])] + ' ' +  this.refactorValue(shipment['ShipmentStatusTime'].DateTime['@Hour']) + ':' + shipment['ShipmentStatusTime'].DateTime['@Minute'] + ' ' + shipment['ShipmentStatusLocation'];
+              let status_time_obj = shipment['ShipmentStatusTime'].DateTime;
+              let status_time = status_time_obj['@Year'] + '-' + status_time_obj['@Month'] + '-' +  status_time_obj['@Day'] + 'T' +  status_time_obj['@Hour'] + ':'  +  status_time_obj['@Minute'];
+              status_time = this.datePipe.transform(status_time, 'MMM dd, ') + this.datePipe.transform(status_time, 'shortTime');
+              shipment.status = shipment['ShipmentStatus'] + "\n" + status_time + ' ' + shipment['ShipmentStatusLocation'];
 
-              if(shipment['ShipmentException'] && !shipment['isDelivered']) {
+              if(shipment['ShipmentException'] && !shipment['ETADateTime']) {
                 let origin = shipment['Origin'] ? shipment['Origin'] : '';
                 tickers.push({
                   name: shipment['ShipmentException'] + ' Shipment: ' +  shipment['ShipmentJobNumber'] + ' ' + origin
@@ -241,13 +251,6 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
     }
   }
-
-  refactorValue(val: any) {
-    let value = val[0] == 0 ? val.substr(1) : val;
-
-    return value;
-  }
-
 
   private deepCopy(oldObj: any) {
     let newObj = oldObj;
