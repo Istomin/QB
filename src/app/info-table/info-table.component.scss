@@ -1,5 +1,19 @@
+table {
+  table-layout: fixed;
+}
+
+// debug
+//table, th, td {
+//    border: 1px solid black !important;
+//}
+
 .info-table {
 	thead {
+		position: fixed;
+		display: table;
+ 		table-layout: fixed;
+		width: 100%;
+
 		th {
 			height: 52px;
 			border-width: 2px 0 1px;
@@ -56,20 +70,21 @@
 		}
 	}
 	tbody {
-    span.space {
-      white-space: pre-wrap;
-    }
+
+		span.space {
+			white-space: pre-wrap;
+		}
 		tr:nth-child(2n) {
 			td {
 				background: #064778;
 			}
 		}
 		td {
-      .reference {
-        width: 150px;
-        display: block;
-        overflow: hidden;
-      }
+			.reference {
+				width: 150px;
+				display: block;
+				overflow: hidden;
+			}
 			font-size: 18px;
 			color: #fff;
 			line-height: 22px;
@@ -77,15 +92,24 @@
 			letter-spacing: 0.5px;
 			border: none;
 			background: #00325d;
-		}
+			&:last-child {
+				min-width: 260px;
+			}
+        }
+        &:before {
+            line-height:4em;
+            content:"-";
+            display:block;
+        }
 	}
 	.etd-cell span {
-		display: block;		white-space: nowrap;
+		display: block;
+		white-space: nowrap;
 	}
 	p {
 		margin: 0;
 	}
 }
 .in-transit {
-  display: block;
+	display: block;
 }

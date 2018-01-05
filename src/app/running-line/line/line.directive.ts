@@ -19,8 +19,6 @@ export class LineDirective {
   }
 
   public startAnimation() {
-      console.log(  jQuery(this.element.nativeElement).find('.slider').width())
-      console.log( jQuery(window).width())
     jQuery(this.element.nativeElement).find('.slider').css({
       left: jQuery(this.element.nativeElement).width()
     }).stop().animate({

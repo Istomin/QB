@@ -48,4 +48,3 @@ export class UploadService {
     return [this.baseApiUrl, target].join('');
   }
 }
-

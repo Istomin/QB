@@ -1,6 +1,6 @@
 export const GlobalVariable = Object.freeze({
-  BASE_API_URL: 'http://208.17.192.85:6544/api/v2/',
-  BASE_URL: 'http://208.17.192.85:6544',
+  BASE_API_URL: 'http://board.quick.aero/api/v2/',
+  BASE_URL: 'http://board.quick.aero',
   SETTINGS: {
     settings: {
       system: {
@@ -32,7 +32,7 @@ export const GlobalVariable = Object.freeze({
         titleTextColor: '#fff',
         tableHeaderColor: '#016c8f',
         tableTextColor: '#fff',
-        tableRowColor1: '#f00',
+        tableRowColor1: '#064778',
         tableRowColor2: '#00325d',
         businessName: 'Your Business Name Here'
       }

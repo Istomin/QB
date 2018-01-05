@@ -288,7 +288,6 @@ export class SettingsTabsComponent implements OnInit {
   onTransitSelectChange(event) {
     this.selectedTransitOption = event.target.value;
     this.show_transit = transit[this.selectedTransitOption];
-    console.log(this.show_transit)
   }
 
   private deepCopy(oldObj: any) {

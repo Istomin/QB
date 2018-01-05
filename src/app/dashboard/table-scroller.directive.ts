@@ -26,7 +26,7 @@ export class TableScrollerDirective {
     this.subscription = this.settingsService.getScrollInterval().subscribe((interval) => {
       clearInterval(this.timer);
       this.startFlag = true;
-      this.animSpeed = interval * 1000;
+      this.animSpeed = interval;
       this.startScrolling();
     });
 
@@ -43,17 +43,19 @@ export class TableScrollerDirective {
   }
 
   startScrolling() {
-    var offset = Math.round(jQuery(this.element.nativeElement).find('table').height() / 40);
+
+
     this.timer = setInterval(() => {
+      var offset = jQuery('main').height() - 50; // get visible table part size
       let scrollTo = jQuery(this.element.nativeElement).scrollTop() + offset;
-      if(scrollTo + 700 > jQuery(this.element.nativeElement).find('table').height()) {
+      if(scrollTo + offset - 1 > jQuery(this.element.nativeElement).find('tbody').height()) {
         scrollTo = 0;
       }
-      jQuery(this.element.nativeElement).stop().animate({
+      jQuery(this.element.nativeElement).animate({
         scrollTop: scrollTo
       }, 500, () => {
 
       });
-    }, this.animSpeed);
+  }, this.animSpeed);
   }
 }
