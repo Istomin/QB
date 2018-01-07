@@ -21,26 +21,26 @@
   </thead>
   <tbody #tableBody scroller [scrollerApi]="scrollerApi">
   <tr  *ngFor="let shipment of shipments | orderBy: order : reverse; let i = index">
-    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[0], 'font-size': fontSize.tBodyTd + 'px'}">{{shipment.ShipmentBOLNumber}}</td>
-    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[1], 'font-size': fontSize.tBodyTd + 'px'}">
+    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[0],'min-width': colunmWidths[0], 'font-size': fontSize.tBodyTd + 'px'}">{{shipment.ShipmentBOLNumber}}</td>
+    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[1],'min-width': colunmWidths[1], 'font-size': fontSize.tBodyTd + 'px'}">
       <span class="reference" >{{shipment.reference}}</span>
     </td>
-    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[2], 'font-size': fontSize.tBodyTd + 'px'}">
+    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[2],'min-width': colunmWidths[2], 'font-size': fontSize.tBodyTd + 'px'}">
       <span class="space" *ngIf="showShipper" >{{shipment.shipper}}</span>
       <span  class="space" *ngIf="!showShipper" >{{shipment.consignee}}</span>
     </td>
-    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[3], 'font-size': fontSize.tBodyTd + 'px'}" >
+    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[3], 'min-width': colunmWidths[3],'font-size': fontSize.tBodyTd + 'px'}" >
       {{shipment.flight}}
     </td>
-    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[4], 'font-size': fontSize.tBodyTd + 'px'}">
+    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[4], 'min-width': colunmWidths[4],'font-size': fontSize.tBodyTd + 'px'}">
       <span *ngIf="showOrg">{{shipment.org}}</span>
       <span *ngIf="!showOrg">{{shipment.des}}</span>
     </td>
-    <td class="etd-cell" [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[5], 'font-size': fontSize.tBodyTd + 'px'}">
+    <td class="etd-cell" [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[5], 'min-width': colunmWidths[5],'font-size': fontSize.tBodyTd + 'px'}">
       <span *ngIf="showOrg && shipment.eta_departure">{{shipment.eta_departure| date: 'MMM d'}}, {{shipment.eta_departure | date: 'shortTime'}}</span>
       <span *ngIf="!showOrg && shipment.eta_arrival">{{shipment.eta_arrival | date: 'MMM d'}}, {{shipment.eta_arrival | date: 'shortTime'}}</span>
     </td>
-    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[6], 'font-size': fontSize.tBodyTd + 'px'}">
+    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[6], 'min-width': colunmWidths[6],'font-size': fontSize.tBodyTd + 'px'}">
       <span class="space">{{shipment.status}}</span>
       <span *ngIf="showTransit && shipment.InTransitTime" class="in-transit">Total Time: {{shipment.InTransitTime}}</span>
       <span *ngIf="showExpectedDelivery && !shipment.isDelivered && shipment.expectedDelivery" class="in-transit">Expected: {{shipment.expectedDelivery | date: 'MMM d'}}, {{shipment.expectedDelivery| date: 'shortTime'}}</span>

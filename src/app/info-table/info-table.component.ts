@@ -11,6 +11,9 @@ import { LocalStorageService } from "../core/local-storage.service";
 
 import { ElementRef } from '@angular/core';
 import { Subscribable } from 'rxjs/Observable';
+import { window } from 'rxjs/operator/window';
+import { WindowRef } from '../core/window-ref';
+import { debounce } from 'rxjs/operator/debounce';
 
 
 const ETANoteType = ['WEATHER DELAY', 'NO SHOW AIRLINE', 'FLIGHT DELAY'];
@@ -52,8 +55,10 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private interval: number;
   private colunmWidths: string[];
   public scrollerApi: any;
+  private resizeLintener: function;
 
-  constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService, private uploadService: UploadService, private localStorage: LocalStorageService, private datePipe: DatePipe) { }
+  constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService, private uploadService: UploadService, private localStorage: LocalStorageService, private datePipe: DatePipe,
+    private winRef: WindowRef) { }
   public ngOnInit() {
     this.subscription = this.settingsService.getTableChangeEmitter().subscribe((response) => {
       this.onAppSettingsChanged(response);
@@ -82,6 +87,27 @@ export class InfoTableComponent implements OnInit, OnDestroy {
       this.applyAlertsSettings(settings);
     });
 
+    this.recalculateColumnsWidth();
+    this.scrollerApi = this.getScrollerApi();
+
+    this.resizeLintener = () => {
+      this.recalculateColumnsWidth();
+    };
+
+    this.winRef.nativeWindow.addEventListener('resize', this.resizeLintener);
+  }
+
+  public ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.refreshIntervalSubscription.unsubscribe();
+    this.alertsSettingsSubscription.unsubscribe();
+    this.tableColSubscription.unsubscribe();
+    this.tableDataChangeSubscription.unsubscribe();
+
+    this.winRef.nativeWindow.removeEventListener('resize', this.resizeLintener);
+  }
+
+  private recalculateColumnsWidth() {
     let cells = this.tableHeaderEl.nativeElement.rows[0].cells;
 
     this.colunmWidths = [];
@@ -89,7 +115,10 @@ export class InfoTableComponent implements OnInit, OnDestroy {
       this.colunmWidths[i] = cells[i].clientWidth + 'px';
     }
 
-    this.scrollerApi = {
+  }
+
+  private getScrollerApi() {
+    return {
       getScrollToOffset: (baseOffset) => {
 
         let rows = this.tableBodyEl.nativeElement.rows
@@ -116,14 +145,6 @@ export class InfoTableComponent implements OnInit, OnDestroy {
         return baseOffset;
       }
     }
-  }
-
-  public ngOnDestroy() {
-    this.subscription.unsubscribe();
-    this.refreshIntervalSubscription.unsubscribe();
-    this.alertsSettingsSubscription.unsubscribe();
-    this.tableColSubscription.unsubscribe();
-    this.tableDataChangeSubscription.unsubscribe();
   }
 
   private onAppSettingsChanged(response: any) {
