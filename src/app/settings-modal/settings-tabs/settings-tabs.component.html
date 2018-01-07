@@ -172,5 +172,55 @@
 				</div>
 			</div>
 		</tab>
+		<tab heading="Font size">
+			<div class="tab-col">
+				<strong class="group-title">Holder text</strong>
+				<md-slider	[(value)]="runTextHolderValue"
+										[max]="fontSizes.runTextHolder.max"
+										(input)="runTextHolderValue = $event.value"
+										[min]="fontSizes.runTextHolder.min"
+										[step]="step">
+				</md-slider>
+				<span>{{runTextHolderValue}} px</span>
+
+				<strong class="group-title">Header clock</strong>
+				<md-slider	[(value)]="headerClockValue"
+										[max]="fontSizes.headerClock.max"
+										(input)="headerClockValue = $event.value"
+										[min]="fontSizes.headerClock.min"
+										[step]="step">
+				</md-slider>
+				<span>{{headerClockValue}} px</span>
+
+				<strong class="group-title">Header logo</strong>
+				<md-slider	[(value)]="headerLogoValue"
+										[max]="fontSizes.headerLogo.max"
+										(input)="headerLogoValue = $event.value"
+										[min]="fontSizes.headerLogo.min"
+										[step]="step">
+				</md-slider>
+				<span>{{headerLogoValue}} px</span>
+
+			</div>
+			<div class="tab-col">
+				<strong class="group-title">Table body</strong>
+				<md-slider	[(value)]="tableBodyTdValue"
+										[max]="fontSizes.tBodyTd.max"
+										(input)="tableBodyTdValue = $event.value"
+										[min]="fontSizes.tBodyTd.min"
+										[step]="step">
+				</md-slider>
+				<span>{{tableBodyTdValue}} px</span>
+
+				<strong class="group-title">Table header</strong>
+				<md-slider	[(value)]="tableHeaderThValue"
+										[max]="fontSizes.tHeadTh.max"
+										(input)="tableHeaderThValue = $event.value"
+										[min]="fontSizes.tHeadTh.min"
+										[step]="step">
+				</md-slider>
+				<span>{{tableHeaderThValue}} px</span>
+			</div>
+		</tab>
 	</tabset>
 </div>

@@ -1,3 +1,5 @@
+import { FontSizeSetting } from '../models/fontSizeSetting';
+
 export const GlobalVariable = Object.freeze({
   BASE_API_URL: 'http://board.quick.aero/api/v2/',
   BASE_URL: 'http://board.quick.aero',
@@ -35,6 +37,13 @@ export const GlobalVariable = Object.freeze({
         tableRowColor1: '#064778',
         tableRowColor2: '#00325d',
         businessName: 'Your Business Name Here'
+      },
+      fontSizes: {
+        tBodyTd: new FontSizeSetting(10, 22, 18),
+        tHeadTh: new FontSizeSetting(10, 22, 18),
+        runTextHolder: new FontSizeSetting(14, 30, 21),
+        headerClock: new FontSizeSetting(14, 30, 22),
+        headerLogo: new FontSizeSetting(14, 30, 22),
       }
     }
   }

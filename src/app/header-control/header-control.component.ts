@@ -10,11 +10,11 @@ import { LocalStorageService } from '.././core/local-storage.service';
 
 @Component({
   selector: 'header-control',
-  styleUrls: [ 'header-control.component.scss' ],
+  styleUrls: ['header-control.component.scss'],
   templateUrl: 'header-control.component.html'
 })
 export class HeaderControlComponent implements OnInit, OnDestroy {
-  @ViewChild('lgModal') public  lgModal: SettingsModalComponent;
+  @ViewChild('lgModal') public lgModal: SettingsModalComponent;
   public subscription: Subscription;
   public userSettingsSubscription: Subscription;
   public logoSubscription: Subscription;
@@ -26,12 +26,19 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
   private imgUrl = 'http://board.quick.aero';
   private userSettings: any;
   private imgSrc: any;
+  private headerLogoFs: string;
+  private headerClockFs: string;
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private spiner: SpinnerService, private localStorage: LocalStorageService) {
   }
 
   public ngOnInit() {
     this.subscription = this.settingsService.getNavChangeEmitter().subscribe((response) => {
       this.onAppSettingsChanged(response);
+    });
+
+    this.settingsService.getFontSize().subscribe((fontSize) => {
+      this.headerLogoFs = fontSize.headerLogo + 'px';
+      this.headerClockFs = fontSize.headerClock + 'px';
     });
 
     this.userSettingsSubscription = this.settingsService.getUserSettingsData().subscribe((response) => {
@@ -42,17 +49,17 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
     });
 
     this.logoSubscription = this.settingsService.getLogoId().subscribe((logoObj) => {
-      if(logoObj.isRemoved) {
+      if (logoObj.isRemoved) {
         this.imgSrc = null;
-      } else if(logoObj.isCanceled) {
-        if(this.userSettings.logo) {
+      } else if (logoObj.isCanceled) {
+        if (this.userSettings.logo) {
           this.setLogo(this.userSettings.logo, true);
         } else {
           this.imgSrc = null;
         }
-      } else if(logoObj.isAdded) {
+      } else if (logoObj.isAdded) {
         this.setLogo(logoObj.logoId, false);
-      } else if(logoObj.isDeleted) {
+      } else if (logoObj.isDeleted) {
         this.imgSrc = null;
         this.userSettings.logo = null;
         this.localStorage.setObject('user', this.userSettings);
@@ -79,7 +86,7 @@ export class HeaderControlComponent implements OnInit, OnDestroy {
   }
 
   private setLogo(id: string, fromSettings) {
-    if(fromSettings) {
+    if (fromSettings) {
       this.imgSrc = this.imgUrl + id;
     } else {
       this.imgSrc = id;

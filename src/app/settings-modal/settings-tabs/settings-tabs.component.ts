@@ -1,13 +1,13 @@
-import {Component, ViewChild, OnInit} from '@angular/core';
-import {ColorPickerComponent} from '../color-picker'
-import {Settings} from '../../models/settings.model';
-import {AppSettingsService} from '../../core/app-settings.service';
-import {LocalStorageService} from "../../core/local-storage.service";
-import {GlobalVariable} from '../../core/global';
-import {UserProfileService} from "../../core/user-profile.service";
-import {Router} from "@angular/router";
-import {LoginService} from  "../../login/login.service";
-import {UploadService} from  "../../core/upload.service";
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { ColorPickerComponent } from '../color-picker'
+import { Settings } from '../../models/settings.model';
+import { AppSettingsService } from '../../core/app-settings.service';
+import { LocalStorageService } from "../../core/local-storage.service";
+import { GlobalVariable } from '../../core/global';
+import { UserProfileService } from "../../core/user-profile.service";
+import { Router } from "@angular/router";
+import { LoginService } from "../../login/login.service";
+import { UploadService } from "../../core/upload.service";
 var jQuery = require("jquery");
 
 enum transit {
@@ -30,16 +30,25 @@ enum ETANote {
 export class SettingsTabsComponent implements OnInit {
 
   @ViewChild(ColorPickerComponent) public colorPickerComponent: ColorPickerComponent;
+
+  private fontSizes = GlobalVariable.SETTINGS.settings.fontSizes;
+  public runTextHolderValue: number = this.fontSizes.runTextHolder.base;
+  public headerClockValue: number = this.fontSizes.headerClock.base;
+  public headerLogoValue: number = this.fontSizes.headerLogo.base;
+  public tableBodyTdValue: number = this.fontSizes.tBodyTd.base;
+  public tableHeaderThValue: number = this.fontSizes.tHeadTh.base;
+
   private pageSettings: Settings;
   private minRefreshInterval: number = 10;
   private minScrollInterval: number = 10;
   private maxRefreshInterval: number = 30;
   private maxScrollInterval: number = 60;
+
   private step: number = 1;
   private refresh_int: number = 10;
   private scroll_int: number = 10;
   private name = 'aaa';
-  private clonedSettings: {}&Settings;
+  private clonedSettings: {} & Settings;
   private baseUrl = GlobalVariable.BASE_URL;
   private dafaultSettings = GlobalVariable.SETTINGS;
   private displayMode;
@@ -48,7 +57,7 @@ export class SettingsTabsComponent implements OnInit {
   private showTransit;
   private showExpectedDelivery;
   private imgSrc: string;
-  private user: {}|any;
+  private user: {} | any;
   private newLogoAdded: boolean;
   private file: any;
   private isLogoRemoved: boolean;
@@ -81,7 +90,7 @@ export class SettingsTabsComponent implements OnInit {
       this.pageSettings.settings.system.dropDelivered = this.userInfo.drop_delivered;
       this.pageSettings.settings.system.showTransit = this.userInfo.show_transit;
       this.pageSettings.settings.system.showExpectedDelivery = this.userInfo.show_expect_delivery;
-      this.refresh_int =  this.pageSettings.settings.system.refreshInterval;
+      this.refresh_int = this.pageSettings.settings.system.refreshInterval;
       this.scroll_int = this.pageSettings.settings.system.scrollInterval / 10;
       this.displayMode['model'] = this.pageSettings.settings.system.displayMode;
       this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
@@ -135,10 +144,12 @@ export class SettingsTabsComponent implements OnInit {
   public saveSettings() {
     this.prepareUserSettingsForSaving();
 
+    this.settingsService.emitFontSizeChange(this.pageSettings.settings.fontSizes);
     this.settingsService.emitScrollInterval(this.pageSettings.settings.system.scrollInterval);
     this.settingsService.emitRefreshInterval(this.pageSettings.settings.system.refreshInterval);
+
     this.localStorage.setObject('userSettings', this.pageSettings);
-    if(this.isLogoRemoved) {
+    if (this.isLogoRemoved) {
       this.uploadService.removeLogo().subscribe((response) => {
         this.settingsService.emitLogoId({
           isDeleted: true
@@ -147,7 +158,7 @@ export class SettingsTabsComponent implements OnInit {
         this.imgSrc = null;
       });
     } else {
-      if(this.newLogoAdded) {
+      if (this.newLogoAdded) {
         this.uploadService.uploadLogo(this.file).subscribe((response) => {
           this.updateUser();
         });
@@ -159,13 +170,13 @@ export class SettingsTabsComponent implements OnInit {
 
   public getSettings() {
     this.userInfo = this.localStorage.getObject('user');
-    if(this.localStorage.getObject('userSettings').hasOwnProperty('settings')) {
+    if (this.localStorage.getObject('userSettings').hasOwnProperty('settings')) {
       this.pageSettings = this.localStorage.getObject('userSettings');
       this.clonedSettings = this.deepCopy(this.pageSettings);
       this.prevTransitOption = this.userInfo.show_transit;
     }
 
-    if(this.userInfo.logo) {
+    if (this.userInfo.logo) {
       this.imgSrc = this.baseUrl + this.userInfo.logo;
     }
   }
@@ -175,20 +186,28 @@ export class SettingsTabsComponent implements OnInit {
     this.localStorage.setObject('user', this.userInfo);
     delete this.userInfo.logo;
     this.loginService.updateUserInfo(this.userInfo).subscribe((response: any) => {
-      if(current != this.prevTransitOption) {
+      if (current != this.prevTransitOption) {
         this.settingsService.emitTableDataChange();
       }
     });
   }
 
   private prepareUserSettingsForSaving() {
-    this.pageSettings.settings.system.refreshInterval =  this.refresh_int;
+    this.pageSettings.settings.system.refreshInterval = this.refresh_int;
     this.pageSettings.settings.system.scrollInterval = this.scroll_int;
     this.pageSettings.settings.system.displayMode = this.displayMode['model'];
     this.pageSettings.settings.system.flightDisplay = this.flightDisplay['model'];
     this.pageSettings.settings.system.dropDelivered = this.dropDelivered['model'];
     this.pageSettings.settings.system.showTransit = this.showTransit['model'];
     this.pageSettings.settings.system.showExpectedDelivery = this.showExpectedDelivery['model'];
+
+    this.pageSettings.settings.fontSizes = {
+      tBodyTd: this.tableBodyTdValue,
+      tHeadTh: this.tableHeaderThValue,
+      headerClock: this.headerClockValue,
+      headerLogo: this.headerLogoValue,
+      runTextHolder: this.runTextHolderValue
+    };
 
     this.collectUserSettings();
   }
@@ -202,7 +221,16 @@ export class SettingsTabsComponent implements OnInit {
     this.userInfo.refresh_int = this.pageSettings.settings.system.refreshInterval;
     this.userInfo.scroll_int = this.pageSettings.settings.system.scrollInterval;
 
+    const { tBodyTd, tHeadTh, headerClock, headerLogo, runTextHolder } = this.pageSettings.settings.fontSizes;
+
+    this.userInfo.tBodyTd = tBodyTd;
+    this.userInfo.tHeadTh = tHeadTh;
+    this.userInfo.headerClock = headerClock;
+    this.userInfo.headerLogo = headerLogo;
+    this.userInfo.runTextHolder = runTextHolder;
+
     this.userInfo.show_transit = this.showTransit['model'] ? this.show_transit : null;
+
   }
 
   private onTableColChange() {
@@ -220,19 +248,19 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   onAlertColorChanged(obj) {
-    if(obj) {
+    if (obj) {
       this.pageSettings.settings.alerts[obj.param] = obj.color;
     }
-   setTimeout(() => {
-     this.settingsService.emitAlertsSettingsChange(this.pageSettings.settings.alerts);
-   }, 300);
+    setTimeout(() => {
+      this.settingsService.emitAlertsSettingsChange(this.pageSettings.settings.alerts);
+    }, 300);
   }
 
   onChange(event) {
-    let  reader = new FileReader();
+    let reader = new FileReader();
     var target = event.target || event.srcElement;
     this.file = target.files[0];
-    reader.onload = () =>{
+    reader.onload = () => {
       this.imgSrc = reader.result;
       this.settingsService.emitLogoId({
         isAdded: true,
@@ -247,7 +275,7 @@ export class SettingsTabsComponent implements OnInit {
   private applySettings(obj: any) {
     if (obj.param === 'tableRowColor1' || obj.param === 'tableRowColor2' ||
       obj.param === 'tableTextColor' || obj.param === 'tableHeaderColor') {
-        this.settingsService.emitTableChangeEvent(obj);
+      this.settingsService.emitTableChangeEvent(obj);
     } else {
       this.settingsService.emitNavChangeEvent(obj);
     }

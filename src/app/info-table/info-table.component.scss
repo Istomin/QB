@@ -73,8 +73,7 @@ display: block;
 height: calc(100vh - 170px);
 width: 100vw;
 overflow: hidden;
-// TODO: set to hidden
-overflow-y: scroll;
+overflow-y: hidden;
 
 		span.space {
 			white-space: pre-wrap;

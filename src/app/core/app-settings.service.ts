@@ -9,6 +9,7 @@ export class AppSettingsService {
   public userSettingsChange: EventEmitter<number> = new EventEmitter();
   public logoIdChange: EventEmitter<number> = new EventEmitter();
   public scrollIntervalChange: EventEmitter<number> = new EventEmitter();
+  public fontSizeChange: EventEmitter<any> = new EventEmitter();
   public datachange: EventEmitter<number> = new EventEmitter();
   public refreshIntervalChange: EventEmitter<number> = new EventEmitter();
   public tableColChange: EventEmitter<number> = new EventEmitter();
@@ -48,9 +49,19 @@ export class AppSettingsService {
   public emitScrollInterval(data: any) {
     this.scrollIntervalChange.emit(data);
   }
+
   public getScrollInterval() {
     return this.scrollIntervalChange;
   }
+
+  public emitFontSizeChange(data: any) {
+    this.fontSizeChange.emit(data);
+  }
+
+  public getFontSize() {
+    return this.fontSizeChange;
+  }
+
   public emitRefreshInterval(data: any) {
     this.refreshIntervalChange.emit(data);
   }

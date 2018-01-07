@@ -1,3 +1,5 @@
+import { FontSizeSetting } from './fontSizeSetting';
+
 export class Settings {
   settings: {
     system: {
@@ -32,6 +34,13 @@ export class Settings {
       tableRowColor1: string,
       tableRowColor2: string,
       businessName: string
+    },
+    fontSizes: {
+      tBodyTd: number,
+      tHeadTh: number,
+      runTextHolder: number,
+      headerClock: number,
+      headerLogo: number
     }
   }
 }

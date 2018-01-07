@@ -10,6 +10,7 @@ import { UploadService } from "../core/upload.service";
 import { LocalStorageService } from "../core/local-storage.service";
 
 import { ElementRef } from '@angular/core';
+import { Subscribable } from 'rxjs/Observable';
 
 
 const ETANoteType = ['WEATHER DELAY', 'NO SHOW AIRLINE', 'FLIGHT DELAY'];
@@ -30,6 +31,8 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   public refreshIntervalSubscription: Subscription;
   public tableDataChangeSubscription: Subscription;
   public alertsSettingsSubscription: Subscription;
+  public fontSizeSubscription: Subscription;
+  public fontSize: any = {};
   private defaultBottomColor: string = '#001a22';
   private tableHeaderColor: string;
   private shipments: Shipment[];
@@ -58,6 +61,10 @@ export class InfoTableComponent implements OnInit, OnDestroy {
     this.tableColSubscription = this.settingsService.getTableCol().subscribe((obj) => {
       this.triggerColsVisibility(obj);
 
+    });
+
+    this.fontSizeSubscription = this.settingsService.getFontSize().subscribe((fontSize) => {
+      this.fontSize = fontSize;
     });
 
     this.getData(false);

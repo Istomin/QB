@@ -6,7 +6,7 @@
 <div class="runtext-container">
   <div class="main-runtext">
     <marquee direction="" onmouseover="this.stop();" onmouseout="this.start();">
-      <div class="holder">
+      <div class="holder" [ngStyle]="{'font-size': fontSize.runTextHolder + 'px'}">
         <div class="text-container" *ngFor="let text of texts">&nbsp;&nbsp;<span class="stars" *ngIf="!defaultText">  <span *ngIf="texts.length > 1">***</span>  </span> {{text.name}}</div>
       </div>
     </marquee>
