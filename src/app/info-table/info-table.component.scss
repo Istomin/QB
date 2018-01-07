@@ -2,18 +2,9 @@ table {
   table-layout: fixed;
 }
 
-// debug
-//table, th, td {
-//    border: 1px solid black !important;
-//}
-
 .info-table {
-	thead {
-		position: fixed;
-		display: table;
- 		table-layout: fixed;
-		width: 100%;
 
+	thead {
 		th {
 			height: 52px;
 			border-width: 2px 0 1px;
@@ -23,6 +14,13 @@ table {
 			line-height: 50px;
 			color: #fff;
 			padding: 0;
+
+			&.normal-column{
+				width: 20%;
+			}
+			&.small-column{
+				width: 160px;
+			}
 			a {
 				color: #fff;
 				display: block;
@@ -71,6 +69,13 @@ table {
 	}
 	tbody {
 
+display: block;
+height: calc(100vh - 170px);
+width: 100vw;
+overflow: hidden;
+// TODO: set to hidden
+overflow-y: scroll;
+
 		span.space {
 			white-space: pre-wrap;
 		}
@@ -94,16 +99,13 @@ table {
 			background: #00325d;
 			&:last-child {
 				min-width: 260px;
-			}
-        }
-        &:before {
-            line-height:4em;
-            content:"-";
-            display:block;
-        }
+			}
+
+		}
 	}
 	.etd-cell span {
-		display: block;
+		display: block;
+
 		white-space: nowrap;
 	}
 	p {
