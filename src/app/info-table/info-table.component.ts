@@ -147,9 +147,10 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
   private getScrollerApi() {
     return {
-      getScrollToOffset: (baseOffset) => {
+      getScrollToOffsetData: (baseHeight) => {
 
         let rows = this.tableBodyEl.nativeElement.rows
+        let previousRowsHeight = 0;
 
         let lastVisibleIndex = -1;
         let visibleElementsHeight = 0;
@@ -162,15 +163,18 @@ export class InfoTableComponent implements OnInit, OnDestroy {
           else {
             if (lastVisibleIndex !== -1 && i > lastVisibleIndex) {
 
-              if (visibleElementsHeight > baseOffset) {
-                visibleElementsHeight -= rows[lastVisibleIndex].clientHeight;
-              }
-
-              return visibleElementsHeight;
+              return {
+                visibleHeight: visibleElementsHeight,
+                hidenHeight: previousRowsHeight
+              };
             }
+            previousRowsHeight += row.clientHeight;
           }
         }
-        return baseOffset;
+        return {
+          visibleHeight: baseHeight,
+          hidenHeight: 0
+        };
       }
     }
   }
@@ -190,8 +194,10 @@ export class InfoTableComponent implements OnInit, OnDestroy {
     this.showShipper = obj.settings.system.displayShipper === undefined ? true : obj.settings.system.displayShipper;
     this.showConsignee = obj.settings.system.displayConsignee === undefined ? true : obj.settings.system.displayConsignee;
 
+    console.log(obj.settings.system);
+
     this.dropDelivered = obj.settings.system.dropDelivered;
-    this.numberOfSigns = obj.settings.system.numberOfSigns === undefined ? 15 : obj.settings.system.numberOfSigns;
+    this.numberOfSigns = obj.settings.system.numberOfSigns;
     this.showTransit = obj.settings.system.showTransit;
     this.showExpectedDelivery = obj.settings.system.showExpectedDelivery;
 

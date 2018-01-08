@@ -20,7 +20,6 @@
 //  }
 //}
 
-
 .runtext-container {
   background: #000;
   width: 100%;
@@ -30,10 +29,11 @@
 }
 
 .main-runtext {margin: 0 auto;
-  overflow: visible;
+  overflow: hidden;
   position: relative;
   height: 50px;
-	display: block;}
+	display: block;
+}
 
 .runtext-container .holder {
   position: relative;
@@ -54,5 +54,7 @@
 		letter-spacing: 2px;
 		font-size: 26px;
 		display: inline-block;
-		vertical-align: top;		margin: 3px 7px 0 0
-	}}
+		vertical-align: top;
+		margin: 3px 7px 0 0
+	}
+}

@@ -15,7 +15,9 @@
 				</md-slider>
 				<span>{{scroll_int}} seconds</span>
 				<div>
-				<input [(ngModel)]="numberOfSigns" (change)="onTableColChange()" min="1" max="999" 
+				<input 
+				[(ngModel)]="pageSettings.settings.system.numberOfSigns"
+					min="1" max="999" 
 					type="number" [ngStyle]="{'width':  '70px', 'padding':'5px'}" /> number of signs
 			</div>
 			</div>

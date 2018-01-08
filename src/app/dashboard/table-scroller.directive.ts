@@ -10,7 +10,10 @@ var jQuery = require("jquery");
 export class TableScrollerDirective {
 
   @Input() scrollerApi: {
-    getScrollToOffset: (offset) => {};
+    getScrollToOffsetData: (offset) => {
+      visibleHeight: number,
+      hidenHeight: number
+    };
   };
 
   public subscription: Subscription;
@@ -59,15 +62,21 @@ export class TableScrollerDirective {
     this.timer = setTimeout(() => {
 
       let offset = 0;
-      let mainElementOffset = jQuery('main').height() - 50;
+      let mainElementHeight = jQuery('main').height() - 50;
 
       let element = this.element.nativeElement;
 
       let scrollTo = 0;
-      if (this.scrollerApi && this.scrollerApi.getScrollToOffset) {
-        offset = +this.scrollerApi.getScrollToOffset(mainElementOffset);
+      if (this.scrollerApi && this.scrollerApi.getScrollToOffsetData) {
+        let scrollData = this.scrollerApi.getScrollToOffsetData(mainElementHeight);
+        if (scrollData.hidenHeight){
+          scrollTo = scrollData.hidenHeight + scrollData.visibleHeight;
+        }
+        else{
+          scrollTo = scrollData.visibleHeight;
+        }
       }
-      scrollTo = jQuery(element).scrollTop() + offset || mainElementOffset;
+      scrollTo = scrollTo || jQuery(element).scrollTop() + offset;
 
       if (this.lastScrollPosition === scrollTo) {
         scrollTo = 0;

@@ -56,7 +56,6 @@ export class SettingsTabsComponent implements OnInit {
 
   private flightDisplay;
   private dropDelivered;
-  private numberOfSigns;
   private showTransit;
   private showExpectedDelivery;
   private imgSrc: string;
@@ -95,7 +94,6 @@ export class SettingsTabsComponent implements OnInit {
       settings.system.displayShipper = this.userInfo.display_mode == 'shipper' || this.userInfo.display_mode == 'both';
       settings.system.flightDisplay = this.userInfo.flight_display == 'org' ? 0 : 1;
       settings.system.dropDelivered = this.userInfo.drop_delivered;
-      settings.system.numberOfSigns = this.userInfo.numberOfSigns;
       settings.system.showTransit = this.userInfo.show_transit;
       settings.system.showExpectedDelivery = this.userInfo.show_expect_delivery;
 
@@ -112,7 +110,7 @@ export class SettingsTabsComponent implements OnInit {
 
       this.flightDisplay['model'] = settings.system.flightDisplay;
       this.dropDelivered['model'] = settings.system.dropDelivered;
-      this.numberOfSigns = settings.system.numberOfSigns;
+      
       this.showTransit['model'] = settings.system.showTransit;
       this.showExpectedDelivery['model'] = settings.system.showExpectedDelivery;
       this.selectedTransitOption = transit[this.userInfo.show_transit];
@@ -145,12 +143,12 @@ export class SettingsTabsComponent implements OnInit {
     this.settingsService.emitLogoId({
       isCanceled: true
     });
+
     this.displayConsignee = this.pageSettings.settings.system.displayConsignee;
     this.displayShipper = this.pageSettings.settings.system.displayShipper;
 
     this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
     this.dropDelivered['model'] = this.pageSettings.settings.system.dropDelivered;
-    this.numberOfSigns = this.pageSettings.settings.system.numberOfSigns;
     this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
     this.showTransit['showExpectedDelivery'] = this.pageSettings.settings.system.showExpectedDelivery;
     this.settingsService.emitTableCol(this.pageSettings);
@@ -169,7 +167,6 @@ export class SettingsTabsComponent implements OnInit {
     this.settingsService.emitScrollInterval(this.pageSettings.settings.system.scrollInterval);
     this.settingsService.emitRefreshInterval(this.pageSettings.settings.system.refreshInterval);
 
-    this.localStorage.setObject('userSettings', this.pageSettings);
     if (this.isLogoRemoved) {
       this.uploadService.removeLogo().subscribe((response) => {
         this.settingsService.emitLogoId({
@@ -220,7 +217,6 @@ export class SettingsTabsComponent implements OnInit {
     this.pageSettings.settings.system.displayShipper = this.displayShipper;
     this.pageSettings.settings.system.flightDisplay = this.flightDisplay['model'];
     this.pageSettings.settings.system.dropDelivered = this.dropDelivered['model'];
-    this.pageSettings.settings.system.numberOfSigns = this.numberOfSigns;
     this.pageSettings.settings.system.showTransit = this.showTransit['model'];
     this.pageSettings.settings.system.showExpectedDelivery = this.showExpectedDelivery['model'];
 
@@ -269,7 +265,6 @@ export class SettingsTabsComponent implements OnInit {
     system.displayConsignee = this.displayConsignee;
     system.flightDisplay = this.flightDisplay['model'];
     system.dropDelivered = this.dropDelivered['model'];
-    system.numberOfSigns = this.numberOfSigns;
     system.showTransit = this.showTransit['model'];
     system.showExpectedDelivery = this.showExpectedDelivery['model'];
     this.settingsService.emitTableCol(this.pageSettings);
@@ -287,6 +282,10 @@ export class SettingsTabsComponent implements OnInit {
     setTimeout(() => {
       this.settingsService.emitAlertsSettingsChange(this.pageSettings.settings.alerts);
     }, 300);
+  }
+
+  onAlertNumberOfSignsChanged(){
+    //console.log('onAlertNumberOfSignsChanged');
   }
 
   onChange(event) {
@@ -317,7 +316,7 @@ export class SettingsTabsComponent implements OnInit {
 
   private onRefreshSliderChanged($event) {
     this.refresh_int = $event.value;
-  }
+  };
 
   private onScrollSliderChanged($event) {
     this.scroll_int = $event.value;
