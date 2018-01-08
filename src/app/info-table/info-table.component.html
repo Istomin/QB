@@ -13,16 +13,9 @@
           <span [style.color]="tableTextColor">Reference</span>
         </a>
       </th>
-      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px', 'width': showConsignee?'auto':'0'}" key="shipper" *ngIf="showShipper" >
-        <a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#"
-          (click)="order = 'shipper'; reverse = !reverse;" [ngClass]="{'active': order == 'shipper', 'up': order == 'shipper' && reverse, 'down': order == 'shipper' && !reverse}">
-          <span [style.color]="tableTextColor">Shipper</span>
-        </a>
-      </th>
-      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px', 'width': showConsignee?'auto':'0'}" key="consignee" *ngIf="showConsignee">
-        <a  [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#"
-          (click)="order = 'consignee'; reverse = !reverse;" [ngClass]="{'active': order == 'consignee', 'up': order == 'consignee' && reverse, 'down': order == 'consignee' && !reverse}">
-          <span [style.color]="tableTextColor">Consignee</span>
+      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" key="shipper" >
+        <a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" >
+          <span [style.color]="tableTextColor"> {{getShowShipperConsigneeHeader()}}</span>
         </a>
       </th>
       <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" class="small-column" key="flight">
@@ -66,12 +59,9 @@
       <td [ngStyle]="{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths['reference'],'min-width': colunmWidths['reference'],'max-width': colunmWidths['reference'], 'font-size': fontSize.tBodyTd + 'px'}">
         <span class="reference" title="{{shipment.reference}}">{{shipment.reference | maxLength: numberOfSigns}}</span>
       </td>
-      <td *ngIf="showShipper" [ngStyle]="{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths['shipper'],'min-width': colunmWidths['shipper'],'max-width': colunmWidths['shipper'], 'font-size': fontSize.tBodyTd + 'px'}">
-        <span  class="space">{{shipment.shipper}}</span>
-      </td>
-
-      <td *ngIf="showConsignee" [ngStyle]="{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths['consignee'], 'min-width': colunmWidths['consignee'],'max-width': colunmWidths['consignee'], 'font-size': fontSize.tBodyTd + 'px'}">
-        <span  class="space">{{shipment.consignee}}</span>
+      <td [ngStyle]="{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths['shipper'],'min-width': colunmWidths['shipper'],'max-width': colunmWidths['shipper'], 'font-size': fontSize.tBodyTd + 'px'}">
+        <span class="space" *ngIf="showShipper">{{shipment.shipper}}</span>
+        <span class="space" *ngIf="showConsignee">{{shipment.consignee}}</span>
       </td>
 
       <td [ngStyle]="{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths['flight'], 'min-width': colunmWidths['flight'],'max-width': colunmWidths['flight'],'font-size': fontSize.tBodyTd + 'px'}">

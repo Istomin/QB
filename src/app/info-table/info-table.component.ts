@@ -98,6 +98,21 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
     this.recalculateColumnsWidthWithDelay();
 
+
+  }
+
+  private getShowShipperConsigneeHeader() {
+    if (this.showConsignee && this.showShipper) {
+      return 'Shipper / Consignee';
+    }
+    else {
+      if (this.showShipper) {
+        return 'Shipper';
+      }
+      if (this.showConsignee) {
+        return 'Consignee';
+      }
+    }
   }
 
   private recalculateColumnsWidthWithDelay() {
@@ -176,7 +191,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
     this.showConsignee = obj.settings.system.displayConsignee === undefined ? true : obj.settings.system.displayConsignee;
 
     this.dropDelivered = obj.settings.system.dropDelivered;
-    this.numberOfSigns = obj.settings.system.numberOfSigns === undefined ? 15: obj.settings.system.numberOfSigns;
+    this.numberOfSigns = obj.settings.system.numberOfSigns === undefined ? 15 : obj.settings.system.numberOfSigns;
     this.showTransit = obj.settings.system.showTransit;
     this.showExpectedDelivery = obj.settings.system.showExpectedDelivery;
 
