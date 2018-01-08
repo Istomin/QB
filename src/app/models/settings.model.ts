@@ -5,7 +5,8 @@ export class Settings {
     system: {
       refreshInterval: number,
       scrollInterval: number,
-      displayMode: number,
+      displayShipper: boolean,
+      displayConsignee: boolean,
       flightDisplay: number,
       showTransit: boolean,
       showTransitType: any,

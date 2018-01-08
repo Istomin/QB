@@ -19,13 +19,15 @@ table {
 				width: 20%;
 			}
 			&.small-column{
+				width: 120px;
+			}
+			&.normal-x-column{
 				width: 160px;
 			}
 			a {
 				color: #fff;
 				display: block;
 				position: relative;
-				white-space: nowrap;
 				padding: 0 10px;
 				&:after {
 					content: '';
@@ -73,7 +75,7 @@ display: block;
 height: calc(100vh - 170px);
 width: 100vw;
 overflow: hidden;
-overflow-y: hidden;
+overflow-y: auto;
 
 		span.space {
 			white-space: pre-wrap;
@@ -84,8 +86,13 @@ overflow-y: hidden;
 			}
 		}
 		td {
+			span{
+				word-wrap: break-word;
+			}
+
+			table-layout: fixed;
+			padding: 0;
 			.reference {
-				width: 150px;
 				display: block;
 				overflow: hidden;
 			}
@@ -97,7 +104,7 @@ overflow-y: hidden;
 			border: none;
 			background: #00325d;
 			&:last-child {
-				min-width: 260px;
+				width: 100%;
 			}
 
 		}

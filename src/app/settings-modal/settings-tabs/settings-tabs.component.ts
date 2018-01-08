@@ -51,7 +51,9 @@ export class SettingsTabsComponent implements OnInit {
   private clonedSettings: {} & Settings;
   private baseUrl = GlobalVariable.BASE_URL;
   private dafaultSettings = GlobalVariable.SETTINGS;
-  private displayMode;
+  private displayShipper;
+  private displayConsignee;
+
   private flightDisplay;
   private dropDelivered;
   private showTransit;
@@ -72,7 +74,8 @@ export class SettingsTabsComponent implements OnInit {
   public ngOnInit() {
     this.transitArrayNames = [transit.PU, transit.PO, transit.AL];
     this.pageSettings = this.localStorage.getObject('userSettings') && this.localStorage.getObject('userSettings').hasOwnProperty('settings') ? this.localStorage.getObject('userSettings') : this.dafaultSettings;
-    this.displayMode = {};
+    this.displayShipper = true;
+    this.displayConsignee = true;
     this.flightDisplay = {};
     this.dropDelivered = {};
     this.showTransit = {};
@@ -85,14 +88,17 @@ export class SettingsTabsComponent implements OnInit {
       this.pageSettings.settings.graphics.businessName = this.userInfo.business_name;
       this.pageSettings.settings.system.refreshInterval = this.userInfo.refresh_int == 0 ? 10 : this.userInfo.refresh_int;
       this.pageSettings.settings.system.scrollInterval = this.userInfo.scroll_int * 10;
-      this.pageSettings.settings.system.displayMode = this.userInfo.display_mode == 'shipper' ? 0 : 1;
+      this.pageSettings.settings.system.displayConsignee = this.userInfo.displayConsignee == 'true';
+      this.pageSettings.settings.system.displayShipper = this.userInfo.displayShipper == 'true';
       this.pageSettings.settings.system.flightDisplay = this.userInfo.flight_display == 'org' ? 0 : 1;
       this.pageSettings.settings.system.dropDelivered = this.userInfo.drop_delivered;
       this.pageSettings.settings.system.showTransit = this.userInfo.show_transit;
       this.pageSettings.settings.system.showExpectedDelivery = this.userInfo.show_expect_delivery;
       this.refresh_int = this.pageSettings.settings.system.refreshInterval;
       this.scroll_int = this.pageSettings.settings.system.scrollInterval / 10;
-      this.displayMode['model'] = this.pageSettings.settings.system.displayMode;
+      this.displayConsignee = this.pageSettings.settings.system.displayConsignee;
+      this.displayShipper = this.pageSettings.settings.system.displayShipper;
+
       this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
       this.dropDelivered['model'] = this.pageSettings.settings.system.dropDelivered;
       this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
@@ -127,7 +133,9 @@ export class SettingsTabsComponent implements OnInit {
     this.settingsService.emitLogoId({
       isCanceled: true
     });
-    this.displayMode['model'] = this.pageSettings.settings.system.displayMode;
+    this.displayConsignee = this.pageSettings.settings.system.displayConsignee;
+    this.displayShipper = this.pageSettings.settings.system.displayShipper;
+
     this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
     this.dropDelivered['model'] = this.pageSettings.settings.system.dropDelivered;
     this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
@@ -195,7 +203,8 @@ export class SettingsTabsComponent implements OnInit {
   private prepareUserSettingsForSaving() {
     this.pageSettings.settings.system.refreshInterval = this.refresh_int;
     this.pageSettings.settings.system.scrollInterval = this.scroll_int;
-    this.pageSettings.settings.system.displayMode = this.displayMode['model'];
+    this.pageSettings.settings.system.displayConsignee = this.displayConsignee;
+    this.pageSettings.settings.system.displayShipper = this.displayShipper;
     this.pageSettings.settings.system.flightDisplay = this.flightDisplay['model'];
     this.pageSettings.settings.system.dropDelivered = this.dropDelivered['model'];
     this.pageSettings.settings.system.showTransit = this.showTransit['model'];
@@ -214,7 +223,8 @@ export class SettingsTabsComponent implements OnInit {
 
   private collectUserSettings() {
     this.userInfo.business_name = this.pageSettings.settings.graphics.businessName;
-    this.userInfo.display_mode = this.pageSettings.settings.system.displayMode == 0 ? 'shipper' : 'consignee';
+    this.userInfo.displayConsignee = this.pageSettings.settings.system.displayConsignee;
+    this.userInfo.displayShipper = this.pageSettings.settings.system.displayShipper;
     this.userInfo.drop_delivered = this.pageSettings.settings.system.dropDelivered;
     this.userInfo.flight_display = this.pageSettings.settings.system.flightDisplay == 0 ? 'org' : 'des';
     this.userInfo.show_expect_delivery = this.pageSettings.settings.system.showExpectedDelivery;
@@ -234,7 +244,9 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   private onTableColChange() {
-    this.pageSettings.settings.system.displayMode = this.displayMode['model'];
+    this.pageSettings.settings.system.displayShipper = this.displayShipper;
+    this.pageSettings.settings.system.displayConsignee = this.displayConsignee;
+
     this.pageSettings.settings.system.flightDisplay = this.flightDisplay['model'];
     this.pageSettings.settings.system.dropDelivered = this.dropDelivered['model'];
     this.pageSettings.settings.system.showTransit = this.showTransit['model'];

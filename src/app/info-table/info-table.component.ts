@@ -11,7 +11,6 @@ import { LocalStorageService } from "../core/local-storage.service";
 
 import { ElementRef } from '@angular/core';
 import { Subscribable } from 'rxjs/Observable';
-import { window } from 'rxjs/operator/window';
 import { WindowRef } from '../core/window-ref';
 import { debounce } from 'rxjs/operator/debounce';
 
@@ -45,7 +44,8 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   order: string;
   reverse: boolean = false;
   private showOrg: boolean;
-  private showShipper: boolean;
+  private showShipper: boolean = true;
+  private showConsignee: boolean = true;
   private dropDelivered: boolean;
   private shipmentsClone: any;
   private showTransit: boolean;
@@ -53,9 +53,10 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private refreshTimer: any;
   private pageSettings: any;
   private interval: number;
-  private colunmWidths: string[];
+  private colunmWidths: {};
   public scrollerApi: any;
-  private resizeLintener: function;
+  private resizeLintener: any;
+  private recalculateTimer: any;
 
   constructor(private settingsService: AppSettingsService, private sanitizer: DomSanitizer, private infoTableService: InfoTableService, private spinner: SpinnerService, private uploadService: UploadService, private localStorage: LocalStorageService, private datePipe: DatePipe,
     private winRef: WindowRef) { }
@@ -65,7 +66,6 @@ export class InfoTableComponent implements OnInit, OnDestroy {
     });
     this.tableColSubscription = this.settingsService.getTableCol().subscribe((obj) => {
       this.triggerColsVisibility(obj);
-
     });
 
     this.fontSizeSubscription = this.settingsService.getFontSize().subscribe((fontSize) => {
@@ -87,14 +87,26 @@ export class InfoTableComponent implements OnInit, OnDestroy {
       this.applyAlertsSettings(settings);
     });
 
-    this.recalculateColumnsWidth();
     this.scrollerApi = this.getScrollerApi();
 
     this.resizeLintener = () => {
-      this.recalculateColumnsWidth();
+      this.recalculateColumnsWidthWithDelay();
     };
 
     this.winRef.nativeWindow.addEventListener('resize', this.resizeLintener);
+
+    this.recalculateColumnsWidthWithDelay();
+
+  }
+
+  private recalculateColumnsWidthWithDelay() {
+    if (this.recalculateTimer) {
+      clearTimeout(this.recalculateTimer);
+      this.recalculateTimer = null;
+    }
+    this.recalculateTimer = setTimeout(() => {
+      this.recalculateColumnsWidth();
+    }, 1000);
   }
 
   public ngOnDestroy() {
@@ -110,11 +122,11 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private recalculateColumnsWidth() {
     let cells = this.tableHeaderEl.nativeElement.rows[0].cells;
 
-    this.colunmWidths = [];
-    for (let i = 0; i < cells.length; i++) {
-      this.colunmWidths[i] = cells[i].clientWidth + 'px';
+    this.colunmWidths = {};
+    for (let i = 0; i < cells.length - 1; i++) {
+      let key = cells[i].attributes['key'].value;
+      this.colunmWidths[key] = cells[i].clientWidth + 'px';
     }
-
   }
 
   private getScrollerApi() {
@@ -154,7 +166,16 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private triggerColsVisibility(obj) {
     this.showOrg = obj.settings.system.flightDisplay === 0;
     this.order = this.showOrg && 'eta_departure' || 'eta_arrival';
-    this.showShipper = obj.settings.system.displayMode === 0;
+
+    if (this.showShipper != obj.settings.system.displayShipper || this.showConsignee != obj.settings.system.displayConsignee) {
+      this.recalculateColumnsWidthWithDelay();
+    }
+
+    console.log('obj.settings.system', obj.settings.system);
+
+    this.showShipper = obj.settings.system.displayShipper;
+    this.showConsignee = obj.settings.system.displayConsignee;
+
     this.dropDelivered = obj.settings.system.dropDelivered;
     this.showTransit = obj.settings.system.showTransit;
     this.showExpectedDelivery = obj.settings.system.showExpectedDelivery;
@@ -330,8 +351,8 @@ export class InfoTableComponent implements OnInit, OnDestroy {
     return (
       rect.top >= 0 &&
       rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+      rect.bottom <= (this.winRef.nativeWindow.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
+      rect.right <= (this.winRef.nativeWindow.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
     );
   }
 

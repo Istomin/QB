@@ -1,50 +1,99 @@
 <table class="table table-hover info-table">
   <thead #tableHeader>
     <tr>
-      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}"><a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'ShipmentBOLNumber'; reverse = !reverse;" [ngClass]="{'active': order == 'ShipmentBOLNumber', 'up': order == 'ShipmentBOLNumber' && reverse, 'down': order == 'ShipmentBOLNumber' && !reverse}"><span [style.color]="tableTextColor">BOL Number</span></a></th>
-      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" class="small-column"><a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'reference'; reverse = !reverse;" [ngClass]="{'active': order == 'reference', 'up': order == 'reference' && reverse, 'down': order == 'reference' && !reverse}"><span [style.color]="tableTextColor">Reference</span></a></th>
-      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}">
-        <a *ngIf="showShipper" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'shipper'; reverse = !reverse;" [ngClass]="{'active': order == 'shipper', 'up': order == 'shipper' && reverse, 'down': order == 'shipper' && !reverse}"><span [style.color]="tableTextColor">Shipper</span></a>
-        <a *ngIf="!showShipper" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'"  href="#" (click)="order = 'consignee'; reverse = !reverse;" [ngClass]="{'active': order == 'consignee', 'up': order == 'consignee' && reverse, 'down': order == 'consignee' && !reverse}"><span [style.color]="tableTextColor">Consignee</span></a>
+      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" key="bol">
+        <a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'ShipmentBOLNumber'; reverse = !reverse;"
+          [ngClass]="{'active': order == 'ShipmentBOLNumber', 'up': order == 'ShipmentBOLNumber' && reverse, 'down': order == 'ShipmentBOLNumber' && !reverse}">
+          <span [style.color]="tableTextColor">BOL Number</span>
+        </a>
       </th>
-      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" class="small-column"><a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'flight'; reverse = !reverse;" [ngClass]="{'active': order == 'flight', 'up': order == 'flight' && reverse, 'down': order == 'flight' && !reverse}"><span [style.color]="tableTextColor">Flight</span></a></th>
-      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" class="small-column">
-        <a *ngIf="showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'org'; reverse = !reverse;" [ngClass]="{'active': order == 'org', 'up': order == 'org' && reverse, 'down': order == 'org' && !reverse}"><span [style.color]="tableTextColor">ORG</span></a>
-        <a *ngIf="!showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'des'; reverse = !reverse;" [ngClass]="{'active': order == 'des', 'up': order == 'des' && reverse, 'down': order == 'des' && !reverse}"><span [style.color]="tableTextColor">DES</span></a>
+      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" class="small-column" key="reference">
+        <a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'reference'; reverse = !reverse;"
+          [ngClass]="{'active': order == 'reference', 'up': order == 'reference' && reverse, 'down': order == 'reference' && !reverse}">
+          <span [style.color]="tableTextColor">Reference</span>
+        </a>
       </th>
-      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" class="small-column">
-        <a *ngIf="showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'eta_departure'; reverse = !reverse;" [ngClass]="{'active': order == 'eta_departure', 'up': order == 'eta_departure' && reverse, 'down': order == 'eta_departure' && !reverse}"><span [style.color]="tableTextColor">Flt ETD</span></a>
-        <a *ngIf="!showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'"  href="#" (click)="order = 'eta_arrival'; reverse = !reverse;" [ngClass]="{'active': order == 'eta_arrival', 'up': order == 'eta_arrival' && reverse, 'down': order == 'eta_arrival' && !reverse}"><span [style.color]="tableTextColor">Flt ETA</span></a>
+      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px', 'width': showConsignee?'auto':'0'}" key="shipper" *ngIf="showShipper" >
+        <a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#"
+          (click)="order = 'shipper'; reverse = !reverse;" [ngClass]="{'active': order == 'shipper', 'up': order == 'shipper' && reverse, 'down': order == 'shipper' && !reverse}">
+          <span [style.color]="tableTextColor">Shipper</span>
+        </a>
       </th>
-      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" class="normal-column"><a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'status'; reverse = !reverse;" [ngClass]="{'active': order == 'status', 'up': order == 'status' && reverse, 'down': order == 'status' && !reverse}"><span [style.color]="tableTextColor">Status</span></a></th>
+      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px', 'width': showConsignee?'auto':'0'}" key="consignee" *ngIf="showConsignee">
+        <a  [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#"
+          (click)="order = 'consignee'; reverse = !reverse;" [ngClass]="{'active': order == 'consignee', 'up': order == 'consignee' && reverse, 'down': order == 'consignee' && !reverse}">
+          <span [style.color]="tableTextColor">Consignee</span>
+        </a>
+      </th>
+      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" class="small-column" key="flight">
+        <a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'flight'; reverse = !reverse;"
+          [ngClass]="{'active': order == 'flight', 'up': order == 'flight' && reverse, 'down': order == 'flight' && !reverse}">
+          <span [style.color]="tableTextColor">Flight</span>
+        </a>
+      </th>
+      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" class="small-column" key="orgDes">
+        <a *ngIf="showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#"
+          (click)="order = 'org'; reverse = !reverse;" [ngClass]="{'active': order == 'org', 'up': order == 'org' && reverse, 'down': order == 'org' && !reverse}">
+          <span [style.color]="tableTextColor">ORG</span>
+        </a>
+        <a *ngIf="!showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#"
+          (click)="order = 'des'; reverse = !reverse;" [ngClass]="{'active': order == 'des', 'up': order == 'des' && reverse, 'down': order == 'des' && !reverse}">
+          <span [style.color]="tableTextColor">DES</span>
+        </a>
+      </th>
+      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" class="normal-x-column" key="etdEta">
+        <a *ngIf="showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#"
+          (click)="order = 'eta_departure'; reverse = !reverse;" [ngClass]="{'active': order == 'eta_departure', 'up': order == 'eta_departure' && reverse, 'down': order == 'eta_departure' && !reverse}">
+          <span [style.color]="tableTextColor">Flt ETD</span>
+        </a>
+        <a *ngIf="!showOrg" [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#"
+          (click)="order = 'eta_arrival'; reverse = !reverse;" [ngClass]="{'active': order == 'eta_arrival', 'up': order == 'eta_arrival' && reverse, 'down': order == 'eta_arrival' && !reverse}">
+          <span [style.color]="tableTextColor">Flt ETA</span>
+        </a>
+      </th>
+      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" class="normal-column">
+        <a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'status'; reverse = !reverse;"
+          [ngClass]="{'active': order == 'status', 'up': order == 'status' && reverse, 'down': order == 'status' && !reverse}">
+          <span [style.color]="tableTextColor">Status</span>
+        </a>
+      </th>
     </tr>
   </thead>
   <tbody #tableBody scroller [scrollerApi]="scrollerApi">
-  <tr  *ngFor="let shipment of shipments | orderBy: order : reverse; let i = index">
-    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[0],'min-width': colunmWidths[0], 'font-size': fontSize.tBodyTd + 'px'}">{{shipment.ShipmentBOLNumber}}</td>
-    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[1],'min-width': colunmWidths[1], 'font-size': fontSize.tBodyTd + 'px'}">
-      <span class="reference" >{{shipment.reference}}</span>
-    </td>
-    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[2],'min-width': colunmWidths[2], 'font-size': fontSize.tBodyTd + 'px'}">
-      <span class="space" *ngIf="showShipper" >{{shipment.shipper}}</span>
-      <span  class="space" *ngIf="!showShipper" >{{shipment.consignee}}</span>
-    </td>
-    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[3], 'min-width': colunmWidths[3],'font-size': fontSize.tBodyTd + 'px'}" >
-      {{shipment.flight}}
-    </td>
-    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[4], 'min-width': colunmWidths[4],'font-size': fontSize.tBodyTd + 'px'}">
-      <span *ngIf="showOrg">{{shipment.org}}</span>
-      <span *ngIf="!showOrg">{{shipment.des}}</span>
-    </td>
-    <td class="etd-cell" [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[5], 'min-width': colunmWidths[5],'font-size': fontSize.tBodyTd + 'px'}">
-      <span *ngIf="showOrg && shipment.eta_departure">{{shipment.eta_departure| date: 'MMM d'}}, {{shipment.eta_departure | date: 'shortTime'}}</span>
-      <span *ngIf="!showOrg && shipment.eta_arrival">{{shipment.eta_arrival | date: 'MMM d'}}, {{shipment.eta_arrival | date: 'shortTime'}}</span>
-    </td>
-    <td [ngStyle] = "{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths[6], 'min-width': colunmWidths[6],'font-size': fontSize.tBodyTd + 'px'}">
-      <span class="space">{{shipment.status}}</span>
-      <span *ngIf="showTransit && shipment.InTransitTime" class="in-transit">Total Time: {{shipment.InTransitTime}}</span>
-      <span *ngIf="showExpectedDelivery && !shipment.isDelivered && shipment.expectedDelivery" class="in-transit">Expected: {{shipment.expectedDelivery | date: 'MMM d'}}, {{shipment.expectedDelivery| date: 'shortTime'}}</span>
-    </td>
-  </tr>
+    <tr *ngFor="let shipment of shipments | orderBy: order : reverse; let i = index">
+
+      <td [ngStyle]="{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths['bol'],'min-width': colunmWidths['bol'],'max-width': colunmWidths['bol'], 'font-size': fontSize.tBodyTd + 'px'}">{{shipment.ShipmentBOLNumber}}</td>
+      <td [ngStyle]="{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths['reference'],'min-width': colunmWidths['reference'],'max-width': colunmWidths['reference'], 'font-size': fontSize.tBodyTd + 'px'}">
+        <span class="reference">{{shipment.reference}}</span>
+      </td>
+      <td *ngIf="showShipper" [ngStyle]="{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths['shipper'],'min-width': colunmWidths['shipper'],'max-width': colunmWidths['shipper'], 'font-size': fontSize.tBodyTd + 'px'}">
+        <span  class="space">{{shipment.shipper}}</span>
+      </td>
+
+      <td *ngIf="showConsignee" [ngStyle]="{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths['consignee'], 'min-width': colunmWidths['consignee'],'max-width': colunmWidths['consignee'], 'font-size': fontSize.tBodyTd + 'px'}">
+        <span  class="space">{{shipment.consignee}}</span>
+      </td>
+
+      <td [ngStyle]="{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths['flight'], 'min-width': colunmWidths['flight'],'max-width': colunmWidths['flight'],'font-size': fontSize.tBodyTd + 'px'}">
+        {{shipment.flight}}
+      </td>
+
+      <td [ngStyle]="{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths['orgDes'], 'min-width': colunmWidths['orgDes'],'max-width': colunmWidths['orgDes'], 'font-size': fontSize.tBodyTd + 'px'}">
+        <span *ngIf="showOrg">{{shipment.org}}</span>
+        <span *ngIf="!showOrg">{{shipment.des}}</span>
+      </td>
+
+      <td class="etd-cell" [ngStyle]="{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2, 'width': colunmWidths['etdEta'], 'min-width': colunmWidths['etdEta'], 'max-width': colunmWidths['etdEta'],'font-size': fontSize.tBodyTd + 'px'}">
+        <span *ngIf="showOrg && shipment.eta_departure">{{shipment.eta_departure| date: 'MMM d'}}, {{shipment.eta_departure | date: 'shortTime'}}</span>
+        <span *ngIf="!showOrg && shipment.eta_arrival">{{shipment.eta_arrival | date: 'MMM d'}}, {{shipment.eta_arrival | date: 'shortTime'}}</span>
+      </td>
+
+      <td [ngStyle]="{'color': shipment.textColor ? shipment.textColor : tableTextColor, 'background': shipment.bgColor ? shipment.bgColor :  i % 2 == 0 ? tableRowColor1 : tableRowColor2,'font-size': fontSize.tBodyTd + 'px'}">
+        <span class="space">{{shipment.status}}</span>
+        <span *ngIf="showTransit && shipment.InTransitTime" class="in-transit">Total Time: {{shipment.InTransitTime}}</span>
+        <span *ngIf="showExpectedDelivery && !shipment.isDelivered && shipment.expectedDelivery" class="in-transit">Expected: {{shipment.expectedDelivery | date: 'MMM d'}}, {{shipment.expectedDelivery| date: 'shortTime'}}</span>
+      </td>
+
+    </tr>
   </tbody>
 </table>
