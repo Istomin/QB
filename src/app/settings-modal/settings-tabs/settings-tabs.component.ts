@@ -56,6 +56,7 @@ export class SettingsTabsComponent implements OnInit {
 
   private flightDisplay;
   private dropDelivered;
+  private numberOfSigns;
   private showTransit;
   private showExpectedDelivery;
   private imgSrc: string;
@@ -85,30 +86,34 @@ export class SettingsTabsComponent implements OnInit {
     this.loginService.getUserInfo().subscribe((response: any) => {
       this.userInfo = JSON.parse(response['_body']);
       this.settingsService.emitUserSettingsData(this.userInfo);
-      this.pageSettings.settings.graphics.businessName = this.userInfo.business_name;
-      this.pageSettings.settings.system.refreshInterval = this.userInfo.refresh_int == 0 ? 10 : this.userInfo.refresh_int;
-      this.pageSettings.settings.system.scrollInterval = this.userInfo.scroll_int * 10;
-      this.pageSettings.settings.system.displayConsignee = this.userInfo.displayConsignee == 'true';
-      this.pageSettings.settings.system.displayShipper = this.userInfo.displayShipper == 'true';
-      this.pageSettings.settings.system.flightDisplay = this.userInfo.flight_display == 'org' ? 0 : 1;
-      this.pageSettings.settings.system.dropDelivered = this.userInfo.drop_delivered;
-      this.pageSettings.settings.system.showTransit = this.userInfo.show_transit;
-      this.pageSettings.settings.system.showExpectedDelivery = this.userInfo.show_expect_delivery;
-      this.refresh_int = this.pageSettings.settings.system.refreshInterval;
-      this.scroll_int = this.pageSettings.settings.system.scrollInterval / 10;
-      this.displayConsignee = this.pageSettings.settings.system.displayConsignee;
-      this.displayShipper = this.pageSettings.settings.system.displayShipper;
 
-      this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
-      this.dropDelivered['model'] = this.pageSettings.settings.system.dropDelivered;
-      this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
-      this.showExpectedDelivery['model'] = this.pageSettings.settings.system.showExpectedDelivery;
+      let settings = this.pageSettings.settings;
+      settings.graphics.businessName = this.userInfo.business_name;
+      settings.system.refreshInterval = this.userInfo.refresh_int == 0 ? 10 : this.userInfo.refresh_int;
+      settings.system.scrollInterval = this.userInfo.scroll_int * 10;
+      settings.system.displayConsignee = this.userInfo.displayConsignee;
+      settings.system.displayShipper = this.userInfo.displayShipper;
+      settings.system.flightDisplay = this.userInfo.flight_display == 'org' ? 0 : 1;
+      settings.system.dropDelivered = this.userInfo.drop_delivered;
+      settings.system.numberOfSigns = this.userInfo.numberOfSigns;
+      settings.system.showTransit = this.userInfo.show_transit;
+      settings.system.showExpectedDelivery = this.userInfo.show_expect_delivery;
+      this.refresh_int = settings.system.refreshInterval;
+      this.scroll_int = settings.system.scrollInterval / 10;
+      this.displayConsignee = settings.system.displayConsignee;
+      this.displayShipper = settings.system.displayShipper;
+
+      this.flightDisplay['model'] = settings.system.flightDisplay;
+      this.dropDelivered['model'] = settings.system.dropDelivered;
+      this.numberOfSigns = settings.system.numberOfSigns;
+      this.showTransit['model'] = settings.system.showTransit;
+      this.showExpectedDelivery['model'] = settings.system.showExpectedDelivery;
       this.selectedTransitOption = transit[this.userInfo.show_transit];
       this.settingsService.emitTableCol(this.pageSettings);
       this.clonedSettings = this.deepCopy(this.pageSettings);
       this.onTextLogoChanged(this.pageSettings.settings.graphics.businessName);
-      this.settingsService.emitRefreshInterval(this.pageSettings.settings.system.refreshInterval);
-      this.settingsService.emitAlertsSettingsChange(this.pageSettings.settings.alerts);
+      this.settingsService.emitRefreshInterval(settings.system.refreshInterval);
+      this.settingsService.emitAlertsSettingsChange(settings.alerts);
     });
   }
 
@@ -138,6 +143,7 @@ export class SettingsTabsComponent implements OnInit {
 
     this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
     this.dropDelivered['model'] = this.pageSettings.settings.system.dropDelivered;
+    this.numberOfSigns = this.pageSettings.settings.system.numberOfSigns;
     this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
     this.showTransit['showExpectedDelivery'] = this.pageSettings.settings.system.showExpectedDelivery;
     this.settingsService.emitTableCol(this.pageSettings);
@@ -207,6 +213,7 @@ export class SettingsTabsComponent implements OnInit {
     this.pageSettings.settings.system.displayShipper = this.displayShipper;
     this.pageSettings.settings.system.flightDisplay = this.flightDisplay['model'];
     this.pageSettings.settings.system.dropDelivered = this.dropDelivered['model'];
+    this.pageSettings.settings.system.numberOfSigns = this.numberOfSigns;
     this.pageSettings.settings.system.showTransit = this.showTransit['model'];
     this.pageSettings.settings.system.showExpectedDelivery = this.showExpectedDelivery['model'];
 
@@ -226,6 +233,7 @@ export class SettingsTabsComponent implements OnInit {
     this.userInfo.displayConsignee = this.pageSettings.settings.system.displayConsignee;
     this.userInfo.displayShipper = this.pageSettings.settings.system.displayShipper;
     this.userInfo.drop_delivered = this.pageSettings.settings.system.dropDelivered;
+    this.userInfo.numberOfSigns = this.pageSettings.settings.system.numberOfSigns;
     this.userInfo.flight_display = this.pageSettings.settings.system.flightDisplay == 0 ? 'org' : 'des';
     this.userInfo.show_expect_delivery = this.pageSettings.settings.system.showExpectedDelivery;
     this.userInfo.refresh_int = this.pageSettings.settings.system.refreshInterval;
@@ -244,13 +252,14 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   private onTableColChange() {
-    this.pageSettings.settings.system.displayShipper = this.displayShipper;
-    this.pageSettings.settings.system.displayConsignee = this.displayConsignee;
-
-    this.pageSettings.settings.system.flightDisplay = this.flightDisplay['model'];
-    this.pageSettings.settings.system.dropDelivered = this.dropDelivered['model'];
-    this.pageSettings.settings.system.showTransit = this.showTransit['model'];
-    this.pageSettings.settings.system.showExpectedDelivery = this.showExpectedDelivery['model'];
+    let system = this.pageSettings.settings.system;
+    system.displayShipper = this.displayShipper;
+    system.displayConsignee = this.displayConsignee;
+    system.flightDisplay = this.flightDisplay['model'];
+    system.dropDelivered = this.dropDelivered['model'];
+    system.numberOfSigns = this.numberOfSigns;
+    system.showTransit = this.showTransit['model'];
+    system.showExpectedDelivery = this.showExpectedDelivery['model'];
     this.settingsService.emitTableCol(this.pageSettings);
   }
 

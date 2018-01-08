@@ -11,7 +11,8 @@ export class Settings {
       showTransit: boolean,
       showTransitType: any,
       showExpectedDelivery: boolean,
-      dropDelivered: boolean
+      dropDelivered: boolean,
+      numberOfSigns: number
     },
     alerts: {
       primaryInTransit: boolean,

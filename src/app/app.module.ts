@@ -52,6 +52,7 @@ import { LocalStorageService } from  './core/local-storage.service';
 import { UploadService } from  './core/upload.service';
 import { TableScrollerDirective } from './dashboard/table-scroller.directive';
 import { ReplacePipe } from './replace.pipe.ts';
+import { MaxLengthPipe } from './maxLength.pipe.ts';
 
 import 'hammerjs';
 import '../styles/styles.scss';
@@ -101,7 +102,8 @@ import { WindowRef } from "./core/window-ref";
     ClockComponent,
     XLargeDirective,
     TableScrollerDirective,
-    ReplacePipe
+    ReplacePipe,
+    MaxLengthPipe
   ],
   /**
    * Import Angular's modules.

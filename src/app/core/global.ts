@@ -14,7 +14,8 @@ export const GlobalVariable = Object.freeze({
         showTransit: true,
         showTransitType: 1,
         showExpectedDelivery: true,
-        dropDelivered: true
+        dropDelivered: true,
+        numberOfSigns: 15
       },
       alerts: {
         primaryInTransit: true,

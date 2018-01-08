@@ -47,6 +47,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   private showShipper: boolean = true;
   private showConsignee: boolean = true;
   private dropDelivered: boolean;
+  private numberOfSigns: number;
   private shipmentsClone: any;
   private showTransit: boolean;
   private showExpectedDelivery: boolean;
@@ -171,12 +172,11 @@ export class InfoTableComponent implements OnInit, OnDestroy {
       this.recalculateColumnsWidthWithDelay();
     }
 
-    console.log('obj.settings.system', obj.settings.system);
-
-    this.showShipper = obj.settings.system.displayShipper;
-    this.showConsignee = obj.settings.system.displayConsignee;
+    this.showShipper = obj.settings.system.displayShipper === undefined ? true : obj.settings.system.displayShipper;
+    this.showConsignee = obj.settings.system.displayConsignee === undefined ? true : obj.settings.system.displayConsignee;
 
     this.dropDelivered = obj.settings.system.dropDelivered;
+    this.numberOfSigns = obj.settings.system.numberOfSigns === undefined ? 15: obj.settings.system.numberOfSigns;
     this.showTransit = obj.settings.system.showTransit;
     this.showExpectedDelivery = obj.settings.system.showExpectedDelivery;
 
