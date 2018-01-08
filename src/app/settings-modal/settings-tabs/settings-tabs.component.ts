@@ -91,13 +91,20 @@ export class SettingsTabsComponent implements OnInit {
       settings.graphics.businessName = this.userInfo.business_name;
       settings.system.refreshInterval = this.userInfo.refresh_int == 0 ? 10 : this.userInfo.refresh_int;
       settings.system.scrollInterval = this.userInfo.scroll_int * 10;
-      settings.system.displayConsignee = this.userInfo.displayConsignee;
-      settings.system.displayShipper = this.userInfo.displayShipper;
+      settings.system.displayConsignee = this.userInfo.display_mode == 'consignee' || this.userInfo.display_mode == 'both';
+      settings.system.displayShipper = this.userInfo.display_mode == 'shipper' || this.userInfo.display_mode == 'both';
       settings.system.flightDisplay = this.userInfo.flight_display == 'org' ? 0 : 1;
       settings.system.dropDelivered = this.userInfo.drop_delivered;
       settings.system.numberOfSigns = this.userInfo.numberOfSigns;
       settings.system.showTransit = this.userInfo.show_transit;
       settings.system.showExpectedDelivery = this.userInfo.show_expect_delivery;
+
+      this.tableBodyTdValue = settings.fontSizes.tBodyTd;
+      this.tableHeaderThValue = settings.fontSizes.tHeadTh;
+      this.headerClockValue = settings.fontSizes.headerClock;
+      this.headerLogoValue = settings.fontSizes.headerLogo;
+      this.runTextHolderValue = settings.fontSizes.runTextHolder;
+
       this.refresh_int = settings.system.refreshInterval;
       this.scroll_int = settings.system.scrollInterval / 10;
       this.displayConsignee = settings.system.displayConsignee;
@@ -230,22 +237,27 @@ export class SettingsTabsComponent implements OnInit {
 
   private collectUserSettings() {
     this.userInfo.business_name = this.pageSettings.settings.graphics.businessName;
-    this.userInfo.displayConsignee = this.pageSettings.settings.system.displayConsignee;
-    this.userInfo.displayShipper = this.pageSettings.settings.system.displayShipper;
+
     this.userInfo.drop_delivered = this.pageSettings.settings.system.dropDelivered;
-    this.userInfo.numberOfSigns = this.pageSettings.settings.system.numberOfSigns;
     this.userInfo.flight_display = this.pageSettings.settings.system.flightDisplay == 0 ? 'org' : 'des';
     this.userInfo.show_expect_delivery = this.pageSettings.settings.system.showExpectedDelivery;
     this.userInfo.refresh_int = this.pageSettings.settings.system.refreshInterval;
     this.userInfo.scroll_int = this.pageSettings.settings.system.scrollInterval;
 
-    const { tBodyTd, tHeadTh, headerClock, headerLogo, runTextHolder } = this.pageSettings.settings.fontSizes;
+    let displayShipper = this.pageSettings.settings.system.displayShipper;
+    let displayConsignee = this.pageSettings.settings.system.displayConsignee;
 
-    this.userInfo.tBodyTd = tBodyTd;
-    this.userInfo.tHeadTh = tHeadTh;
-    this.userInfo.headerClock = headerClock;
-    this.userInfo.headerLogo = headerLogo;
-    this.userInfo.runTextHolder = runTextHolder;
+    if (displayShipper && displayConsignee) {
+      this.userInfo.display_mode = 'both'
+    }
+    else {
+      if (displayShipper) {
+        this.userInfo.display_mode = 'shipper'
+      }
+      if (displayConsignee) {
+        this.userInfo.display_mode = 'consignee'
+      }
+    }
 
     this.userInfo.show_transit = this.showTransit['model'] ? this.show_transit : null;
 
