@@ -175,6 +175,7 @@ export class SettingsTabsComponent implements OnInit {
     this.settingsService.emitFontSizeChange(this.pageSettings.settings.fontSizes);
     this.settingsService.emitScrollInterval(this.pageSettings.settings.system.scrollInterval);
     this.settingsService.emitRefreshInterval(this.pageSettings.settings.system.refreshInterval);
+    this.settingsService.emitTableCol(this.pageSettings);
 
     if (this.isLogoRemoved) {
       this.uploadService.removeLogo().subscribe((response) => {
@@ -195,6 +196,7 @@ export class SettingsTabsComponent implements OnInit {
     }
 
     this.localStorage.setObject('userSettings', this.pageSettings);
+    
   }
 
   public getSettings() {
