@@ -98,6 +98,10 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
     this.recalculateColumnsWidthWithDelay();
 
+    let settings = this.getLocalSettings();
+    if (settings) {
+      this.settingsService.emitFontSizeChange(settings.fontSizes);
+    }
 
   }
 
@@ -304,7 +308,6 @@ export class InfoTableComponent implements OnInit, OnDestroy {
           let settings = this.getLocalSettings();
           if (settings) {
             this.applyAlertsSettings(settings.alerts);
-            this.settingsService.emitFontSizeChange(settings.fontSizes);
           }
 
           this.getTableData(null);
