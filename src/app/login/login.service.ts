@@ -22,7 +22,6 @@ export class LoginService {private baseApiUrl = GlobalVariable.BASE_API_URL;
   }
 
   updateUserInfo(obj) {
-    console.log('updateUserInfo',obj );
     return this.http
       .put(this.makeApiUri('auth/me/'), obj)
       .do(data => data)

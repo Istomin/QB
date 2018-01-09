@@ -26,11 +26,11 @@
 					<strong class="group-title">Display Mode</strong>
 					<ul class="radio-list">
 						<li>
-							<input type="checkbox" (change)="onTableColChange()" [(ngModel)]="displayShipper" [value]="true" />
+							<input type="checkbox" (ngModelChange)="changeShipper($event)" [ngModel]="displayShipper" />
 							<label for="shipped">Shipper</label>
 						</li>
 						<li>
-							<input type="checkbox" (change)="onTableColChange()" [(ngModel)]="displayConsignee" [value]="true" />
+							<input type="checkbox" (ngModelChange)="changeConsignee($event)" [ngModel]="displayConsignee"/>
 							<label for="consignee">Consignee</label>
 						</li>
 					</ul>

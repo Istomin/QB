@@ -76,7 +76,7 @@ export class SettingsTabsComponent implements OnInit {
     this.transitArrayNames = [transit.PU, transit.PO, transit.AL];
     this.pageSettings = this.localStorage.getObject('userSettings') && this.localStorage.getObject('userSettings').hasOwnProperty('settings') ? this.localStorage.getObject('userSettings') : this.dafaultSettings;
     this.displayShipper = true;
-    this.displayConsignee = true;
+    this.displayConsignee = false;
     this.flightDisplay = {};
     this.dropDelivered = {};
     this.showTransit = {};
@@ -113,7 +113,7 @@ export class SettingsTabsComponent implements OnInit {
 
       this.flightDisplay['model'] = settings.system.flightDisplay;
       this.dropDelivered['model'] = settings.system.dropDelivered;
-      
+
       this.showTransit['model'] = settings.system.showTransit;
       this.showExpectedDelivery['model'] = settings.system.showExpectedDelivery;
       this.selectedTransitOption = transit[this.userInfo.show_transit];
@@ -150,7 +150,7 @@ export class SettingsTabsComponent implements OnInit {
     this.displayConsignee = this.pageSettings.settings.system.displayConsignee;
     this.displayShipper = this.pageSettings.settings.system.displayShipper;
 
-    this.numberOfSigns  = this.pageSettings.settings.system.numberOfSigns;
+    this.numberOfSigns = this.pageSettings.settings.system.numberOfSigns;
     this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
     this.dropDelivered['model'] = this.pageSettings.settings.system.dropDelivered;
     this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
@@ -165,6 +165,9 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   public saveSettings() {
+
+    this.onTableColChange();
+
     this.prepareUserSettingsForSaving();
 
     this.pageSettings.settings.system.numberOfSigns = this.numberOfSigns;
@@ -219,12 +222,11 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   private prepareUserSettingsForSaving() {
-    console.log('prepareUserSettingsForSaving');
     this.pageSettings.settings.system.refreshInterval = this.refresh_int;
     this.pageSettings.settings.system.scrollInterval = this.scroll_int;
     this.pageSettings.settings.system.displayConsignee = this.displayConsignee;
     this.pageSettings.settings.system.displayShipper = this.displayShipper;
-    
+
     this.pageSettings.settings.system.flightDisplay = this.flightDisplay['model'];
     this.pageSettings.settings.system.dropDelivered = this.dropDelivered['model'];
     this.pageSettings.settings.system.showTransit = this.showTransit['model'];
@@ -270,10 +272,26 @@ export class SettingsTabsComponent implements OnInit {
 
   }
 
+  private changeShipper(newValue) {
+    if (!newValue) {
+      this.displayConsignee = true;
+    }
+    this.displayShipper = newValue;
+  }
+
+  private changeConsignee(newValue) {
+    if (!newValue) {
+      this.displayShipper = true;
+    }
+    this.displayConsignee = newValue;
+  }
+
   private onTableColChange() {
     let system = this.pageSettings.settings.system;
+
     system.displayShipper = this.displayShipper;
     system.displayConsignee = this.displayConsignee;
+
     system.flightDisplay = this.flightDisplay['model'];
     system.dropDelivered = this.dropDelivered['model'];
     system.showTransit = this.showTransit['model'];
