@@ -69,6 +69,7 @@ export class TableScrollerDirective {
       let scrollTo = 0;
       if (this.scrollerApi && this.scrollerApi.getScrollToOffsetData) {
         let scrollData = this.scrollerApi.getScrollToOffsetData(mainElementHeight);
+        
         if (scrollData.hidenHeight){
           scrollTo = scrollData.hidenHeight + scrollData.visibleHeight;
         }
@@ -78,7 +79,7 @@ export class TableScrollerDirective {
       }
       scrollTo = scrollTo || jQuery(element).scrollTop() + offset;
 
-      if (this.lastScrollPosition === scrollTo) {
+      if (this.lastScrollPosition >= scrollTo) {
         scrollTo = 0;
       }
 
