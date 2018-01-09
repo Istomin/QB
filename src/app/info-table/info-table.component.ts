@@ -301,8 +301,10 @@ export class InfoTableComponent implements OnInit, OnDestroy {
             this.shipments = this.deepCopy(this.shipmentsClone);
           }
 
-          if (this.localStorage.getObject('userSettings') && this.localStorage.getObject('userSettings').hasOwnProperty('settings')) {
-            this.applyAlertsSettings(this.localStorage.getObject('userSettings').settings.alerts);
+          let settings = this.getLocalSettings();
+          if (settings) {
+            this.applyAlertsSettings(settings.alerts);
+            this.settingsService.emitFontSizeChange(settings.fontSizes);
           }
 
           this.getTableData(null);
@@ -312,6 +314,11 @@ export class InfoTableComponent implements OnInit, OnDestroy {
         }
         );
     }, 100);
+  }
+
+  getLocalSettings() {
+    let localData = this.localStorage.getObject('userSettings')
+    return localData && localData.settings || null;
   }
 
   applyAlertsSettings(settings: any) {
