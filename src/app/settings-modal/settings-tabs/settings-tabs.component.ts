@@ -53,6 +53,7 @@ export class SettingsTabsComponent implements OnInit {
   private dafaultSettings = GlobalVariable.SETTINGS;
   private displayShipper;
   private displayConsignee;
+  private numberOfSigns = 99;
 
   private flightDisplay;
   private dropDelivered;
@@ -102,11 +103,13 @@ export class SettingsTabsComponent implements OnInit {
       this.headerClockValue = settings.fontSizes.headerClock;
       this.headerLogoValue = settings.fontSizes.headerLogo;
       this.runTextHolderValue = settings.fontSizes.runTextHolder;
+      this.numberOfSigns = settings.system.numberOfSigns;
 
       this.refresh_int = settings.system.refreshInterval;
       this.scroll_int = settings.system.scrollInterval / 10;
       this.displayConsignee = settings.system.displayConsignee;
       this.displayShipper = settings.system.displayShipper;
+
 
       this.flightDisplay['model'] = settings.system.flightDisplay;
       this.dropDelivered['model'] = settings.system.dropDelivered;
@@ -147,6 +150,7 @@ export class SettingsTabsComponent implements OnInit {
     this.displayConsignee = this.pageSettings.settings.system.displayConsignee;
     this.displayShipper = this.pageSettings.settings.system.displayShipper;
 
+    this.numberOfSigns  = this.pageSettings.settings.system.numberOfSigns;
     this.flightDisplay['model'] = this.pageSettings.settings.system.flightDisplay;
     this.dropDelivered['model'] = this.pageSettings.settings.system.dropDelivered;
     this.showTransit['model'] = this.pageSettings.settings.system.showTransit;
@@ -162,6 +166,8 @@ export class SettingsTabsComponent implements OnInit {
 
   public saveSettings() {
     this.prepareUserSettingsForSaving();
+
+    this.pageSettings.settings.system.numberOfSigns = this.numberOfSigns;
 
     this.settingsService.emitFontSizeChange(this.pageSettings.settings.fontSizes);
     this.settingsService.emitScrollInterval(this.pageSettings.settings.system.scrollInterval);
@@ -184,6 +190,8 @@ export class SettingsTabsComponent implements OnInit {
         this.updateUser();
       }
     }
+
+    this.localStorage.setObject('userSettings', this.pageSettings);
   }
 
   public getSettings() {
@@ -211,10 +219,12 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   private prepareUserSettingsForSaving() {
+    console.log('prepareUserSettingsForSaving');
     this.pageSettings.settings.system.refreshInterval = this.refresh_int;
     this.pageSettings.settings.system.scrollInterval = this.scroll_int;
     this.pageSettings.settings.system.displayConsignee = this.displayConsignee;
     this.pageSettings.settings.system.displayShipper = this.displayShipper;
+    
     this.pageSettings.settings.system.flightDisplay = this.flightDisplay['model'];
     this.pageSettings.settings.system.dropDelivered = this.dropDelivered['model'];
     this.pageSettings.settings.system.showTransit = this.showTransit['model'];
@@ -241,6 +251,7 @@ export class SettingsTabsComponent implements OnInit {
     this.userInfo.scroll_int = this.pageSettings.settings.system.scrollInterval;
 
     let displayShipper = this.pageSettings.settings.system.displayShipper;
+
     let displayConsignee = this.pageSettings.settings.system.displayConsignee;
 
     if (displayShipper && displayConsignee) {
@@ -282,10 +293,6 @@ export class SettingsTabsComponent implements OnInit {
     setTimeout(() => {
       this.settingsService.emitAlertsSettingsChange(this.pageSettings.settings.alerts);
     }, 300);
-  }
-
-  onAlertNumberOfSignsChanged(){
-    //console.log('onAlertNumberOfSignsChanged');
   }
 
   onChange(event) {
