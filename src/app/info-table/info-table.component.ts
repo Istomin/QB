@@ -333,27 +333,40 @@ export class InfoTableComponent implements OnInit, OnDestroy {
           shipment['textColor'] = null;
         }
       });
+
       if (settings.secondaryInTransit) {
         this.shipments.forEach((shipment) => {
           if (!shipment['isDelivered'] && shipment['InTransitTime']) {
-            let hour = shipment['InTransitTime'].split(' ')[0],
-              min = shipment['InTransitTime'].split(' ')[2];
+            let hour = 0, min = 0;
+            let timeObj = shipment['InTransitTime'].split(' ');
+            if(timeObj[1] === 'd') {
+                hour = timeObj[0] * 24 + timeObj[2];
+            } else {
+                hour = timeObj[0]; 
+                min = timeObj[2];
+            }
 
-            if (hour > +settings.secondaryInTransitTime && min > 0) {
+            if (hour > +settings.secondaryInTransitTime && min >= 0) {
               shipment['bgColor'] = settings.secondaryInTransitBackgroundColor;
               shipment['textColor'] = settings.secondaryInTransitTextColor;
             }
           }
         });
       }
-
+z
       if (settings.primaryInTransit) {
         this.shipments.forEach((shipment) => {
           if (!shipment['isDelivered'] && shipment['InTransitTime']) {
-            let hour = shipment['InTransitTime'].split(' ')[0],
-              min = shipment['InTransitTime'].split(' ')[2];
+            let hour = 0, min = 0;
+            let timeObj = shipment['InTransitTime'].split(' ');
+            if(timeObj[1] === 'd') {
+                hour = timeObj[0] * 24 + timeObj[2];
+            } else {
+                hour = timeObj[0]; 
+                min = timeObj[2];
+            }
 
-            if (hour > +settings.primaryInTransitTime && min > 0) {
+            if (hour > +settings.primaryInTransitTime && min >= 0) {
               shipment['bgColor'] = settings.primaryInTransitBackgroundColor;
               shipment['textColor'] = settings.primaryInTransitTextColor;
             }
