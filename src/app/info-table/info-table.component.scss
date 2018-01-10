@@ -33,16 +33,16 @@ table {
 					content: '';
 					position: absolute;
 					right: 7px;
-					top: 14px;
+					top: 21px;
 					border-width: 7px;
 					border-style: solid;
-					border-color: transparent transparent rgba(255,255,255,0.2);
+					border-color: rgba(255,255,255,0.2) transparent transparent;
 					display: none;
 				}
 				&.up {
 					&:after {
-						border-color: rgba(255,255,255,0.2) transparent transparent;
-						top: 21px;
+						border-color: transparent transparent rgba(255,255,255,0.2);
+						top: 14px;
 					}
 				}
 				&:hover {
