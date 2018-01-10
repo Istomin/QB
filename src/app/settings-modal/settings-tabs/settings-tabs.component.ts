@@ -31,7 +31,7 @@ export class SettingsTabsComponent implements OnInit {
 
   @ViewChild(ColorPickerComponent) public colorPickerComponent: ColorPickerComponent;
 
-  private fontSizes = GlobalVariable.SETTINGS.settings.fontSizes;
+  private fontSizes = GlobalVariable.FONT_SIZES;
   public runTextHolderValue: number = this.fontSizes.runTextHolder.base;
   public headerClockValue: number = this.fontSizes.headerClock.base;
   public headerLogoValue: number = this.fontSizes.headerLogo.base;
@@ -73,6 +73,7 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   public ngOnInit() {
+
     this.transitArrayNames = [transit.PU, transit.PO, transit.AL];
     this.pageSettings = this.localStorage.getObject('userSettings') && this.localStorage.getObject('userSettings').hasOwnProperty('settings') ? this.localStorage.getObject('userSettings') : this.dafaultSettings;
     this.displayShipper = true;
@@ -97,6 +98,8 @@ export class SettingsTabsComponent implements OnInit {
       settings.system.dropDelivered = this.userInfo.drop_delivered;
       settings.system.showTransit = this.userInfo.show_transit;
       settings.system.showExpectedDelivery = this.userInfo.show_expect_delivery;
+
+      console.log('settings.fontSizes.tBodyTd',settings);
 
       this.tableBodyTdValue = settings.fontSizes.tBodyTd;
       this.tableHeaderThValue = settings.fontSizes.tHeadTh;

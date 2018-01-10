@@ -1,8 +1,17 @@
 import { FontSizeSetting } from '../models/fontSizeSetting';
 
+const fontSizes = {
+  tBodyTd: new FontSizeSetting(10, 22, 18),
+  tHeadTh: new FontSizeSetting(10, 22, 18),
+  runTextHolder: new FontSizeSetting(14, 30, 21),
+  headerClock: new FontSizeSetting(14, 30, 22),
+  headerLogo: new FontSizeSetting(14, 30, 22),
+}
+
 export const GlobalVariable = Object.freeze({
   BASE_API_URL: 'http://board.quick.aero/api/v2/',
   BASE_URL: 'http://board.quick.aero',
+  FONT_SIZES: fontSizes,
   SETTINGS: {
     settings: {
       system: {
@@ -41,11 +50,11 @@ export const GlobalVariable = Object.freeze({
         businessName: 'Your Business Name Here'
       },
       fontSizes: {
-        tBodyTd: new FontSizeSetting(10, 22, 18),
-        tHeadTh: new FontSizeSetting(10, 22, 18),
-        runTextHolder: new FontSizeSetting(14, 30, 21),
-        headerClock: new FontSizeSetting(14, 30, 22),
-        headerLogo: new FontSizeSetting(14, 30, 22),
+        tBodyTd: fontSizes.tBodyTd.base,
+        tHeadTh: fontSizes.tHeadTh.base,
+        runTextHolder: fontSizes.runTextHolder.base,
+        headerClock: fontSizes.headerClock.base,
+        headerLogo: fontSizes.headerLogo.base
       }
     }
   }
