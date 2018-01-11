@@ -249,6 +249,7 @@ export class SettingsTabsComponent implements OnInit {
   }
 
   private collectUserSettings() {
+    console.log('collectUserSettings');
     this.userInfo.business_name = this.pageSettings.settings.graphics.businessName;
 
     this.userInfo.drop_delivered = this.pageSettings.settings.system.dropDelivered;
