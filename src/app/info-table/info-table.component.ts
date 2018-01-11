@@ -232,8 +232,9 @@ export class InfoTableComponent implements OnInit, OnDestroy {
           var tickers = [];
 
           this.shipments.forEach((shipment) => {
-            shipment['shipper'] = shipment['Shipper'].Address.CompanyName + "\n" + shipment['Shipper'].Address.City + ' ' + shipment['Shipper'].Address.StateProvinceCode + ' ' + shipment['Shipper'].Address.CountryCode;
-            shipment['consignee'] = shipment['Consignee'].Address.CompanyName + "\n" + shipment['Consignee'].Address.City + ' ' + shipment['Consignee'].Address.StateProvinceCode + ' ' + shipment['Consignee'].Address.CountryCode;
+            shipment['shipper'] = shipment['Shipper'].Address.CompanyName + "\n" + shipment['Shipper'].Address.City + ' ' + (shipment['Shipper'].Address.StateProvinceCode || '') + ' ' + (shipment['Shipper'].Address.CountryCode || '');
+            shipment['consignee'] = shipment['Consignee'].Address.CompanyName + "\n" + shipment['Consignee'].Address.City + ' ' + (shipment['Consignee'].Address.StateProvinceCode || '')  + ' ' + (shipment['Consignee'].Address.CountryCode || '');
+
             if (shipment['ShippersReference']) {
               if (Array.isArray(shipment['ShippersReference'])) {
                 shipment.reference = shipment['ShippersReference'].join(', ');
@@ -289,9 +290,10 @@ export class InfoTableComponent implements OnInit, OnDestroy {
             shipment.status = shipment['ShipmentStatus'] + "\n" + status_time + ' ' + shipment['ShipmentStatusLocation'];
 
             if (shipment['ShipmentException'] && !shipment['ETADateTime']) {
-              let origin = shipment['Origin'] ? shipment['Origin'] : '';
+              let addr =  this.showShipper ? shipment['Shipper'].Address : shipment['Consignee'].Address;
+              let origin = 'Origin: ' + addr.City + ' ' + addr.StateProvinceCode + ' ' + addr.CountryCode;
               tickers.push({
-                name: shipment['ShipmentException'] + ' Shipment: ' + shipment['ShipmentJobNumber'] + ' ' + origin
+                name: shipment['ShipmentException'] + ' Shipment: ' + shipment['ShipmentBOLNumber'] + ' ' + origin
               });
             }
           });
@@ -341,18 +343,19 @@ export class InfoTableComponent implements OnInit, OnDestroy {
             let timeObj = shipment['InTransitTime'].split(' ');
             if(timeObj[1] === 'd') {
                 hour = timeObj[0] * 24 + timeObj[2];
+                min = 1;
             } else {
-                hour = timeObj[0]; 
+                hour = timeObj[0];
                 min = timeObj[2];
             }
 
-            if (hour > +settings.secondaryInTransitTime && min >= 0) {
+            if (hour >= +settings.secondaryInTransitTime-1 && min > 0) {
               shipment['bgColor'] = settings.secondaryInTransitBackgroundColor;
               shipment['textColor'] = settings.secondaryInTransitTextColor;
             }
           }
         });
-      } 
+      }
 
       if (settings.primaryInTransit) {
         this.shipments.forEach((shipment) => {
@@ -360,13 +363,14 @@ export class InfoTableComponent implements OnInit, OnDestroy {
             let hour = 0, min = 0;
             let timeObj = shipment['InTransitTime'].split(' ');
             if(timeObj[1] === 'd') {
-                hour = timeObj[0] * 24 + timeObj[2];
+                hour = parseInt(timeObj[0]) * 24 + parseInt(timeObj[2]);
+                min = 1;
             } else {
-                hour = timeObj[0]; 
+                hour = timeObj[0];
                 min = timeObj[2];
             }
 
-            if (hour > +settings.primaryInTransitTime && min >= 0) {
+            if (hour > +settings.primaryInTransitTime-1 && min > 0) {
               shipment['bgColor'] = settings.primaryInTransitBackgroundColor;
               shipment['textColor'] = settings.primaryInTransitTextColor;
             }
