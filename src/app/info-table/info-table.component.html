@@ -7,7 +7,7 @@
           <span [style.color]="tableTextColor">BOL Number</span>
         </a>
       </th>
-      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" class="small-column" key="reference">
+      <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" class="normal-x-column" key="reference">
         <a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" (click)="order = 'reference'; reverse = !reverse;"
           [ngClass]="{'active': order == 'reference', 'up': order == 'reference' && reverse, 'down': order == 'reference' && !reverse}">
           <span [style.color]="tableTextColor">Reference</span>
