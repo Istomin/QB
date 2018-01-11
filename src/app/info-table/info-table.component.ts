@@ -352,8 +352,8 @@ export class InfoTableComponent implements OnInit, OnDestroy {
             }
           }
         });
-      }
-z
+      } 
+
       if (settings.primaryInTransit) {
         this.shipments.forEach((shipment) => {
           if (!shipment['isDelivered'] && shipment['InTransitTime']) {
