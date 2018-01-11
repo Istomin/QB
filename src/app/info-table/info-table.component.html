@@ -14,7 +14,9 @@
         </a>
       </th>
       <th [ngStyle]="{'font-size': fontSize.tHeadTh + 'px'}" key="shipper" >
-        <a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" >
+        <a [style.background]="'linear-gradient(0deg,' + defaultBottomColor + ',' + tableHeaderColor+')'" href="#" 
+            (click)="orderByShipperConsignee()"
+           [ngClass]="{'active': order == 'shipper' || order == 'consignee', 'up': (order == 'shipper' || order == 'consignee') && reverse, 'down': (order == 'shipper' || order == 'consignee') && !reverse}">
           <span [style.color]="tableTextColor"> {{getShowShipperConsigneeHeader()}}</span>
         </a>
       </th>
