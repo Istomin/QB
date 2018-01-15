@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { SpinnerState, SpinnerService } from './spinner.service';
 import { AppSettingsService } from '../app-settings.service';
@@ -9,6 +9,8 @@ import { AppSettingsService } from '../app-settings.service';
   templateUrl: './spinner.component.html'
 })
 export class SpinnerComponent implements OnDestroy, OnInit {
+  @Input('showSpinnerText')
+  showSpinnerText:boolean = true;
   visible = false;
   progress: any;
   showProgress: boolean = false;

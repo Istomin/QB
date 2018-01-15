@@ -18,7 +18,7 @@ export class LoginComponent implements OnDestroy {
   private user = new User('', '');
   private active: boolean = true;
   private invalidCreds: boolean = false;
-
+  private showLoading: boolean = false;
   constructor(private loginService: LoginService,
               private route: ActivatedRoute,
               private router: Router,
@@ -39,7 +39,7 @@ export class LoginComponent implements OnDestroy {
 
   private login() {
     this.spinner.show();
-
+    this.showLoading = true;
     let loginResults = null;
    /// {"login": "QB_4453JHSF", "password": "ERB577WAU"}
     this.loginSub = this.loginService
@@ -58,6 +58,7 @@ export class LoginComponent implements OnDestroy {
           let url = redirectTo ? [redirectTo] : ['/dashboard'];
           this.router.navigate(url);
         }
+        this.showLoading = false;
         this.spinner.hide();
       });
   }

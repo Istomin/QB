@@ -14,5 +14,5 @@
 		<div class="sk-circle12 sk-child"></div>
 	</div>
 	<span *ngIf="showProgress" class="numbers">{{progress}} %</span>
-	<span>Refreshing</span>
+	<span *ngIf="showSpinnerText" class="spinner-text">Refreshing</span>
 </div>
