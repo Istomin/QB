@@ -11,7 +11,7 @@ export class Shipment {
 export class InfoTableService {
   private baseApiUrl = GlobalVariable.BASE_API_URL;
   constructor(private http: Http) { }
-
+ // TODO: remove?
   getShipments(value?: string) {
     return this.http
       .get(this.makeApiUri('data2/'))
@@ -30,4 +30,3 @@ export class InfoTableService {
     return [this.baseApiUrl, target].join('');
   }
 }
-

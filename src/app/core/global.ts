@@ -18,7 +18,7 @@ export const GlobalVariable = Object.freeze({
         refreshInterval: 10,
         scrollInterval: 10,
         displayShipper: true,
-        displayConsignee: false,
+        displayConsignee: true,
         flightDisplay: 0,
         showTransit: true,
         showTransitType: 1,

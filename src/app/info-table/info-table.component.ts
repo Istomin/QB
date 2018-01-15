@@ -15,7 +15,7 @@ import { WindowRef } from '../core/window-ref';
 import { debounce } from 'rxjs/operator/debounce';
 
 
-const ETANoteType = ['WEATHER DELAY', 'NO SHOW AIRLINE', 'FLIGHT DELAY'];
+const ETANoteType = ['WEATHER DELAY', 'NO SHOW AIRLINE', 'AIRLINE DELAY'];
 
 @Component({
   selector: 'info-table',
@@ -45,7 +45,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
   reverse: boolean = false;
   private showOrg: boolean;
   private showShipper: boolean = true;
-  private showConsignee: boolean = false;
+  private showConsignee: boolean = true;
   private dropDelivered: boolean;
   private numberOfSigns: number;
   private shipmentsClone: any;
@@ -103,22 +103,6 @@ export class InfoTableComponent implements OnInit, OnDestroy {
       this.settingsService.emitFontSizeChange(settings.fontSizes);
     }
 
-  }
-
-  private orderByShipperConsignee() {
-    if (this.showConsignee && this.showShipper) {
-      return;
-    }
-
-    this.reverse = !this.reverse;
-
-
-    if (this.showShipper) {
-      this.order = 'shipper';
-    }
-    if (this.showConsignee) {
-      this.order = 'consignee';
-    }
   }
 
   private getShowShipperConsigneeHeader() {
@@ -211,8 +195,8 @@ export class InfoTableComponent implements OnInit, OnDestroy {
       this.recalculateColumnsWidthWithDelay();
     }
 
-    this.showShipper = !!obj.settings.system.displayShipper;
-    this.showConsignee = !!obj.settings.system.displayConsignee;
+    this.showShipper = obj.settings.system.displayShipper === undefined ? true : obj.settings.system.displayShipper;
+    this.showConsignee = obj.settings.system.displayConsignee === undefined ? true : obj.settings.system.displayConsignee;
 
     this.dropDelivered = obj.settings.system.dropDelivered;
     this.numberOfSigns = obj.settings.system.numberOfSigns;
@@ -249,7 +233,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
 
           this.shipments.forEach((shipment) => {
             shipment['shipper'] = shipment['Shipper'].Address.CompanyName + "\n" + shipment['Shipper'].Address.City + ' ' + (shipment['Shipper'].Address.StateProvinceCode || '') + ' ' + (shipment['Shipper'].Address.CountryCode || '');
-            shipment['consignee'] = shipment['Consignee'].Address.CompanyName + "\n" + shipment['Consignee'].Address.City + ' ' + (shipment['Consignee'].Address.StateProvinceCode || '') + ' ' + (shipment['Consignee'].Address.CountryCode || '');
+            shipment['consignee'] = shipment['Consignee'].Address.CompanyName + "\n" + shipment['Consignee'].Address.City + ' ' + (shipment['Consignee'].Address.StateProvinceCode || '')  + ' ' + (shipment['Consignee'].Address.CountryCode || '');
 
             if (shipment['ShippersReference']) {
               if (Array.isArray(shipment['ShippersReference'])) {
@@ -292,9 +276,16 @@ export class InfoTableComponent implements OnInit, OnDestroy {
               shipment['eta_arrival'] = '';
               shipment['eta_departure'] = '';
             }
-            if (shipment['DeadlineDateTime']) {
-              let deadline_time = shipment['DeadlineDateTime'].DateTime;
-              shipment['expectedDelivery'] = deadline_time['@Year'] + '-' + deadline_time['@Month'] + '-' + deadline_time['@Day'] + 'T' + deadline_time['@Hour'] + ':' + deadline_time['@Minute'];
+            // expected delivery
+            let expected_delivery;
+            if (shipment['ETADateTime']) {
+                expected_delivery = shipment['ETADateTime'].DateTime;
+            }
+            else if (shipment['DeadlineDateTime']) {
+                expected_delivery = shipment['DeadlineDateTime'].DateTime;
+            }
+            if (expected_delivery) {
+              shipment['expectedDelivery'] = expected_delivery['@Year'] + '-' + expected_delivery['@Month'] + '-' + expected_delivery['@Day'] + 'T' + expected_delivery['@Hour'] + ':' + expected_delivery['@Minute'];
             } else {
               shipment['expectedDelivery'] = '';
             }
@@ -306,7 +297,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
             shipment.status = shipment['ShipmentStatus'] + "\n" + status_time + ' ' + shipment['ShipmentStatusLocation'];
 
             if (shipment['ShipmentException'] && !shipment['ETADateTime']) {
-              let addr = this.showShipper ? shipment['Shipper'].Address : shipment['Consignee'].Address;
+              let addr =  this.showShipper ? shipment['Shipper'].Address : shipment['Consignee'].Address;
               let origin = 'Origin: ' + addr.City + ' ' + addr.StateProvinceCode + ' ' + addr.CountryCode;
               tickers.push({
                 name: shipment['ShipmentException'] + ' Shipment: ' + shipment['ShipmentBOLNumber'] + ' ' + origin
@@ -342,6 +333,19 @@ export class InfoTableComponent implements OnInit, OnDestroy {
     return localData && localData.settings || null;
   }
 
+  parseInTransit(shipment){
+      let hours = 0;
+      let timeObj = shipment['InTransitTime'].split(' ');
+      if(timeObj[1] === 'd') {
+          hours = parseInt(timeObj[0]) * 24 + parseInt(timeObj[2]);
+      } else if (timeObj[1] === 'h'){
+          hours = parseInt(timeObj[0]) + 1;  // stupid? yeh, but same as original AIR app
+      } else {
+          hours = 1;
+      }
+      return hours;
+  }
+
   applyAlertsSettings(settings: any) {
     if (this.shipments && this.shipments.length) {
 
@@ -355,17 +359,8 @@ export class InfoTableComponent implements OnInit, OnDestroy {
       if (settings.secondaryInTransit) {
         this.shipments.forEach((shipment) => {
           if (!shipment['isDelivered'] && shipment['InTransitTime']) {
-            let hour = 0, min = 0;
-            let timeObj = shipment['InTransitTime'].split(' ');
-            if (timeObj[1] === 'd') {
-              hour = timeObj[0] * 24 + timeObj[2];
-              min = 1;
-            } else {
-              hour = timeObj[0];
-              min = timeObj[2];
-            }
-
-            if (hour >= +settings.secondaryInTransitTime - 1 && min > 0) {
+            let hours = this.parseInTransit(shipment);
+            if (hours >= settings.secondaryInTransitTime) {
               shipment['bgColor'] = settings.secondaryInTransitBackgroundColor;
               shipment['textColor'] = settings.secondaryInTransitTextColor;
             }
@@ -376,17 +371,9 @@ export class InfoTableComponent implements OnInit, OnDestroy {
       if (settings.primaryInTransit) {
         this.shipments.forEach((shipment) => {
           if (!shipment['isDelivered'] && shipment['InTransitTime']) {
-            let hour = 0, min = 0;
-            let timeObj = shipment['InTransitTime'].split(' ');
-            if (timeObj[1] === 'd') {
-              hour = parseInt(timeObj[0]) * 24 + parseInt(timeObj[2]);
-              min = 1;
-            } else {
-              hour = timeObj[0];
-              min = timeObj[2];
-            }
+            let hours = this.parseInTransit(shipment);
 
-            if (hour > +settings.primaryInTransitTime - 1 && min > 0) {
+            if (hours >= settings.primaryInTransitTime) {
               shipment['bgColor'] = settings.primaryInTransitBackgroundColor;
               shipment['textColor'] = settings.primaryInTransitTextColor;
             }
@@ -395,6 +382,7 @@ export class InfoTableComponent implements OnInit, OnDestroy {
       }
 
       if (settings.etaNote) {
+
         this.shipments.forEach((shipment) => {
           if (shipment['ETANote'] && shipment['ETANote'].indexOf(ETANoteType[settings.etaNoteType]) >= 0) {
             shipment['bgColor'] = settings.etaNoteBackgroundColor;
