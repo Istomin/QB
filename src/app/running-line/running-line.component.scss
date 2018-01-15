@@ -20,6 +20,26 @@
 //  }
 //}
 
+/* Make it a marquee */
+.marquee {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+  animation: marquee 50s linear infinite;
+  color: #fff;
+}
+
+.marquee:hover {
+  animation-play-state: paused
+}
+
+/* Make it move */
+@keyframes marquee {
+  0%   { text-indent: 27.5em }
+  100% { text-indent: -105em }
+}
+
 .runtext-container {
   background: #000;
   width: 100%;
@@ -28,7 +48,8 @@
 	line-height: 50px;
 }
 
-.main-runtext {margin: 0 auto;
+.main-runtext {
+  margin: 0 auto;
   overflow: hidden;
   position: relative;
   height: 50px;
